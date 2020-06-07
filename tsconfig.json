@@ -1,0 +1,52 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"target": "es5",
+		"paths": {
+			"Ctx": [
+				"context/appContext"
+			],
+			"Tools": [
+				"utils/Tools"
+			],
+			"Global": [
+				"utils/Global"
+			],
+			"Layout": [
+				"layout/Layout"
+			],
+			"Strings": [
+				"lang/Strings.json"
+			],
+			"Prismic": [
+				"utils/Prismic"
+			]
+		},
+		"lib": [
+			"dom",
+			"dom.iterable",
+			"esnext"
+		],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve"
+	},
+	"exclude": [
+		"node_modules"
+	],
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx"
+	]
+}

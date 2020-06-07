@@ -1,0 +1,26 @@
+{
+	"extends": [
+		"tslint:latest",
+		"tslint-react",
+		"tslint-config-prettier"
+	],
+	"rulesDirectory": [
+		"tslint-plugin-prettier"
+	],
+	"rules": {
+		"prettier": true,
+		"interface-name": false,
+		"no-console": false,
+		"no-submodule-imports": false,
+		"no-for-in-array": true,
+		"only-arrow-functions": true,
+		"no-duplicate-variable": true,
+		"no-implicit-dependencies": false,
+		"no-duplicate-switch-case": true,
+		"no-invalid-template-strings": true,
+		"no-string-literal": false,
+		"jsx-boolean-value": [
+			"never"
+		]
+	}
+}

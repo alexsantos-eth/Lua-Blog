@@ -1,0 +1,56 @@
+{
+	"en": {
+		"SplashPage": {
+			"title": "Titulo de splash",
+			"text": "Texto de splash"
+		},
+		"Layout": {
+			"toast": {
+				"online": "De nuevo en linea",
+				"offline": "Sin conexión a internet"
+			}
+		},
+		"Index": {
+			"title": "LUA Development Studio - Blog",
+			"description": "Blog de tecnología y ciencia, aquí encontraras desde artículos hasta consejos y tips para le desarrollo de software, ven y únete a nuestra comunidad",
+			"more": {
+				"part_1": "Descubre más de",
+				"part_2": "LUA"
+			},
+			"newsletter": {
+				"title": "¿Quieres subscribirte a nuestro NewsLetter semanal?",
+				"alert": {
+					"title": "Subscripción semanal",
+					"body": "Escribe el correo electrónico con el que deseas suscribirte a nuestro newsletter"
+				}
+			}
+		}
+	},
+	"es": {
+		"SplashPage": {
+			"title": "Titulo de splash",
+			"text": "Texto de splash"
+		},
+		"Layout": {
+			"toast": {
+				"online": "De nuevo en linea",
+				"offline": "Sin conexión a internet"
+			}
+		},
+		"Index": {
+			"title": "LUA Development Studio - Blog",
+			"description": "Blog de tecnología y ciencia, aquí encontraras desde artículos hasta consejos y tips para le desarrollo de software, ven y únete a nuestra comunidad",
+			"more": {
+				"part_1": "Descubre más de",
+				"part_2": "LUA"
+			},
+			"newsletter": {
+				"title": "¿Quieres subscribirte a nuestro NewsLetter semanal? ",
+				"alert": {
+					"title": "Subscripción semanal",
+					"body": "Escribe el correo electrónico con el que deseas suscribirte a nuestro newsletter"
+				}
+			}
+		}
+	}
+}
