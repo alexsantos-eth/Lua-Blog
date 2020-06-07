@@ -1,0 +1,345 @@
+/* GENERALES */
+
+@font-face {
+	src: url('/fonts/Futura-Book.ttf');
+	font-family: 'Futura';
+	font-display: block;
+	font-weight: 300;
+}
+
+@font-face {
+	src: url('/fonts/Futura-Medium.ttf');
+	font-family: 'Futura';
+	font-display: block;
+	font-weight: 400;
+}
+
+@font-face {
+	src: url('/fonts/OpenSans-Light.ttf');
+	font-family: 'OpenSans';
+	font-display: block;
+	font-weight: 200;
+}
+
+@font-face {
+	src: url('/fonts/OpenSans-Regular.ttf');
+	font-family: 'OpenSans';
+	font-display: block;
+	font-weight: 300;
+}
+
+@font-face {
+	src: url('/fonts/OpenSans-SemiBold.ttf');
+	font-family: 'OpenSans';
+	font-display: block;
+	font-weight: 400;
+}
+
+@font-face {
+	src: url('/fonts/OpenSans-Bold.ttf');
+	font-family: 'OpenSans';
+	font-display: block;
+	font-weight: 500;
+}
+
+@font-face {
+	src: url('/fonts/OpenSans-ExtraBold.ttf');
+	font-family: 'OpenSans';
+	font-display: block;
+	font-weight: 600;
+}
+
+@font-face {
+	src: url('/fonts/Manrope-Light.ttf');
+	font-family: 'Manrope';
+	font-display: block;
+	font-weight: 200;
+}
+
+@font-face {
+	src: url('/fonts/Manrope-Medium.ttf');
+	font-family: 'Manrope';
+	font-display: block;
+	font-weight: 300;
+}
+
+@font-face {
+	src: url('/fonts/Manrope-Regular.ttf');
+	font-family: 'Manrope';
+	font-display: block;
+	font-weight: 400;
+}
+
+@font-face {
+	src: url('/fonts/Manrope-Bold.ttf');
+	font-family: 'Manrope';
+	font-display: block;
+	font-weight: 500;
+}
+
+@font-face {
+	src: url('/fonts/Manrope-ExtraBold.ttf');
+	font-family: 'Manrope';
+	font-display: block;
+	font-weight: 600;
+}
+
+body {
+	--pink: #e60f71;
+	--purple: #9c27b0;
+	--blue: #2196f3;
+	--deepOrange: #ff5722;
+	--mainBackground: #160F30;
+	--postText: #fff;
+	--postContent: #160F30;
+	--postMain: rgba(245, 245, 245, 0.9);
+	--postPhrase: #eee;
+	--postPhraseBold: #fff;
+	--navbarBackground: #160F30;
+	--categoryBackground: #221a41;
+	--shadow: rgba(0, 0, 0, .4);
+	background: rgba(0, 0, 0, .4);
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 15px;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	user-select: none;
+	-webkit-user-drag: none;
+	transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+	font-weight: 300;
+	font-family: 'OpenSans';
+}
+
+body main {
+	display: block;
+	position: relative;
+	width: 100%;
+	background: var(--mainBackground);
+	border-radius: 0 0 10px 10px;
+}
+
+*::before {
+	transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+*::after {
+	transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+body>div {
+	margin: 0 auto;
+	width: 85%;
+	max-width: 1200px;
+}
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+body {
+	padding: 40px 0;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* BOTONES */
+
+.btn {
+	appearance: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	font-size: 1em;
+	background: var(--deepPurple);
+	color: var(--white);
+	border-radius: 10px;
+	box-shadow: 3px 3px 10px var(--shadow);
+	font-family: 'Futura';
+	width: 160px;
+	height: 45px;
+}
+
+button {
+	appearance: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	font-size: 1em;
+	background: var(--deepPurple);
+	color: var(--white);
+	border-radius: 10px;
+	box-shadow: 3px 3px 10px var(--shadow);
+	font-family: 'Futura';
+	width: 160px;
+	height: 45px;
+}
+
+/* HEADINGS */
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 500;
+	font-family: 'OpenSans';
+}
+
+p {
+	font-weight: 300;
+	font-family: 'OpenSans';
+}
+
+.toast {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	transform: translateY(100%);
+	transition: transform 0.3s ease-in-out;
+	background: var(--text);
+	padding: 20px;
+	z-index: 99;
+}
+
+.toast>span {
+	font-size: 1em;
+	font-weight: 500;
+	color: var(--postContent);
+}
+
+@keyframes show {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.alertContainer {
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	animation: show 0.4s ease-in-out 1;
+	transition: opacity 0.4s ease-in-out;
+}
+
+.alertContainer>.alertShadow {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 1;
+}
+
+.alertContainer .alertContent {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	padding: 30px;
+	width: calc(100% - 40px);
+	max-width: 450px;
+	transform: translate(-50%, -50%);
+	background: var(--postContent);
+	z-index: 2;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
+}
+
+.alertContainer .alertActions {
+	display: flex;
+	justify-content: flex-end;
+	position: relative;
+	z-index: 3;
+}
+
+.alertContainer .alertActions li .cancelBtn {
+	color: var(--postText);
+	background: transparent;
+	box-shadow: none;
+	display: none;
+}
+
+.alertContainer .alertActions li button {
+	color: var(--postPhraseBold);
+	width: 100px;
+	background: var(--deepOrange);
+	box-shadow: none;
+	overflow: hidden;
+}
+
+.alertContainer .alertContent h1 {
+	color: var(--postText);
+	font-family: 'OpenSans';
+	font-size: 2em;
+	margin-bottom: 10px;
+	font-weight: 600;
+}
+
+.alertContainer .alertContent p {
+	color: var(--postText);
+	font-family: 'OpenSans';
+	margin-bottom: 20px;
+	font-size: 1em;
+	line-height: 20px;
+}
+
+@media screen and (max-width: 965px) {
+	body {
+		font-size: 14px;
+	}
+}
+
+@media screen and (max-width: 760px) {
+	body {
+		font-size: 13px;
+	}
+}
+
+@media screen and (max-width: 410px) {
+	body {
+		font-size: 12px;
+		padding: 0;
+	}
+	body>div {
+		width: 100%;
+	}
+}
