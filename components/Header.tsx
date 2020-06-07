@@ -208,7 +208,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 						padding: 20px;
 					}
 				}
-				@media screen and (max-width: 410px) {
+				@media screen and (max-width: 460px) {
 					header > .post-link > #header-post > p {
 						line-height: 15px;
 						font-size: 1em;

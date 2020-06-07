@@ -334,7 +334,7 @@ p {
 	}
 }
 
-@media screen and (max-width: 410px) {
+@media screen and (max-width: 460px) {
 	body {
 		font-size: 12px;
 		padding: 0;
