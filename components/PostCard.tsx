@@ -160,7 +160,7 @@ const PostCard: React.SFC<PostCardProps> = (props: PostCardProps) => {
 						width: 95%;
 					}
 				}
-				@media screen and (max-width: 410px) {
+				@media screen and (max-width: 460px) {
 					.post-card > #post-content > p {
 						line-height: 15px;
 						font-size: 1em;

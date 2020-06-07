@@ -91,7 +91,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 				nav > #nav-btns > span {
 					cursor: pointer;
 				}
-				@media screen and (max-width: 410px) {
+				@media screen and (max-width: 460px) {
 					nav {
 						width: 100%;
 						border-radius: 0px;

@@ -169,7 +169,7 @@ const Category: React.FC<CategoryProps> = (props: CategoryProps) => {
 						padding:20px 30px;
 					}
 				}
-				@media screen and (max-width: 410px) {
+				@media screen and (max-width: 460px) {
 					section > #category-header > p{
 						width:160px;
 					}
