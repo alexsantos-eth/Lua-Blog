@@ -82,6 +82,7 @@ class LuaDoc extends Document<DocProps> {
 					<link rel='icon' type='image/png' sizes='16x16' href='/images/icons/favicon-16x16.png' />
 					<meta property='og:type' content='website' />
 					<meta name='twitter:card' content='summary_large_image' />
+					<meta property='og:locale' content='es_GT' />
 				</Head>
 				<body>
 					<Main />
