@@ -51,14 +51,14 @@ const Category: React.FC<CategoryProps> = (props: CategoryProps) => {
 				svg {
 					position: absolute;
 					top: 0px;
-					left: 0;
-					width: 100%;
+					left: -40px;
+					width: 100vw;
 					z-index: 2;
 				}
 
 				section > #category-docs {
 					position: relative;
-					margin-bottom:50px;
+					margin-bottom:70px;
 					left: ${props.reverse ? '50px' : '-50px'};
 					width: 85%;
 					border-radius: 10px;
@@ -78,10 +78,12 @@ const Category: React.FC<CategoryProps> = (props: CategoryProps) => {
 					position: absolute;
 					z-index: 4;
 					width: 400px;
+					top:41%;
+					transform:translateY(-50%);
 					${props.reverse ? 'right: 0;' : 'left: 0;'}
 					background: ${props.color || 'var(--blue)'};
 					box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.1);
-					margin-${props.reverse ? 'right' : 'left'}: 80px;
+					margin-${props.reverse ? 'right' : 'left'}: 120px;
 					border-radius: 10px;
 					display: flex;
 					flex-direction: column;
@@ -120,11 +122,17 @@ const Category: React.FC<CategoryProps> = (props: CategoryProps) => {
 						padding: 40px 0px;
 					}
 				}
+
 				@media screen and (max-width: 1080px) {
 					section > #category-header {
 						${props.reverse ? 'right:-40px' : 'left: -40px'}
 					}
+					section > #category-header > img {
+					width: 50%;
+					${props.reverse ? 'right:-30px' : 'left: -30px'}
 				}
+				}
+
 				@media screen and (max-width: 965px) {
 					section {
 						flex-direction: column;
@@ -133,9 +141,10 @@ const Category: React.FC<CategoryProps> = (props: CategoryProps) => {
 					}
 					section > #category-header {
 						position: relative;
-						top: 0;
+						top: -20px;
+						transform:none;
 						left: 0;
-						${props.reverse ? 'margin-top: 70px;' : ''}
+						${props.top ? 'margin-top: 30px;' : ''}
 					}
 
 					section > #category-docs {
@@ -146,39 +155,73 @@ const Category: React.FC<CategoryProps> = (props: CategoryProps) => {
 						justify-content: center;
 					}
 				}
+
+				@media screen and (max-width:800px){
+					section > #category-header {
+						${props.top ? 'margin-top: 70px;' : ''}
+					}
+				}
+
 				@media screen and (max-width: 760px) {
 					section > #category-header {
+						margin:0;
 						${props.reverse ? 'margin-top: 90px;' : ''}
-						width: 110%;
+						width: 105%;
 					}
 					section > #category-header > p {
 						font-size: 1.3em;
 					}
 					section > #category-header > img {
-						${props.reverse ? 'right:-90px' : 'left: -90px'}
+						${props.reverse ? 'right:0px' : 'left: 0px'}
 					}
 				}
+
+				@media screen and (max-width: 600px) {
+					section > #category-header {
+						width: 120%;
+					}
+					section > #category-header > img {
+						width: 40%;
+					}
+				}
+
+
 				@media screen and (max-width: 500px) {
 					section {
 						padding: 0 20px;
 					}
 					section > #category-header {
 						${props.reverse ? 'margin-top: 100px;' : ''}
-						width: 90%;
+						width: 105%;
 						font-size:0.8em;
 						padding:20px 30px;
 					}
 				}
+
 				@media screen and (max-width: 460px) {
+					section > #category-header{
+						width:100%;
+								${props.top ? 'margin-top: 60px;' : ''}
+						${props.reverse ? 'left:-5%' : 'right: -10%'}
+
+					}
+
 					section > #category-header > p{
 						width:160px;
+					}
+					section > #category-header > img {
+						width: 50%;
+						${props.reverse ? 'right:-10%' : 'left: -10%'}
+					}
+					svg{
+						left:0;
 					}
 				}
 			`}</style>
 			<style jsx global>{`
 				@media screen and (max-width: 1080px) {
 					.category > #category-docs > a {
-						margin-left: -60px;
+						margin-left: -75px;
 					}
 				}
 				@media screen and (max-width: 965px) {

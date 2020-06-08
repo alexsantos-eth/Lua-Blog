@@ -57,6 +57,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 
 				header > img {
 					width: 40%;
+					max-width: 500px;
 					position: relative;
 					z-index: 2;
 				}
@@ -64,13 +65,14 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 				svg {
 					position: absolute;
 					bottom: 0;
-					left: 0;
+					left: -40px;
 					transform: scaleY(-1);
-					width: 100%;
+					width: 100vw;
 				}
 
 				header > .post-link {
 					width: 60%;
+					max-width: 650px;
 					display: flex;
 					justify-content: flex-end;
 					position: relative;
@@ -78,7 +80,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 
 				header > .post-link > div:nth-child(1) {
 					width: 90%;
-					height: 250px;
+					height: 300px;
 					background: url(${props.doc.data.banner.url || ''});
 					background-size: cover;
 					position: relative;
@@ -178,11 +180,11 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 						width: 70%;
 					}
 				}
-				@media screen and (max-width: 965px) {
+				@media screen and (max-width: 800px) {
 					header > img {
 						position: absolute;
-						bottom: -30px;
-						left: -70px;
+						bottom: -40px;
+						left: 40px;
 						width: 300px;
 						z-index: 4;
 					}
@@ -199,7 +201,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 						padding: 50px 20px;
 					}
 					header > img {
-						bottom: -20px;
+						bottom: -10px;
 						left: -20px;
 						width: 250px;
 					}
@@ -212,6 +214,9 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 					header > .post-link > #header-post > p {
 						line-height: 15px;
 						font-size: 1em;
+					}
+					svg {
+						left: 0;
 					}
 				}
 			`}</style>

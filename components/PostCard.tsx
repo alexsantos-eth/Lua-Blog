@@ -49,6 +49,7 @@ const PostCard: React.SFC<PostCardProps> = (props: PostCardProps) => {
 					justify-content: flex-end;
 					position: relative;
 					z-index: 3;
+					margin-top: -20px;
 				}
 
 				.post-card > div:nth-child(1) {
@@ -91,7 +92,7 @@ const PostCard: React.SFC<PostCardProps> = (props: PostCardProps) => {
 					overflow: hidden;
 					position: absolute;
 					bottom: -20px;
-					left: -10px;
+					left: 0;
 					box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.1);
 				}
 
