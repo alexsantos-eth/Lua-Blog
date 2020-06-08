@@ -128,7 +128,6 @@ const Post: NextPage = ({ post }: any) => {
 				.post-page-content > * {
 					position: relative;
 					z-index: 2;
-					color: var(--postText);
 				}
 
 				.post-page-content > a {
@@ -142,6 +141,7 @@ const Post: NextPage = ({ post }: any) => {
 					border-radius: 10px;
 					background: transparent;
 					box-shadow: none;
+					color: var(--postText);
 					margin-bottom: 30px;
 				}
 
@@ -152,6 +152,7 @@ const Post: NextPage = ({ post }: any) => {
 				.post-page-content > h1 {
 					font-size: 3em;
 					font-weight: bold;
+					color: var(--postText);
 				}
 
 				.post-page-content > .post-page-desc {
@@ -160,6 +161,7 @@ const Post: NextPage = ({ post }: any) => {
 					opacity: 0.8;
 					margin-bottom: 30px;
 					font-family: 'OpenSans';
+					color: var(--postText);
 				}
 
 				.post-page-content > p > strong {
@@ -174,6 +176,7 @@ const Post: NextPage = ({ post }: any) => {
 					font-size: 0.9em;
 					align-items: center;
 					justify-content: flex-start;
+					color: var(--postText);
 				}
 
 				.post-page-content > .post-page-head > p > strong {
@@ -188,6 +191,18 @@ const Post: NextPage = ({ post }: any) => {
 					background: var(--postText);
 					z-index: 2;
 				}
+
+				@media screen and (max-width: 1024px) {
+					.post-banner {
+						width: 90%;
+						margin-bottom: 30px;
+					}
+				}
+				@media screen and (max-width: 460px) {
+					.post-banner {
+						width: 100%;
+					}
+				}
 			`}</style>
 			<style jsx global>{`
 				.post-page-content > .post-page-main {
@@ -201,6 +216,12 @@ const Post: NextPage = ({ post }: any) => {
 				.post-page-content > .post-page-main > h2 {
 					font-size: 1.3em;
 					margin: 10px 0;
+				}
+
+				@media screen and (max-width: 760px) {
+					.post-page-content > .post-page-main {
+						font-size: 14px;
+					}
 				}
 			`}</style>
 		</section>
