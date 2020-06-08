@@ -100,6 +100,12 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 						transform: none;
 					}
 				}
+
+				@media screen and (max-width: 965px) {
+					nav {
+						font-size: 14px;
+					}
+				}
 			`}</style>
 		</nav>
 	)

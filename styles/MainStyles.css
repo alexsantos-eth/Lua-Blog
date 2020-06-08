@@ -92,7 +92,7 @@ body {
 	--mainBackground: #160F30;
 	--postText: #fff;
 	--postContent: #160F30;
-	--postMain: rgba(245, 245, 245, 0.9);
+	--postMain: rgba(245, 245, 245, 0.7);
 	--postPhrase: #eee;
 	--postPhraseBold: #fff;
 	--navbarBackground: #160F30;
@@ -341,5 +341,9 @@ p {
 	}
 	body>div {
 		width: 100%;
+	}
+	body main {
+		overflow: hidden;
+		border-radius: 0;
 	}
 }
