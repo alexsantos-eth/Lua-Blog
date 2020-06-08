@@ -63,7 +63,7 @@ const Index: NextPage = ({ posts }: any) => {
 						<Category
 							top
 							reverse
-							desc='Encuentra artículos sobre librerias, frameworks, ES6, novedades y mas'
+							desc='Encuentra artículos sobre librerías, frameworks, ES6, novedades y mas'
 							img='/images/svgs/javascript.svg'
 							name='JavaScript'
 							icon='javascript'

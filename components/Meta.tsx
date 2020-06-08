@@ -23,7 +23,7 @@ const Meta: React.FC<Props> = (props: Props) => {
 			<meta name='twitter:description' content={props.desc} />
 			<meta name='twitter:image' content={props.banner} />
 			<meta name='twitter:site' content={`@https://blog.wearelua.com/${props.url}`} />
-			<meta property='og:url' content={`https:/blog.wearelua.com/${props.url}`} />
+			<meta property='og:url' content={`https://blog.wearelua.com/${props.url}`} />
 			<link rel='canonical' href={`https://blog.wearelua.com/${props.url}`} />
 		</>
 	)
