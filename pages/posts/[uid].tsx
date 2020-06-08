@@ -67,6 +67,8 @@ const Post: NextPage = ({ post }: any) => {
 			<Head>
 				<title>{title}</title>
 				<Meta title={title} desc={sPost ? RichText.asText(description) : description} />
+				<meta name='og:image:secure_url' content={sPost?.data.banner.url || ''} />
+				<meta name='og:image' content={sPost?.data.banner.url || ''} />
 			</Head>
 			{sPost && (
 				<motion.div initial='init' animate='in' exit='out' variants={PostPageVariant}>
