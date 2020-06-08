@@ -91,7 +91,7 @@ const Post: NextPage = ({ post }: any) => {
 			)}
 			<style jsx>{`
 				.post {
-					padding: 50px 0;
+					padding: 35px 0;
 				}
 
 				.post-page-content {
@@ -201,6 +201,9 @@ const Post: NextPage = ({ post }: any) => {
 				@media screen and (max-width: 460px) {
 					.post-banner {
 						width: 100%;
+					}
+					.post-page-content {
+						padding: 20px;
 					}
 				}
 			`}</style>
