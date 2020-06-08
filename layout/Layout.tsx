@@ -1,6 +1,6 @@
 // TIPOS DE DATOS Y HOOKS
 import { useEffect, FC, Dispatch, SetStateAction, useState } from 'react'
-import { showToast, toggleDarkMode, updateApp } from 'Tools'
+import { showToast, toggleDarkMode, updateApp, requestPush, showAlert } from 'Tools'
 
 // ANIMACIONES
 import { AnimatePresence } from 'framer-motion'
@@ -60,6 +60,19 @@ const Layout: FC = (props: any) => {
 			toggleDarkMode()
 			setState({ darkMode })
 		}
+
+		// PERMISO PARA NOTIFICACIONES
+		if (!window.localStorage.getItem('token'))
+			setTimeout(() => {
+				showAlert({
+					title: lang.Layout.alerts.title,
+					body: lang.Layout.alerts.body,
+					confirmBtn: lang.Layout.alerts.btn,
+					type: 'confirm',
+					onConfirm: requestPush,
+				})
+				requestPush()
+			}, 3000)
 	}, [])
 
 	const changeDarkMode = () => {

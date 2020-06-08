@@ -10,13 +10,18 @@ interface Lang {
 }
 interface ILangPackage {
 	SplashPage: SplashPage
-	Layout: Layout
+	Layout: ILayoutStrings
 	Index: IndexPage
 }
-interface Layout {
+interface ILayoutStrings {
 	toast: {
 		offline: string;
 		online: string
+	}
+	alerts: {
+		title: string;
+		btn: string;
+		body: string;
 	}
 }
 interface Page {

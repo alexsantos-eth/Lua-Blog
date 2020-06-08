@@ -258,6 +258,7 @@ p {
 	z-index: 100;
 	animation: show 0.4s ease-in-out 1;
 	transition: opacity 0.4s ease-in-out;
+	font-size: 14px;
 }
 
 .alertContainer>.alertShadow {
