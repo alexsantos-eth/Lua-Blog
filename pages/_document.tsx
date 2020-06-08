@@ -29,7 +29,7 @@ class LuaDoc extends Document<DocProps> {
 		return (
 			<Html lang={this.props.langCode}>
 				<Head>
-					<meta name='author' content='Lua Development Studio' />
+					<meta name='author' content='LUA Development Studio' />
 					<meta name='theme-color' content='#ff5722' />
 					<meta name='Robots' content='follow' />
 					<meta name='MobileOptimized' content='yes' />
@@ -83,6 +83,7 @@ class LuaDoc extends Document<DocProps> {
 					<meta property='og:type' content='website' />
 					<meta name='twitter:card' content='summary_large_image' />
 					<meta property='og:locale' content='es_GT' />
+					<meta property='fb:app_id' content='1170302416648939' />
 				</Head>
 				<body>
 					<Main />

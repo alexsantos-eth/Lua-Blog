@@ -66,9 +66,13 @@ const Post: NextPage = ({ post }: any) => {
 		<section className='page post'>
 			<Head>
 				<title>{title}</title>
-				<Meta title={title} desc={sPost ? RichText.asText(description) : description} />
-				<meta name='og:image:secure_url' content={sPost?.data.banner.url || ''} />
-				<meta name='og:image' content={sPost?.data.banner.url || ''} />
+				<Meta
+					title={title}
+					desc={sPost ? RichText.asText(description) : description}
+					banner={sPost?.data.banner.url || ''}
+					url={`posts/${sPost?.uid || ''}`}
+					keys={['wearelua', 'blog'].concat(sPost?.tags || [''])}
+				/>
 			</Head>
 			{sPost && (
 				<motion.div initial='init' animate='in' exit='out' variants={PostPageVariant}>

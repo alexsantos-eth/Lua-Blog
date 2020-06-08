@@ -45,7 +45,7 @@ const Index: NextPage = ({ posts }: any) => {
 		<section className='page home'>
 			<Head>
 				<title>{title}</title>
-				<Meta title={title} desc={desc} />
+				<Meta title={title} desc={desc} banner='' url='' keys={['wearelua', 'blog', 'react']} />
 			</Head>
 			{posts && (
 				<motion.div
