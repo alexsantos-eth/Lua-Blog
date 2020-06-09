@@ -286,9 +286,9 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					nav > #nav-sections {
 						position: fixed;
 						left: unset;
-						right: -265px;
+						right: -260px;
 						top: 0;
-						width: 255px;
+						width: 250px;
 						height: 100vh;
 						background: var(--navbarBackground);
 						box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
@@ -301,7 +301,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 
 					#showMenu:checked ~ #nav-sections {
 						transition: transform 0.3s ease-in-out;
-						transform: translateX(-265px);
+						transform: translateX(-260px);
 					}
 					#showMenu:checked ~ #nav-btns > #nav-menuBtn {
 						width: 33px;
@@ -340,7 +340,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					nav > #nav-sections::after {
 						content: '';
 						position: absolute;
-						left: calc(255px - 100vw);
+						left: calc(250px - 100vw);
 						top: 0;
 						width: 100vw;
 						height: 100vh;
@@ -374,10 +374,10 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					}
 
 					nav > #nav-sections {
-						width: 220px;
+						width: 215px;
 					}
 					nav > #nav-sections::after {
-						left: calc(220px - 100vw);
+						left: calc(215px - 100vw);
 					}
 				}
 				@media screen and (max-width: 400px) {
