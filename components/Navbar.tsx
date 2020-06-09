@@ -291,7 +291,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 						width: 255px;
 						height: 100vh;
 						background: var(--navbarBackground);
-						box-shadow: -10px 0 10px rgba(0, 0, 0, 0.2);
+						box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
 						transition: transform 0.3s ease-in-out 0.3s;
 					}
 
@@ -344,7 +344,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 						top: 0;
 						width: 100vw;
 						height: 100vh;
-						z-index: -1;
+						z-index: -2;
 						background: var(--navbarBackground);
 						backdrop-filter: blur(10px);
 						opacity: 0;
