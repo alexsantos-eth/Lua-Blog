@@ -65,7 +65,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 				svg {
 					position: absolute;
 					bottom: 0;
-					left: -40px;
+					left: 0;
 					transform: scaleY(-1);
 					width: 100vw;
 				}
@@ -76,7 +76,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 					display: flex;
 					justify-content: flex-end;
 					position: relative;
-					margin-bottom: -20px;
+					margin-top: 20px;
 				}
 
 				header > .post-link > div:nth-child(1) {
@@ -181,43 +181,101 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 						width: 70%;
 					}
 				}
+
+				@media screen and (max-width: 965px) {
+					header > .post-link > #header-post {
+						width: 65%;
+					}
+				}
+
 				@media screen and (max-width: 800px) {
+					header {
+						justify-content: flex-end;
+					}
+
 					header > img {
 						position: absolute;
-						bottom: -40px;
+						bottom: -10px;
 						left: 40px;
-						width: 300px;
+						width: 350px;
 						z-index: 4;
 					}
 					header > .post-link {
-						width: 100%;
+						width: 70%;
+						margin-left: 45px;
 					}
 					header > .post-link > #header-post {
-						width: 90%;
+						width: 75%;
 						left: 0px;
 					}
 				}
-				@media screen and (max-width: 500px) {
-					header {
-						padding: 50px 20px;
+
+				@media screen and (max-width: 760px) {
+					header > .post-link {
+						width: 80%;
 					}
+					header > .post-link > #header-post {
+						width: 70%;
+					}
+				}
+
+				@media screen and (max-width: 600px) {
+					header {
+						padding: 50px;
+					}
+
 					header > img {
 						bottom: -10px;
-						left: -20px;
-						width: 250px;
+						left: 50px;
+						width: 320px;
+					}
+
+					header > .post-link {
+						margin-left: 0px;
+						width: 100%;
 					}
 
 					header > .post-link > div:nth-child(1) > div {
 						padding: 20px;
 					}
+
+					header > .post-link > #header-post {
+						width: 70%;
+					}
 				}
+
+				@media screen and (max-width: 500px) {
+					header {
+						padding: 20px;
+					}
+
+					header > img {
+						bottom: -20px;
+						left: 20px;
+						width: 280px;
+					}
+				}
+
 				@media screen and (max-width: 460px) {
 					header > .post-link > #header-post > p {
 						line-height: 15px;
 						font-size: 1em;
 					}
+
 					svg {
 						left: 0;
+					}
+
+					header > img {
+						left: -20px;
+					}
+				}
+
+				@media screen and (max-width: 400px) {
+					header > img {
+						left: -40px;
+						width: 250px;
+						bottom: -10px;
 					}
 				}
 			`}</style>
