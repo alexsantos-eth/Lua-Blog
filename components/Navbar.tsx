@@ -102,7 +102,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					position: absolute;
 					top: 0;
 					left: 0;
-					/* background: var(--navbarBackground); */
+					background: var(--navbarBackground);
 					z-index: -2;
 				}
 
@@ -113,7 +113,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					position: absolute;
 					top: 0;
 					left: 0;
-					/* background: var(--shadow); */
+					background: var(--shadow);
 					z-index: -1;
 				}
 
@@ -138,9 +138,11 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					background: var(--postText);
 					transition: all 0.3s ease-in-out;
 				}
+
 				#nav-menuBtn > span:nth-child(1) {
 					width: 90%;
 				}
+
 				#nav-menuBtn > span:nth-child(3) {
 					width: 70%;
 				}
@@ -286,9 +288,9 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					nav > #nav-sections {
 						position: fixed;
 						left: unset;
-						right: -260px;
+						right: -259.933px;
 						top: 0;
-						width: 250px;
+						width: 249.933px;
 						height: 100vh;
 						background: var(--navbarBackground);
 						box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
@@ -301,20 +303,26 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 
 					#showMenu:checked ~ #nav-sections {
 						transition: transform 0.3s ease-in-out;
-						transform: translateX(-260px);
+						transform: translateX(-259.933px);
 					}
+
 					#showMenu:checked ~ #nav-btns > #nav-menuBtn {
 						width: 33px;
 						height: 25px;
+						position: relative;
+						left: -3px;
 					}
+
 					#showMenu:checked ~ #nav-btns > #nav-menuBtn > span:nth-child(1) {
 						width: 100%;
 						transform: rotate(-45deg);
 						transform-origin: top right;
 					}
+
 					#showMenu:checked ~ #nav-btns > #nav-menuBtn > span:nth-child(2) {
 						width: 0;
 					}
+
 					#showMenu:checked ~ #nav-btns > #nav-menuBtn > span:nth-child(3) {
 						width: 100%;
 						transform: rotate(45deg);
@@ -333,20 +341,20 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 						row-gap: 60px;
 						text-align: center;
 						position: relative;
-						top: 55%;
+						margin-top: calc((var(--navHeight) / 2) - 20px);
+						top: 50%;
 						transform: translateY(-50%);
 					}
 
 					nav > #nav-sections::after {
 						content: '';
 						position: absolute;
-						left: calc(250px - 100vw);
+						left: calc(249.933px - 100vw);
 						top: 0;
 						width: 100vw;
 						height: 100vh;
 						z-index: -2;
 						background: var(--navbarBackground);
-						backdrop-filter: blur(10px);
 						opacity: 0;
 						transition: opacity 0.3s ease-in-out;
 					}
@@ -359,9 +367,11 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					.talkBtn:nth-child(3) {
 						display: none;
 					}
+
 					nav > #nav-sections > ul > li > a {
 						font-size: 15px;
 					}
+
 					nav > #nav-sections > ul > li > .talkBtn {
 						display: inline-flex;
 						width: 140px;
@@ -374,13 +384,18 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					}
 
 					nav > #nav-sections {
-						width: 215px;
+						width: 209.933px;
 					}
+
 					nav > #nav-sections::after {
-						left: calc(215px - 100vw);
+						left: calc(209.933px - 100vw);
 					}
 				}
 				@media screen and (max-width: 400px) {
+					nav > #nav-logo > img {
+						width: 50px;
+					}
+
 					nav > #nav-logo > div {
 						display: none;
 					}

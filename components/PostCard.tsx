@@ -49,6 +49,7 @@ const PostCard: React.SFC<PostCardProps> = (props: PostCardProps) => {
 					justify-content: flex-end;
 					position: relative;
 					z-index: 3;
+					margin-left: 0;
 					margin-top: -20px;
 				}
 
@@ -151,9 +152,17 @@ const PostCard: React.SFC<PostCardProps> = (props: PostCardProps) => {
 						width: 80%;
 					}
 				}
-				@media screen and (max-width: 965px) {
+				@media screen and (max-width: 930px) {
 					.post-card > #post-content {
 						width: 90%;
+					}
+				}
+				@media screen and (max-width: 760px) {
+					.post-card > #post-content > p {
+						line-height: 15px;
+					}
+					.post-card > #post-content {
+						width: 85%;
 					}
 				}
 				@media screen and (max-width: 600px) {

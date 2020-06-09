@@ -97,13 +97,13 @@ const Post: NextPage = ({ post }: any) => {
 			)}
 			<style jsx>{`
 				.post {
-					padding: 35px 0;
+					padding: 50px;
 				}
 
 				.post-page-content {
 					position: relative;
 					margin: 0 auto;
-					width: 90%;
+					width: 100%;
 					padding: 40px;
 					box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 					border-radius: 15px;
