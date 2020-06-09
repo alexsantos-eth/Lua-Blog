@@ -20,9 +20,9 @@ const Category: React.FC<CategoryProps> = (props: CategoryProps) => {
 			{props.top && (
 				<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'>
 					<path
-						fill='rgba(0,0,0,.4)'
+						fill='var(--wavesColor)'
 						fillOpacity='1'
-						d='M0,64L48,90.7C96,117,192,171,288,213.3C384,256,480,288,576,261.3C672,235,768,149,864,112C960,75,1056,85,1152,122.7C1248,160,1344,224,1392,256L1440,288L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z'
+						d='M0,160L48,138.7C96,117,192,75,288,85.3C384,96,480,160,576,186.7C672,213,768,203,864,170.7C960,139,1056,85,1152,90.7C1248,96,1344,160,1392,192L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z'
 					/>
 				</svg>
 			)}
@@ -219,11 +219,6 @@ const Category: React.FC<CategoryProps> = (props: CategoryProps) => {
 				}
 			`}</style>
 			<style jsx global>{`
-				@media screen and (max-width: 1080px) {
-					.category > #category-docs > a {
-						margin-left: -75px;
-					}
-				}
 				@media screen and (max-width: 965px) {
 					.category > #category-docs > a {
 						margin-left: 10px;

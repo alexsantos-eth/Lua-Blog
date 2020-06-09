@@ -1,6 +1,8 @@
 // COLORES
 const colors: IColor[] = [
 	{ name: '--postContent', value: '#fff', darkValue: '#160F30' },
+	{ name: '--navCTA', value: '#ff5722', darkValue: '#e60f71' },
+	{ name: '--wavesColor', value: 'rgba(0,0,0,.4)', darkValue: 'rgba(245, 245, 245, 0.1)' },
 	{ name: '--postMain', value: 'rgba(22, 15, 48, 0.7)', darkValue: 'rgba(245, 245, 245, 0.7)' },
 	{ name: '--postText', value: '#160F30', darkValue: '#fff' },
 	{ name: '--mainBackground', value: '#F5F5F5', darkValue: '#160F30' },

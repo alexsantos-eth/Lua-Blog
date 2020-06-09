@@ -69,13 +69,6 @@ const Index: NextPage = ({ posts }: any) => {
 							icon='javascript'
 							doc={posts[1]}
 						/>
-						<Category
-							desc='Encuentra artículos sobre librerías, frameworks, ES6, novedades y mas'
-							img='/images/svgs/javascript.svg'
-							name='JavaScript'
-							icon='javascript'
-							doc={posts[1]}
-						/>
 					</motion.div>
 				</motion.div>
 			)}
