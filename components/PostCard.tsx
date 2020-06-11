@@ -147,29 +147,35 @@ const PostCard: React.SFC<PostCardProps> = (props: PostCardProps) => {
 					opacity: 0.8;
 					overflow: hidden;
 				}
+
 				@media screen and (max-width: 1200px) {
 					.post-card > #post-content {
 						width: 80%;
 					}
 				}
+
 				@media screen and (max-width: 930px) {
 					.post-card > #post-content {
 						width: 90%;
 					}
 				}
+
 				@media screen and (max-width: 760px) {
 					.post-card > #post-content > p {
 						line-height: 15px;
 					}
+
 					.post-card > #post-content {
 						width: 85%;
 					}
 				}
+
 				@media screen and (max-width: 600px) {
 					.post-card > #post-content {
 						width: 95%;
 					}
 				}
+
 				@media screen and (max-width: 460px) {
 					.post-card > #post-content > p {
 						line-height: 15px;

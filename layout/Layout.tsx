@@ -62,8 +62,8 @@ const Layout: FC = (props: any) => {
 		}
 
 		// PERMISO PARA NOTIFICACIONES
-		if (!window.localStorage.getItem('token'))
-			setTimeout(() => {
+		setTimeout(() => {
+			if (!window.localStorage.getItem('token'))
 				showAlert({
 					title: lang.Layout.alerts.title,
 					body: lang.Layout.alerts.body,
@@ -71,8 +71,7 @@ const Layout: FC = (props: any) => {
 					type: 'confirm',
 					onConfirm: requestPush,
 				})
-				requestPush()
-			}, 3000)
+		}, 3000)
 	}, [])
 
 	const changeDarkMode = () => {

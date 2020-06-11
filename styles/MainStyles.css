@@ -137,6 +137,22 @@ body main {
 	transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
 }
 
+::-moz-progress-bar {
+	background-color: var(--pink);
+}
+
+::-webkit-progress-value {
+	background-color: var(--pink);
+}
+
+::-webkit-progress-bar {
+	background-color: transparent;
+}
+
+progress {
+	-webkit-appearance: none;
+}
+
 body>div {
 	border-radius: 10px;
 	margin: 0 auto;

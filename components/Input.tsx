@@ -84,12 +84,14 @@ const Input: FC<InputProps> = (props: InputProps) => {
 					flex-direction: row-reverse;
 					align-items: center;
 				}
+
 				.in i {
 					transition: color 0.2s ease-in-out;
 					position: absolute;
 					left: 0;
 					margin-top: -1px;
 				}
+
 				.in + span {
 					position: relative;
 					top: 5px;
@@ -99,24 +101,28 @@ const Input: FC<InputProps> = (props: InputProps) => {
 					font-size: 13px;
 					color: var(--postText);
 				}
+
 				.in > label {
 					font-family: 'Manrope';
 					position: absolute;
 					transition: all 0.2s ease-in-out;
 					font-weight: 500;
 				}
+
 				.in > span {
 					font-family: 'OpenSans';
 					position: absolute;
 					right: 20px;
 					color: var(--postText);
 				}
+
 				.dLabel {
 					color: var(--postText);
 					transform: translate(0, 0);
 					font-size: 15px;
 					left: 35px;
 				}
+
 				.in > input {
 					appearance: none;
 					font-size: 15px;
@@ -132,24 +138,30 @@ const Input: FC<InputProps> = (props: InputProps) => {
 					font-weight: 500;
 					position: relative;
 				}
+
 				.in > input:-webkit-autofill + label {
 					transform: translate(0, -200%);
 					font-size: 13px;
 					left: 0;
 					color: var(--deepOrange);
 				}
+
 				.in > input:-webkit-autofill ~ hr {
 					transform: scaleX(1);
 				}
+
 				.in > input:-webkit-autofill ~ i {
 					color: var(--deepOrange);
 				}
+
 				.iActive {
 					color: var(--deepOrange);
 				}
+
 				.iDisabled {
 					color: var(--postText);
 				}
+
 				.in > hr {
 					content: '';
 					position: absolute;
@@ -162,12 +174,15 @@ const Input: FC<InputProps> = (props: InputProps) => {
 					margin: 0;
 					z-index: 3;
 				}
+
 				.hrDisabled {
 					transform: scaleX(0);
 				}
+
 				.hrActive {
 					transform: scaleX(1);
 				}
+
 				.aLabel {
 					transform: translate(0, -200%);
 					font-size: 13px;

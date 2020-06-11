@@ -44,8 +44,7 @@ export const requestPush = () => {
 				const token: string | undefined = await messaging?.getToken()
 
 				// ENVIAR TOKEN AL SERVIDOR
-				if (!window.localStorage.getItem('token'))
-					sendToken(token || '').then(() => window.localStorage.setItem('token', token || ''))
+				sendToken(token || '').then(() => window.localStorage.setItem('token', token || ''))
 			})
 
 			// NO EXISTE PERMISO DEL USUARIO
