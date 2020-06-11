@@ -87,12 +87,13 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					left: 0;
 					z-index: 5;
 					width: 100%;
-					padding: 15px 80px;
+					padding: 15px 50px;
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
 					color: var(--postText);
 					overflow: hidden;
+					box-shadow: 0 5px 5px rgba(0, 0, 0, 0.05);
 				}
 
 				nav::before {
@@ -288,13 +289,13 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					nav > #nav-sections {
 						position: fixed;
 						left: unset;
-						right: -259.933px;
+						right: -100vw;
 						top: 0;
 						width: 249.933px;
 						height: 100vh;
 						background: var(--navbarBackground);
 						box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
-						transition: transform 0.3s ease-in-out 0.3s;
+						transition: transform 0.6s ease-in-out 0.3s;
 					}
 
 					#nav-menuBtn {
@@ -302,8 +303,8 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					}
 
 					#showMenu:checked ~ #nav-sections {
-						transition: transform 0.3s ease-in-out;
-						transform: translateX(-259.933px);
+						transition: transform 0.6s ease-in-out;
+						transform: translateX(-100vw);
 					}
 
 					#showMenu:checked ~ #nav-btns > #nav-menuBtn {
@@ -360,7 +361,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					}
 
 					#showMenu:checked ~ #nav-sections::after {
-						transition: opacity 0.3s ease-in-out 0.3s;
+						transition: opacity 0.3s ease-in-out 0.6s;
 						opacity: 0.7;
 					}
 
@@ -378,6 +379,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 						border-color: var(--navCTA);
 					}
 				}
+
 				@media screen and (max-width: 460px) {
 					nav {
 						padding: 15px 20px;
@@ -391,6 +393,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 						left: calc(209.933px - 100vw);
 					}
 				}
+
 				@media screen and (max-width: 400px) {
 					nav > #nav-logo > img {
 						width: 50px;

@@ -122,6 +122,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 					left: -20px;
 					box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.1);
 				}
+
 				header > .post-link > #header-post::before {
 					content: '';
 					width: 100%;
@@ -177,6 +178,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 					img {
 						width: 30%;
 					}
+
 					header > .post-link {
 						width: 70%;
 					}
@@ -200,10 +202,12 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 						width: 350px;
 						z-index: 4;
 					}
+
 					header > .post-link {
 						width: 70%;
 						margin-left: 45px;
 					}
+
 					header > .post-link > #header-post {
 						width: 75%;
 						left: 0px;
@@ -214,6 +218,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 					header > .post-link {
 						width: 80%;
 					}
+
 					header > .post-link > #header-post {
 						width: 70%;
 					}
@@ -253,6 +258,10 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 						bottom: -20px;
 						left: 20px;
 						width: 280px;
+					}
+
+					header > .post-link > #header-post {
+						width: 95%;
 					}
 				}
 
