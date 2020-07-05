@@ -12,7 +12,7 @@ import { colors } from '../utils/Global'
 import { Document } from 'prismic-javascript/d.ts/documents'
 
 // =============== GLOBALS ===============
-const db = firebase.firestore()
+const db = new firebase.firestore()
 let fcmHandler: number = 0
 
 // =========== NOTIFICACIONES ============
