@@ -2,20 +2,31 @@
 import React from 'react'
 
 // JSON DE LENGUAJES
-import LangsPackages from '../lang/Strings.json'
+import Strings from '../lang/Strings.json'
+
+// PRISMIC
+import { Document } from 'prismic-javascript/d.ts/documents'
 
 // HOC GENERAL DE LA APLICACIÓN
 interface AppContext {
 	lang: ILangPackage
 	darkMode: boolean
-	isEs: boolean
-}
-const defaultAppContext: AppContext = {
-	lang: LangsPackages.es,
-	darkMode: true,
-	isEs: true,
+	langCode: string
+	setDocs: (docs: Document[]) => any
+	docs: Document[]
 }
 
+// CONTEXTO
+const defaultAppContext: AppContext = {
+	lang: Strings.es,
+	darkMode: false,
+	langCode: 'ES',
+	setDocs: () => null,
+	docs: [],
+}
+
+// CREAR CONTEXTO
 const appContext: React.Context<AppContext> = React.createContext(defaultAppContext)
 
+// EXPORTAR
 export { appContext }

@@ -1,42 +1,23 @@
 {
-	"en": {
-		"SplashPage": {
-			"title": "Titulo de splash",
-			"text": "Texto de splash"
-		},
-		"Layout": {
-			"toast": {
-				"online": "De nuevo en linea",
-				"offline": "Sin conexión a internet"
-			},
-			"alerts": {
-				"title": "Notificaciones",
-				"btn": "Permitir",
-				"body": "Hola, gracias por visitar nuestro blog, te gustaría que te notifiquemos sobre nuevos artículos, post, noticias y más de nuestro blog?"
-			}
-		},
-		"Index": {
-			"title": "LUA Development Studio - Blog",
-			"description": "Blog de tecnología y ciencia, aquí encontraras desde artículos hasta consejos y tips para le desarrollo de software, ven y únete a nuestra comunidad",
-			"more": {
-				"part_1": "Descubre más de",
-				"part_2": "LUA"
-			},
-			"newsletter": {
-				"title": "¿Quieres subscribirte a nuestro NewsLetter semanal?",
-				"alert": {
-					"title": "Subscripción semanal",
-					"body": "Escribe el correo electrónico con el que deseas suscribirte a nuestro newsletter"
-				}
-			}
-		}
-	},
 	"es": {
-		"SplashPage": {
-			"title": "Titulo de splash",
-			"text": "Texto de splash"
+		"general": {
+			"title": "Miguel Ángel Gálvez - Blog"
 		},
-		"Layout": {
+		"postPage": {
+			"subtitle": "Contenido",
+			"likes": "Calificación",
+			"toast": "URL copiada correctamente"
+		},
+		"navbar": {
+			"title": "Miguel Ángel Gálvez",
+			"title_m": "Miguel A. Gálvez",
+			"routes": ["Inicio", "Acerca de", "Logros", "Blog", "Prensa", "Contacto"]
+		},
+		"index": {
+			"postTitle": "Post Recientes",
+			"postTitle_2": "Post Destacados"
+		},
+		"layout": {
 			"toast": {
 				"online": "De nuevo en linea",
 				"offline": "Sin conexión a internet"
@@ -44,22 +25,7 @@
 			"alerts": {
 				"title": "Notificaciones",
 				"btn": "Permitir",
-				"body": "Hola, gracias por visitar nuestro blog, te gustaría que te notifiquemos sobre nuevos artículos, post, y noticias de nuestro blog?"
-			}
-		},
-		"Index": {
-			"title": "LUA Development Studio - Blog",
-			"description": "Blog de tecnología y ciencia, aquí encontraras desde artículos hasta consejos y tips para le desarrollo de software, ven y únete a nuestra comunidad",
-			"more": {
-				"part_1": "Descubre más de",
-				"part_2": "LUA"
-			},
-			"newsletter": {
-				"title": "¿Quieres subscribirte a nuestro NewsLetter semanal? ",
-				"alert": {
-					"title": "Subscripción semanal",
-					"body": "Escribe el correo electrónico con el que deseas suscribirte a nuestro newsletter"
-				}
+				"body": "Hola, gracias por visitar nuestro blog, ¿te gustaría que te notifiquemos sobre nuevos artículos, post, noticias y más?"
 			}
 		}
 	}

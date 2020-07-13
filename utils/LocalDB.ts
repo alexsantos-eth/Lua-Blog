@@ -57,7 +57,7 @@ export const initDB = () => iLocalDB.open()
 export const clearDocs = async () => iLocalDB.posts.clear()
 
 // AGREGAR TODOS LOS POSTS
-export const setDocs = async (posts: Document[]) => {
+export const saveDocs = async (posts: Document[]) => {
 	// MAPEAR POSTS DE DOCUMENT[]
 	const postsDB: IPostsDB[] = posts.map((doc: Document) => {
 		return {
@@ -103,6 +103,19 @@ export const usePrismicData = async (inferUID: string | boolean, prevPost?: Docu
 		const doc: IPostsDB | undefined = await getPost(uid)
 		return doc?.post
 	}
+}
+
+export const findByUID = (uid: string, docs: Document[]) => {
+	// DOCUMENTO
+	let doc: Document | undefined
+
+	// RECORRER DOCUMENTOS
+	docs.forEach((sDoc: Document) => {
+		if (sDoc.uid === uid) doc = sDoc
+	})
+
+	// RETORNAR DOCUMENTO
+	return doc
 }
 
 export default IPostsDB
