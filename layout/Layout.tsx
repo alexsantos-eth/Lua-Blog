@@ -1,102 +1,108 @@
-// TIPOS DE DATOS Y HOOKS
-import { useEffect, FC, Dispatch, SetStateAction, useState } from 'react'
-import { showToast, toggleDarkMode, updateApp, requestPush, showAlert } from 'Tools'
+// REACT
+import { useEffect, Dispatch, SetStateAction, useState, ComponentProps } from 'react'
 
 // ANIMACIONES
 import { AnimatePresence } from 'framer-motion'
 
 // TEXTOS
-import Strings from 'Strings'
+import Strings from 'lang/Strings.json'
 
 // COMPONENTES
-import Navbar from 'components/Navbar'
 import RouteNProgress from 'components/Progress'
+import Navbar from 'components/Navbar'
 
 // CONTEXTO
-import { appContext } from 'Ctx'
-import { initDB } from 'utils/LocalDB'
+import { appContext } from 'context/appContext'
 
-// INTERFAZ DE ESTADO
-interface LayoutState {
+// HERRAMIENTAS
+import { requestPush, initFCM, toggleDarkMode } from 'utils/Tools'
+import { showAlert, showToast } from 'utils/Fx'
+
+// PRISMIC
+import { Document } from 'prismic-javascript/d.ts/documents'
+
+// ESTADO
+interface AppState {
+	docs: Document[] | []
 	darkMode: boolean
 }
 
 // ESTADO POR DEFECTO
-const DefState: LayoutState = {
-	darkMode: true,
+const DefState: AppState = {
+	docs: [],
+	darkMode: false,
 }
 
-const Layout: FC = (props: any) => {
-	// ESTADO
-	const [state, setState]: [LayoutState, Dispatch<SetStateAction<LayoutState>>] = useState(DefState)
+const Layout: React.FC = (props: ComponentProps<React.FC>) => {
+	// STRINGS
+	const lang: ILangPackage = Strings.es
 
-	// OBTENER LENGUAJE
-	const lang: ILangPackage = Strings['es']
+	// ESTADO
+	const [state, setDocs]: [AppState, Dispatch<SetStateAction<AppState>>] = useState(DefState)
 
 	useEffect(() => {
-		// INICIAR DB
-		initDB()
+		// INICIAR FCM
+		initFCM()
 
-		// ACTUALIZAR APP
-		updateApp()
+		// NO MOSTRAR MENSAJE DE PWA
+		window.addEventListener('beforeinstallprompt', (e) => e.preventDefault())
 
 		// ESTADO DE CONEXIÓN
 		const online = navigator.onLine
 
 		// MOSTRAR ALERTA CUANDO RECUPERO LA CONEXIÓN
-		window.addEventListener('online', () => showToast({ text: lang.Layout.toast.online }))
+		window.addEventListener('online', () => showToast({ text: lang.layout.toast.online }))
+
 		// MOSTRAR ALERTA CUANDO PERDIÓ LA CONEXIÓN
-		window.addEventListener('offline', () => showToast({ text: lang.Layout.toast.offline }))
+		window.addEventListener('offline', () => showToast({ text: lang.layout.toast.offline }))
 
 		// DETECTAR CONEXIÓN AL ENTRAR
-		if (!online) showToast({ text: lang.Layout.toast.online })
-
-		// DARKMODE
-		const drkLocal: string | null = window.localStorage.getItem('darkMode')
-		if (!drkLocal) window.localStorage.setItem('darkMode', '1')
-		// LEER CAMBIOS
-		else {
-			const darkMode: boolean = drkLocal === '1'
-			toggleDarkMode()
-			setState({ darkMode })
-		}
+		if (!online) showToast({ text: lang.layout.toast.offline })
 
 		// PERMISO PARA NOTIFICACIONES
 		setTimeout(() => {
 			if (!window.localStorage.getItem('token'))
 				showAlert({
-					title: lang.Layout.alerts.title,
-					body: lang.Layout.alerts.body,
-					confirmBtn: lang.Layout.alerts.btn,
+					title: lang.layout.alerts.title,
+					body: lang.layout.alerts.body,
+					confirmBtn: lang.layout.alerts.btn,
 					type: 'confirm',
 					onConfirm: requestPush,
 				})
 		}, 3000)
 	}, [])
 
+	// ACTUALIZAR DOCUMENTOS
+	const updateDocs = (docs: Document[]) => setDocs({ ...state, docs })
+
+	// CAMBIAR DARKMODE
 	const changeDarkMode = () => {
-		// OBTENER Y ASIGNAR
-		const darkMode: boolean = window.localStorage.getItem('darkMode') === '1'
-		window.localStorage.setItem('darkMode', darkMode ? '0' : '1')
+		// OBTENER VALOR ACTUAL
+		const currentDark: boolean = window.localStorage.getItem('darkMode') === '1'
+
+		// CAMBIAR NUEVO VALOR
+		window.localStorage.setItem('darkMode', currentDark ? '0' : '1')
 
 		// CAMBIAR CSS
 		toggleDarkMode()
 
-		// ACTUALIZAR ESTADO
-		setState({ darkMode: !darkMode })
+		// ACTUALIZAR APP
+		setDocs({ ...state, darkMode: !state.darkMode })
 	}
 
 	return (
 		<>
 			<RouteNProgress />
-			<Navbar changeDarkMode={changeDarkMode} darkMode={state.darkMode} />
 			<AnimatePresence exitBeforeEnter>
 				<appContext.Provider
 					value={{
 						lang,
+						langCode: 'ES',
+						docs: state.docs,
+						setDocs: updateDocs,
 						darkMode: state.darkMode,
-						isEs: true,
 					}}>
+					<Navbar darkMode={state.darkMode} changeDarkMode={changeDarkMode} />
 					<main>{props.children}</main>
 				</appContext.Provider>
 			</AnimatePresence>

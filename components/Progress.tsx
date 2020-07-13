@@ -1,10 +1,12 @@
+// REACT
+import { useEffect } from 'react'
+
 // PROGRESS
 // @ts-ignore
 import NProgress from 'nprogress'
 
 // ROUTER
 import Router from 'next/router'
-import { useEffect } from 'react'
 
 // INTERFAZ
 interface RouteNProgressProps {
@@ -18,18 +20,21 @@ interface RouteNProgressProps {
 const defaultProps: RouteNProgressProps = {
 	startPosition: 0.3,
 	stopDelayMs: 200,
-	color: 'var(--deepOrange)',
+	color: 'var(--darkBlue)',
 	height: 3,
 }
 
-const RouteNProgress: React.SFC<RouteNProgressProps> = (props: RouteNProgressProps) => {
+const RouteNProgress: React.FC<RouteNProgressProps> = (props: RouteNProgressProps) => {
+	// TIMER
 	let timer: number
 
+	// CAMBIAR CON RUTA
 	const routeChangeStart = () => {
 		NProgress.set(props.startPosition || defaultProps.startPosition)
 		NProgress.start()
 	}
 
+	// FINALIZAR PROGRESS
 	const routeChangeEnd = () => {
 		clearTimeout(timer)
 		timer = setTimeout(() => {
@@ -37,6 +42,7 @@ const RouteNProgress: React.SFC<RouteNProgressProps> = (props: RouteNProgressPro
 		}, props.stopDelayMs || defaultProps.stopDelayMs)
 	}
 
+	// AGREGAR EVENTOS
 	useEffect(() => {
 		Router.events.on('routeChangeStart', routeChangeStart)
 		Router.events.on('routeChangeComplete', routeChangeEnd)
@@ -74,7 +80,6 @@ const RouteNProgress: React.SFC<RouteNProgressProps> = (props: RouteNProgressPro
 			}
 
 			#nprogress .spinner {
-				display: none;
 				position: fixed;
 				z-index: 1031;
 				top: 15px;
