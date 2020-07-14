@@ -289,7 +289,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					width: calc(100% - 40px);
 					max-width: 450px;
 					transform: translate(-50%, -50%);
-					background: var(--postText);
+					background: var(--navbarBackground);
 					z-index: 2;
 					box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 					border-radius: 10px;
@@ -304,7 +304,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 				}
 
 				.alertContainer .alertActions li .cancelBtn {
-					color: #333;
+					color: var(--postText);
 					background: transparent;
 					box-shadow: none;
 					display: none;
@@ -320,7 +320,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 				}
 
 				.alertContainer .alertContent h1 {
-					color: #333;
+					color: var(--postText);
 					font-size: 2em;
 					margin-bottom: 10px;
 					font-weight: 600;
@@ -328,7 +328,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 				}
 
 				.alertContainer .alertContent p {
-					color: #555;
+					color: var(--postText);
 					margin-bottom: 20px;
 					font-size: 1em;
 					line-height: 20px;
