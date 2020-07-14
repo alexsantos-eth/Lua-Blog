@@ -267,7 +267,7 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 					outline: none;
 					background: transparent;
 					font-family: 'OpenSans';
-					color: var(--dark);
+					color: var(--postText);
 					font-size: 2.3em;
 					font-weight: 600;
 					cursor: pointer;

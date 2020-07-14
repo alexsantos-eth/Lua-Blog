@@ -600,7 +600,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					color: var(--postText);
 					font-weight: 500;
 					font-size: 1.2em;
-					line-height: 23px;
+					line-height: 20px;
 					opacity: 0.7;
 				}
 
