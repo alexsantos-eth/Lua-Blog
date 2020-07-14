@@ -33,77 +33,77 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					font-display: block;
 					font-weight: 300;
 				}
-				
+
 				@font-face {
 					src: url('./fonts/Futura-Medium.ttf');
 					font-family: 'Futura';
 					font-display: block;
 					font-weight: 400;
 				}
-				
+
 				@font-face {
 					src: url('./fonts/OpenSans-Light.ttf');
 					font-family: 'OpenSans';
 					font-display: block;
 					font-weight: 200;
 				}
-				
+
 				@font-face {
 					src: url('./fonts/OpenSans-Regular.ttf');
 					font-family: 'OpenSans';
 					font-display: block;
 					font-weight: 300;
 				}
-				
+
 				@font-face {
 					src: url('./fonts/OpenSans-SemiBold.ttf');
 					font-family: 'OpenSans';
 					font-display: block;
 					font-weight: 400;
 				}
-				
+
 				@font-face {
 					src: url('./fonts/OpenSans-Bold.ttf');
 					font-family: 'OpenSans';
 					font-display: block;
 					font-weight: 500;
 				}
-				
+
 				@font-face {
 					src: url('./fonts/OpenSans-ExtraBold.ttf');
 					font-family: 'OpenSans';
 					font-display: block;
 					font-weight: 600;
 				}
-				
+
 				@font-face {
 					src: url('./fonts/Manrope-Light.ttf');
 					font-family: 'Manrope';
 					font-display: block;
 					font-weight: 200;
 				}
-				
+
 				@font-face {
 					src: url('./fonts/Manrope-Medium.ttf');
 					font-family: 'Manrope';
 					font-display: block;
 					font-weight: 300;
 				}
-				
+
 				@font-face {
 					src: url('./fonts/Manrope-Regular.ttf');
 					font-family: 'Manrope';
 					font-display: block;
 					font-weight: 400;
 				}
-				
+
 				@font-face {
 					src: url('./fonts/Manrope-Bold.ttf');
 					font-family: 'Manrope';
 					font-display: block;
 					font-weight: 500;
 				}
-				
+
 				@font-face {
 					src: url('./fonts/Manrope-ExtraBold.ttf');
 					font-family: 'Manrope';
@@ -116,22 +116,23 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					--purple: #9c27b0;
 					--blue: #2196f3;
 					--deepOrange: #ff5722;
-					--mainBackground: #160F30;
+					--mainBackground: #160f30;
 					--postText: #fff;
-					--postContent: #160F30;
+					--postContent: #160f30;
 					--postMain: rgba(245, 245, 245, 0.7);
 					--postPhrase: #eee;
 					--postPhraseBold: #fff;
-					--navbarBackground: #160F30;
+					--navbarBackground: #160f30;
 					--categoryBackground: #221a41;
 					--wavesColor: #2d2644;
 					--navCTA: #e60f71;
-					--shadow: rgba(0, 0, 0, .4);
+					--shadow: rgba(0, 0, 0, 0.4);
 					--navHeight: 95px;
 					background: var(--mainBackground);
 					transition: background 0.3s ease-in-out;
 					margin: 0;
-					font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+					font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+						'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 					-webkit-font-smoothing: antialiased;
 					-moz-osx-font-smoothing: grayscale;
 					font-size: 15px;
@@ -181,11 +182,16 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					list-style: none;
 				}
 
-				h1, h2, h3, h4, h5, h6 {
+				h1,
+				h2,
+				h3,
+				h4,
+				h5,
+				h6 {
 					font-weight: 500;
 					font-family: 'OpenSans';
 				}
-				
+
 				p {
 					font-weight: 300;
 					font-family: 'OpenSans';
@@ -334,18 +340,18 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 						font-size: 14px;
 					}
 				}
-				
+
 				@media screen and (max-width: 760px) {
 					body {
 						font-size: 13px;
 					}
 				}
-				
+
 				@media screen and (max-width: 460px) {
 					body {
 						font-size: 12px;
 					}
-					body>div {
+					body > div {
 						width: 100%;
 					}
 					body main {
@@ -353,7 +359,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 						border-radius: 0;
 					}
 				}
-				
+
 				@font-face {
 					font-family: lineicons;
 					src: url('/fonts/LineIcons.woff2') format('woff2');
