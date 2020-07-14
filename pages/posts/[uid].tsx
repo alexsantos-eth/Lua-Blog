@@ -131,18 +131,22 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					post: gPost,
 				})
 			})
-
-		// ACTUALIZAR PROGRESS BAR
-		if (progressScroll.current) progressScroll.current.max = calculateScrollDistance()
-
-		// OBTENER INDICES
-		const subtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
-			'.post-page-main > h2'
-		) as NodeListOf<HTMLHeadingElement>
-
-		// ACTUALIZAR ESTADO
-		setState({ ...state, subtitles })
 	}, [uid])
+
+	useEffect(() => {
+		if (state.post) {
+			// ACTUALIZAR PROGRESS BAR
+			if (progressScroll.current) progressScroll.current.max = calculateScrollDistance()
+
+			// OBTENER INDICES
+			const subtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
+				'.post-page-main > h2'
+			) as NodeListOf<HTMLHeadingElement>
+
+			// ACTUALIZAR ESTADO
+			setState({ ...state, subtitles })
+		}
+	}, [state.post])
 
 	// OBTENER LIKES
 	getLikesAverage(uid, [state.subtitles, state.post], (likesAverage: string) =>
@@ -252,14 +256,14 @@ const Post: NextPage<PostProps> = ({ post }) => {
 											</a>
 										</li>
 										<li>
-											<a href='#t' title='Title' target='_blank'>
+											<a href='https://www.linkedin.com/company/weareluastudio/' title='Linkedin - LUA Development Studio' target='_blank'>
 												<i className='lni lni-linkedin' />
 											</a>
 										</li>
 										<li>
 											<a
 												href='https://www.facebook.com/weareluastudio'
-												title='LUA Development Studio'
+												title='Facebook - LUA Development Studio'
 												target='_blank'>
 												<i className='lni lni-facebook' />
 											</a>

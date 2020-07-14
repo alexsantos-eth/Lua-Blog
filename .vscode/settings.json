@@ -4,7 +4,10 @@
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.ignoreWords": [
+    "actualizació",
+    "avrg",
     "btns",
+    "mgra",
     "pilcrow"
   ]
 }
