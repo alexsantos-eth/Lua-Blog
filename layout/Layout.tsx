@@ -106,7 +106,6 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 				<appContext.Provider
 					value={{
 						lang,
-						langCode: 'ES',
 						docs: state.docs,
 						setDocs: updateDocs,
 						darkMode: state.darkMode,

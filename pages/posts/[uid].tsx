@@ -133,8 +133,11 @@ const Post: NextPage<PostProps> = ({ post }) => {
 			})
 	}, [uid])
 
+	// POST ACTUAL
+	const sPost: Document | undefined = post || state.post
+
 	useEffect(() => {
-		if (state.post) {
+		if (sPost) {
 			// ACTUALIZAR PROGRESS BAR
 			if (progressScroll.current) progressScroll.current.max = calculateScrollDistance()
 
@@ -146,15 +149,12 @@ const Post: NextPage<PostProps> = ({ post }) => {
 			// ACTUALIZAR ESTADO
 			setState({ ...state, subtitles })
 		}
-	}, [state.post])
+	}, [sPost])
 
 	// OBTENER LIKES
 	getLikesAverage(uid, [state.subtitles, state.post], (likesAverage: string) =>
 		setState({ ...state, likesAverage })
 	)
-
-	// POST ACTUAL
-	const sPost: Document | undefined = post || state.post
 
 	// AVANZAR A SECCIONES
 	const goTo = (h: HTMLHeadingElement) => {
@@ -256,7 +256,10 @@ const Post: NextPage<PostProps> = ({ post }) => {
 											</a>
 										</li>
 										<li>
-											<a href='https://www.linkedin.com/company/weareluastudio/' title='Linkedin - LUA Development Studio' target='_blank'>
+											<a
+												href='https://www.linkedin.com/company/weareluastudio/'
+												title='Linkedin - LUA Development Studio'
+												target='_blank'>
 												<i className='lni lni-linkedin' />
 											</a>
 										</li>
@@ -309,7 +312,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					top: 0;
 					left: 0;
 					width: 100%;
-					z-index: 10;
+					z-index: 9;
 				}
 
 				.post-page-content {
@@ -590,9 +593,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					.post-page-back::before {
 						right: -14px;
 					}
-				}
-
-				@media screen and (max-width: 360px) {
 					.post-page-content {
 						width: calc(100% - 60px);
 					}

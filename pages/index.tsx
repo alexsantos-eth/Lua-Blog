@@ -287,7 +287,7 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 					}
 				}
 
-				@media screen and (max-width: 360px) {
+				@media screen and (max-width: 460px) {
 					.page {
 						padding: 0 30px;
 					}

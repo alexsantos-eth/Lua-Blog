@@ -11,7 +11,6 @@ import { Document } from 'prismic-javascript/d.ts/documents'
 interface AppContext {
 	lang: ILangPackage
 	darkMode: boolean
-	langCode: string
 	setDocs: (docs: Document[]) => any
 	docs: Document[]
 }
@@ -20,7 +19,6 @@ interface AppContext {
 const defaultAppContext: AppContext = {
 	lang: Strings.es,
 	darkMode: false,
-	langCode: 'ES',
 	setDocs: () => null,
 	docs: [],
 }

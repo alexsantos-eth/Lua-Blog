@@ -158,11 +158,11 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 				}
 
 				::-moz-progress-bar {
-					background-color: var(--pink);
+					background-color: var(--deepOrange);
 				}
 
 				::-webkit-progress-value {
-					background-color: var(--pink);
+					background-color: var(--deepOrange);
 				}
 
 				::-webkit-progress-bar {

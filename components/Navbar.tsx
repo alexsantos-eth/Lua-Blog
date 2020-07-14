@@ -323,6 +323,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					}
 					nav > #nav-sections > ul > li > a {
 						font-size: 15px;
+						font-weight: 500;
 					}
 					nav > #nav-sections > ul > li > .talkBtn {
 						display: inline-flex;
