@@ -283,7 +283,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					width: calc(100% - 40px);
 					max-width: 450px;
 					transform: translate(-50%, -50%);
-					background: var(--white);
+					background: var(--postText);
 					z-index: 2;
 					box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 					border-radius: 10px;
@@ -305,9 +305,9 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 				}
 
 				.alertContainer .alertActions li button {
-					color: var(--white);
+					color: #fff;
 					width: 100px;
-					background: var(--darkBlue);
+					background: var(--deepOrange);
 					box-shadow: none;
 					overflow: hidden;
 					font-family: 'OpenSans';
