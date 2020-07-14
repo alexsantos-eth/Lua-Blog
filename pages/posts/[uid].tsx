@@ -113,7 +113,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				clearLikes()
 				fillLikes(likeN)
 				window.localStorage.setItem(`like-${uid}`, likeN.toString())
-				saveLikes(uid, likeN)
+				saveLikes(uid, likeN + 1)
 				likeHandler = true
 			})
 		})
@@ -204,9 +204,8 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					desc={sPost ? RichText.asText(description) : description}
 					banner={sPost?.data.banner.url || ''}
 					url={`posts/${sPost?.uid || ''}`}
-					keys={['miguel ángel gálvez', 'blog'].concat(sPost?.tags || [''])}
+					keys={['LUA', 'blog'].concat(sPost?.tags || [''])}
 				/>
-				<script async src='https://platform.twitter.com/widgets.js' />
 			</Head>
 			{sPost && (
 				<motion.div initial='init' animate='in' exit='in' variants={PostPageVariant}>
@@ -246,8 +245,8 @@ const Post: NextPage<PostProps> = ({ post }) => {
 									<ul>
 										<li>
 											<a
-												href='https://twitter.com/miguelgalvezag?lang=es'
-												title='@miguelagalvez'
+												href='https://twitter.com/weareluastudio?lang=es'
+												title='@weareluastudio'
 												target='_blank'>
 												<i className='lni lni-twitter' />
 											</a>
@@ -259,8 +258,8 @@ const Post: NextPage<PostProps> = ({ post }) => {
 										</li>
 										<li>
 											<a
-												href='https://www.facebook.com/miguel.galvez.501151'
-												title='Facebook/Miguel Ángel Gálvez'
+												href='https://www.facebook.com/weareluastudio'
+												title='LUA Development Studio'
 												target='_blank'>
 												<i className='lni lni-facebook' />
 											</a>
@@ -290,13 +289,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 											))}
 									</ul>
 								</div>
-								<div className='post-page-index-twitter'>
-									<a
-										className='twitter-timeline'
-										href='https://twitter.com/Miguelgalvezag?ref_src=twsrc%5Etfw'>
-										<i className='lni lni-twitter' /> @Miguelgalvezag
-									</a>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -324,7 +316,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				}
 
 				.post-page-content > * {
-					color: var(--dark);
+					color: var(--postText);
 					font-family: 'OpenSans';
 				}
 
@@ -342,7 +334,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					right: -10px;
 					width: 26px;
 					height: 2px;
-					background: var(--dark);
+					background: var(--postText);
 				}
 
 				.post-page-header {
@@ -377,8 +369,10 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				}
 
 				.post-page-head > span {
-					color: var(--darkBlue);
+					color: var(--postText);
 					font-weight: 500;
+					font-family: 'Manrope';
+					opacity: 0.6;
 				}
 
 				.post-page-container > .post-page-index {
@@ -390,62 +384,57 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				}
 
 				.post-page-index-list {
-					top: 50px;
-					border: 2px solid var(--lightBlue);
-					box-shadow: 5px 5px 15px #416e8f40;
-					border-radius: 10px;
+					position: relative;
+					color: var(--postText);
 					width: 300px;
-					padding: 20px 50px;
-					background: var(--white);
+					border-radius: 10px;
+					padding: 10px 60px;
+					box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
 					margin-bottom: 30px;
+					overflow: hidden;
+				}
+
+				.post-page-index-list::before {
+					content: '';
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					left: 0;
+					background: var(--navbarBackground);
+					z-index: -2;
+					transition: background 0.3s ease-in-out;
+				}
+
+				.post-page-index-list::after {
+					content: '';
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					left: 0;
+					background: var(--shadow);
+					z-index: -1;
 				}
 
 				.post-page-index-list > h2 {
-					font-family: 'OpenSans';
-					font-weight: 600;
-					margin: 0;
-					width: 100%;
 					text-align: center;
-					margin-bottom: 20px;
+					font-weight: 500;
+					margin-bottom: 35px;
+					margin-top: 10px;
+					font-size: 1.4em;
 				}
 
 				.post-page-index-list > ul {
-					margin-left: 15px;
+					list-style: initial;
 				}
 
-				.post-page-index-list > ul > li::before {
-					content: '• ';
-					color: var(--lightBlue);
-					font-size: 1.3em;
+				.post-page-index-list > ul > li {
+					margin-bottom: 20px;
 				}
 
 				.post-page-index-list > ul > li > a {
-					line-height: 40px;
-					color: var(--lightBlue);
-					font-size: 1.1em;
-					font-family: 'OpenSans';
-				}
-
-				.post-page-footer {
-					margin-top: 30px;
-					display: flex;
-					align-items: center;
-					justify-content: space-between;
-					width: 470px;
-				}
-
-				.post-page-footer > img {
-					border-radius: 100%;
-				}
-
-				.post-page-footer > span {
-					color: var(--lightBlue);
-					font-family: 'OpenSans';
-					font-weight: 600;
-					font-style: italic;
-					font-size: 1em;
-					width: 350px;
-					display: block;
+					color: var(--postText);
 				}
 
 				.post-page-likes-title{
@@ -453,20 +442,21 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					margin-bottom: 10px;
 					display: flex;
 					align-items: center;
-					font-family: 'OpenSans'
-					color: var(--darkBlue);
+					font-family: 'Manrope'
+					color: var(--postText);
 					font-size: 1.1em;
+					opacity: 0.7;
+					font-weight: 400;
 				}
 
 				.post-page-likes-title > span{
-					font-weight: 600;
+					font-weight: 500;
 					margin:0 10px;
 				}
 
 				.post-page-likes-title > img{
-					filter: invert(14%) sepia(95%) saturate(520%) hue-rotate(180deg) brightness(96%)
-						contrast(87%);
-					width: 20px;
+					filter: invert(47%) sepia(33%) saturate(6181%) hue-rotate(346deg) brightness(101%) contrast(101%);
+										width: 20px;
 					cursor: pointer;
 				}
 
@@ -474,7 +464,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					width: 100%;
 					margin-bottom: 50px;
 					padding-bottom: 10px;
-					border-bottom: 2px solid var(--darkBlue);
+					border-bottom: 2px solid var(--postText);
 					display: flex;
 					align-items: center;
 					justify-content: space-between;
@@ -503,7 +493,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				}
 
 				.post-page-likes > ul:last-child > li > a {
-					color: var(--darkBlue);
+					color: var(--postText);
 				}
 
 				.post-page-likes > ul:last-child > li > a > i {
@@ -511,8 +501,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				}
 
 				.post-page-likes > ul:first-child > li > img {
-					filter: invert(14%) sepia(95%) saturate(520%) hue-rotate(180deg) brightness(96%)
-						contrast(87%);
+					filter: invert(47%) sepia(33%) saturate(6181%) hue-rotate(346deg) brightness(101%) contrast(101%);
 					width: 100%;
 					cursor: pointer;
 					padding: 0 10px;
@@ -608,20 +597,26 @@ const Post: NextPage<PostProps> = ({ post }) => {
 			<style jsx global>{`
 				.post-page-desc > * {
 					font-family: 'OpenSans';
-					color: var(--dark);
-					font-size: 1.1em;
+					color: var(--postText);
+					font-weight: 500;
+					font-size: 1.2em;
+					line-height: 23px;
+					opacity: 0.7;
 				}
 
 				.post-page-main > * {
 					font-family: 'OpenSans';
-					color: var(--dark);
+					color: var(--postText);
 					font-size: 1.1em;
+					opacity: 0.7;
+					line-height: 20px;
 				}
 
 				.post-page-main > h2 {
 					margin: 15px 0;
 					font-size: 1.7em;
-					font-weight: 600;
+					opacity: 0.9;
+					font-weight: bold;
 				}
 			`}</style>
 		</section>

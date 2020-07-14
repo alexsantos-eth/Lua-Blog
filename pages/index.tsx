@@ -99,14 +99,7 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 		<section className='page home'>
 			<Head>
 				<title>{lang.general.title}</title>
-				<Meta
-					title={lang.general.title}
-					desc=''
-					banner=''
-					url=''
-					keys={['miguel ángel gálvez', 'blog', 'guatemala']}
-				/>
-				<script async src='https://platform.twitter.com/widgets.js' />
+				<Meta title={lang.general.title} desc='' banner='' url='' keys={['LUA', 'blog']} />
 			</Head>
 			{postsState.docs && (
 				<motion.div
@@ -163,14 +156,6 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 								})}
 							</ul>
 						</div>
-
-						<div className='post-page-index-twitter'>
-							<a
-								className='twitter-timeline'
-								href='https://twitter.com/Miguelgalvezag?ref_src=twsrc%5Etfw'>
-								<i className='lni lni-twitter' /> @Miguelgalvezag
-							</a>
-						</div>
 					</div>
 				</motion.div>
 			)}
@@ -179,7 +164,7 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 					display: flex;
 					justify-content: space-between;
 					position: relative;
-					margin-top: 20px;
+					margin-top: 30px;
 					width: 1100px;
 				}
 
@@ -212,20 +197,44 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 
 				.postClip {
 					position: relative;
-					color: var(--white);
+					color: var(--postText);
 					width: 300px;
 					border-radius: 10px;
 					padding: 10px 60px;
-					box-shadow: 5px 5px 15px #416e8f40;
-					background: var(--dark);
+					box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
 					margin-bottom: 30px;
+					overflow: hidden;
+				}
+
+				.postClip::before {
+					content: '';
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					left: 0;
+					background: var(--navbarBackground);
+					z-index: -2;
+					transition: background 0.3s ease-in-out;
+				}
+
+				.postClip::after {
+					content: '';
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					left: 0;
+					background: var(--shadow);
+					z-index: -1;
 				}
 
 				.postClip > h2 {
 					text-align: center;
-					font-weight: 600;
+					font-weight: 500;
 					margin-bottom: 35px;
 					margin-top: 10px;
+					font-size: 1.4em;
 				}
 
 				.postClip > ul {
@@ -237,11 +246,11 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 				}
 
 				.postClip > ul > li > a {
-					color: var(--white);
+					color: var(--postText);
 				}
 
 				.selectIcon {
-					color: var(--dark);
+					color: var(--postText);
 					font-size: 1.5em;
 					margin-left: 5px;
 				}

@@ -24,26 +24,29 @@ const PostCard: React.FC<IPostProps> = (props: IPostProps) => {
 				<span>{formateDate(props.doc.first_publication_date, props.doc.data.author)}</span>
 				<style jsx>{`
 					.postCard {
-						color: var(--dark);
+						color: var(--postText);
 						width: 700px;
 						margin-bottom: 50px;
 						cursor: pointer;
 					}
 
 					img {
-						background: var(--dark);
+						background: var(--navbarBackground);
 						width: 100%;
 						height: 350px;
 						object-fit: cover;
 						margin-bottom: 10px;
 						border-radius: 10px;
-						box-shadow: 4px 4px 4px #416e8f40;
+						box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.05);
 					}
 
 					h2,
-					p,
-					span {
+					p {
 						font-family: 'OpenSans';
+					}
+
+					span {
+						font-family: 'Manrope';
 					}
 
 					h2 {
@@ -53,13 +56,15 @@ const PostCard: React.FC<IPostProps> = (props: IPostProps) => {
 					}
 
 					p {
-						color: var(--darkBlue);
+						color: var(--postText);
 						margin-bottom: 10px;
 						font-size: 1.05em;
+						line-height: 20px;
+						opacity: 0.8;
 					}
 
 					span {
-						color: var(--lightBlue);
+						opacity: 0.6;
 					}
 
 					@media screen and (max-width: 1100px) {

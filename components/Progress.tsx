@@ -20,7 +20,7 @@ interface RouteNProgressProps {
 const defaultProps: RouteNProgressProps = {
 	startPosition: 0.3,
 	stopDelayMs: 200,
-	color: 'var(--darkBlue)',
+	color: 'var(--pink)',
 	height: 3,
 }
 

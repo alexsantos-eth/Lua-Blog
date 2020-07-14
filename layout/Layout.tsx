@@ -70,6 +70,15 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 					onConfirm: requestPush,
 				})
 		}, 3000)
+
+		// OBTENER VALOR ACTUAL
+		const currentDark: boolean = window.localStorage.getItem('darkMode') === '1'
+
+		// CAMBIAR CSS
+		toggleDarkMode()
+
+		// ACTUALIZAR APP
+		setDocs({ ...state, darkMode: currentDark })
 	}, [])
 
 	// ACTUALIZAR DOCUMENTOS

@@ -129,6 +129,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					--shadow: rgba(0, 0, 0, .4);
 					--navHeight: 95px;
 					background: var(--mainBackground);
+					transition: background 0.3s ease-in-out;
 					margin: 0;
 					font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 					-webkit-font-smoothing: antialiased;
@@ -152,16 +153,15 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					display: block;
 					position: relative;
 					width: 100%;
-					background: var(--mainBackground);
 					margin-top: var(--navHeight);
 				}
 
 				::-moz-progress-bar {
-					background-color: var(--darkBlue);
+					background-color: var(--pink);
 				}
 
 				::-webkit-progress-value {
-					background-color: var(--darkBlue);
+					background-color: var(--pink);
 				}
 
 				::-webkit-progress-bar {
@@ -191,35 +191,6 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					font-family: 'OpenSans';
 				}
 
-				.post-page-index-twitter {
-					height: 300px;
-					width: 100%;
-					overflow-y: scroll;
-					box-shadow: 5px 5px 15px #416e8f40;
-					border-radius: 10px;
-					display: flex;
-					justify-content: center;
-					margin-bottom: 50px;
-				}
-
-				.twitter-timeline {
-					background: #00acee;
-					color: var(--white);
-					padding: 0 100px;
-					height: 50px;
-					width: 170px;
-					font-family: 'OpenSans';
-					font-weight: 600;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					border-radius: 10px;
-				}
-
-				.twitter-timeline > i {
-					margin-right: 10px;
-				}
-
 				/* BOTONES */
 
 				.btn {
@@ -228,7 +199,6 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					outline: none;
 					cursor: pointer;
 					font-size: 1em;
-					background: var(--darkBlue);
 					color: var(--white);
 					border-radius: 10px;
 					box-shadow: 3px 3px 10px var(--shadow);
@@ -247,7 +217,6 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					outline: none;
 					cursor: pointer;
 					font-size: 1em;
-					background: var(--darkBlue);
 					color: var(--white);
 					border-radius: 10px;
 					box-shadow: 3px 3px 10px var(--shadow);
@@ -262,7 +231,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					width: 100%;
 					transform: translateY(100%);
 					transition: transform 0.3s ease-in-out;
-					background: var(--dark);
+					background: #333;
 					padding: 20px;
 					z-index: 99;
 				}
@@ -329,7 +298,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 				}
 
 				.alertContainer .alertActions li .cancelBtn {
-					color: var(--grey);
+					color: #333;
 					background: transparent;
 					box-shadow: none;
 					display: none;
@@ -345,7 +314,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 				}
 
 				.alertContainer .alertContent h1 {
-					color: var(--grey);
+					color: #333;
 					font-size: 2em;
 					margin-bottom: 10px;
 					font-weight: 600;
@@ -353,7 +322,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 				}
 
 				.alertContainer .alertContent p {
-					color: var(--grey);
+					color: #555;
 					margin-bottom: 20px;
 					font-size: 1em;
 					line-height: 20px;
@@ -385,12 +354,6 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					}
 				}
 				
-				@media screen and (max-width: 400px) {
-					body {
-						--navHeight: 80px;
-					}
-				}
-
 				@font-face {
 					font-family: lineicons;
 					src: url('/fonts/LineIcons.woff2') format('woff2');

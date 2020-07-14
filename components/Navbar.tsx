@@ -1,3 +1,7 @@
+// CONTEXTO
+import { useContext } from 'react'
+import { appContext } from 'context/appContext'
+
 // INTERFAZ
 interface NavProps {
 	changeDarkMode?: () => any
@@ -5,6 +9,9 @@ interface NavProps {
 }
 
 const Navbar: React.FC<NavProps> = (props: NavProps) => {
+	// LENGUAJE
+	const { lang } = useContext(appContext)
+
 	// CAMBIAR DARKMODE
 	const changeDarkMode = () => props.changeDarkMode && props.changeDarkMode()
 
@@ -20,36 +27,18 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 			</div>
 			<div id='nav-sections'>
 				<ul>
-					<li>
-						<a href='https://wearelua.com/' title='Inicio' className='disable-route'>
-							Inicio
-						</a>
-					</li>
-					<li>
-						<a href='https://wearelua.com/nosotros' title='Nosotros' className='disable-route'>
-							Nosotros
-						</a>
-					</li>
-					<li>
-						<a href='https://wearelua.com/soluciones' title='Soluciones' className='disable-route'>
-							Soluciones
-						</a>
-					</li>
-					<li>
-						<a href='https://wearelua.com/equipo' title='Equipo' className='disable-route'>
-							Equipo
-						</a>
-					</li>
-					<li>
-						<a href='/' title='Blog' className='enable-route'>
-							Blog
-						</a>
-					</li>
-					<li>
-						<a href='https://wearelua.com/hablemos' className='btn talkBtn'>
-							Hablemos
-						</a>
-					</li>
+					{lang.navbar.routes.map((route: string, key: number) => (
+						<li key={key}>
+							<a
+								href={key === 4 ? '/' : `https://wearelua.com/${route === 'Inicio' ? '' : route}`}
+								title={route}
+								className={
+									key === 5 ? 'btn talkBtn' : key === 4 ? 'enable-route' : 'disable-route'
+								}>
+								{route}
+							</a>
+						</li>
+					))}
 				</ul>
 			</div>
 			<div id='nav-btns'>
@@ -103,6 +92,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					left: 0;
 					background: var(--navbarBackground);
 					z-index: -2;
+					transition: background 0.3s ease-in-out;
 				}
 				nav::after {
 					content: '';
@@ -233,6 +223,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					display: inline-block;
 					font-size: 0.8em;
 					font-family: 'Futura';
+					background: transparent;
 					height: 25px;
 				}
 				nav > #nav-btns > ul > li > button.active-langBtn {
