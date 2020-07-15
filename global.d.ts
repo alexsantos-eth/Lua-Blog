@@ -8,6 +8,7 @@ interface ILangPackage {
 	}
 	navbar: {
 		title: string
+		searchPlaceholder: string
 		routes: string[]
 	}
 	index: {

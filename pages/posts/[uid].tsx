@@ -20,12 +20,18 @@ import { RichText } from 'prismic-reactjs'
 import Meta from 'components/Meta'
 
 // HERRAMIENTAS
-import { formateDate, saveLikes, getLikesAverage, calculateScrollDistance } from 'utils/Tools'
-import { usePrismicData, findByUID } from 'utils/LocalDB'
+import {
+	formateDate,
+	getLikesAverage,
+	calculateScrollDistance,
+	copyPath,
+	sendLikes,
+} from 'utils/Tools'
+import { findByUID } from 'utils/LocalDB'
 
 // CONTEXTO
 import { appContext } from 'context/appContext'
-import { showToast } from 'utils/Fx'
+import fetchPosts from 'utils/Prismic'
 
 // INTERFAZ DE ESTADO
 interface PostState {
@@ -58,79 +64,39 @@ const likeSrcFilled: string = '/images/posts/like-filled.png'
 
 const Post: NextPage<PostProps> = ({ post }) => {
 	// CONTEXTO
-	const { docs, lang } = useContext(appContext)
+	const { docs, lang, setDocs } = useContext(appContext)
 
 	// REFERENCIAS
 	const progressScroll: RefObject<HTMLProgressElement> = useRef(null)
 
 	// BUSCAR POR ID
 	const uid: string = useRouter().asPath.substr(7)
-	DefState.post = findByUID(uid, docs)
+	DefState.post = docs ? findByUID(uid, docs) : undefined
 
 	// ESTADO DEL POST
 	const [state, setState]: [PostState, Dispatch<SetStateAction<PostState>>] = useState(DefState)
 
-	// HACER PETICIONES Y OFFLINE
 	useEffect(() => {
-		// LIKES
-		const likeList: NodeListOf<HTMLImageElement> = document.querySelectorAll(
-			'.post-page-likes > ul > li > img'
-		) as NodeListOf<HTMLImageElement>
-
-		// LIMPIAR/LLENAR LIKES
-		const clearLikes = () => likeList.forEach((likeF: HTMLImageElement) => (likeF.src = likeSrc))
-		const fillLikes = (likeN: number) =>
-			likeList.forEach((likeS: HTMLImageElement, index: number) => {
-				if (index <= likeN) likeS.src = likeSrcFilled
-			})
-
-		// EVITAR HOVER
-		let likeHandler: boolean = false
-
-		// LLENAR DESDE LOCAL
-		fillLikes(parseInt(window.localStorage.getItem(`like-${uid}`) || '', 10))
-
-		// RECORRER LIKES
-		likeList.forEach((like: HTMLImageElement) => {
-			// OBTENER NUMERO DE LIKE
-			const likeN: number = parseInt(like.getAttribute('data-like') || '', 10)
-
-			// HOVER
-			like.addEventListener('mouseover', () => {
-				if (!likeHandler) {
-					clearLikes()
-					fillLikes(likeN)
-				}
-			})
-
-			// SALIDA
-			like.addEventListener('mouseout', () => {
-				if (!likeHandler) clearLikes()
-			})
-
-			// GUARDAR LIKE
-			like.addEventListener('click', () => {
-				clearLikes()
-				fillLikes(likeN)
-				window.localStorage.setItem(`like-${uid}`, likeN.toString())
-				saveLikes(uid, likeN + 1)
-				likeHandler = true
-			})
-		})
-
 		// SCROLL
 		window.addEventListener('scroll', () => {
 			if (progressScroll.current) progressScroll.current.value = window.scrollY
 		})
 
-		if (!post && !docs.length)
-			usePrismicData(true).then((gPost: Document | undefined) => {
-				// ACTUALIZAR DATOS
-				setState({
-					...state,
-					post: gPost,
-				})
-			})
+		// ENVIAR DOCUMENTOS
+		setTimeout(() => {
+			if (post && !docs?.length)
+				fetchPosts().then((fDocs: Document[]) =>
+					// GUARDAR EN LOCAL
+					setDocs(fDocs)
+				)
+		}, 3000)
+	}, [])
+
+	// PLUGIN DE LIKES DE LIKES
+	sendLikes(uid)
+
+	useEffect(() => {
+		setState({ ...state, post: docs ? findByUID(uid, docs) : undefined })
 	}, [uid])
 
 	// POST ACTUAL
@@ -149,7 +115,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 			// ACTUALIZAR ESTADO
 			setState({ ...state, subtitles })
 		}
-	}, [sPost])
+	}, [sPost, state.likesAverage])
 
 	// OBTENER LIKES
 	getLikesAverage(uid, [state.subtitles, state.post], (likesAverage: string) =>
@@ -177,17 +143,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 		? Array.from(state.subtitles).map((subtitle: HTMLHeadingElement) => () => goTo(subtitle))
 		: []
 
-	const copyPath = (e: any) => {
-		// EVITAR LINK
-		e.preventDefault()
-
-		// COPIAR
-		navigator.clipboard.writeText(window.location.href).then(() =>
-			showToast({
-				text: lang.postPage.toast,
-			})
-		)
-	}
+	const copyPaths = (e: any) => copyPath(e, lang.postPage.toast)
 
 	// META TAGS
 	const title: string = sPost
@@ -272,7 +228,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 											</a>
 										</li>
 										<li>
-											<a onClick={copyPath} href='#copy' title='Copiar URL' target='_blank'>
+											<a onClick={copyPaths} href='#copy' title='Copiar URL' target='_blank'>
 												<i className='lni lni-link' />
 											</a>
 										</li>
@@ -312,7 +268,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					top: 0;
 					left: 0;
 					width: 100%;
-					z-index: 9;
+					z-index: 5;
 				}
 
 				.post-page-content {

@@ -1,5 +1,14 @@
 // REACT
-import { useEffect, Dispatch, SetStateAction, useState, ComponentProps } from 'react'
+import {
+	useEffect,
+	Dispatch,
+	SetStateAction,
+	useState,
+	ComponentProps,
+	MutableRefObject,
+	useRef,
+	useCallback,
+} from 'react'
 
 // ANIMACIONES
 import { AnimatePresence } from 'framer-motion'
@@ -23,13 +32,13 @@ import { Document } from 'prismic-javascript/d.ts/documents'
 
 // ESTADO
 interface AppState {
-	docs: Document[] | []
+	docs: Document[] | null
 	darkMode: boolean
 }
 
 // ESTADO POR DEFECTO
 const DefState: AppState = {
-	docs: [],
+	docs: null,
 	darkMode: false,
 }
 
@@ -39,6 +48,9 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 
 	// ESTADO
 	const [state, setDocs]: [AppState, Dispatch<SetStateAction<AppState>>] = useState(DefState)
+
+	// REFERENCIAS
+	const docsRef: MutableRefObject<Document[] | null> = useRef(null)
 
 	useEffect(() => {
 		// INICIAR FCM
@@ -70,7 +82,9 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 					onConfirm: requestPush,
 				})
 		}, 3000)
+	}, [])
 
+	useEffect(() => {
 		// OBTENER VALOR ACTUAL
 		const currentDark: boolean = window.localStorage.getItem('darkMode') === '1'
 
@@ -78,14 +92,17 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 		toggleDarkMode()
 
 		// ACTUALIZAR APP
-		setDocs({ ...state, darkMode: currentDark })
-	}, [])
+		setDocs({ docs: docsRef.current, darkMode: currentDark })
+	}, [docsRef.current])
 
 	// ACTUALIZAR DOCUMENTOS
-	const updateDocs = (docs: Document[]) => setDocs({ ...state, docs })
+	const updateDocs = (docs: Document[]) => {
+		docsRef.current = docs
+		setDocs({ darkMode: state.darkMode, docs })
+	}
 
 	// CAMBIAR DARKMODE
-	const changeDarkMode = () => {
+	const changeDarkMode = useCallback(() => {
 		// OBTENER VALOR ACTUAL
 		const currentDark: boolean = window.localStorage.getItem('darkMode') === '1'
 
@@ -96,8 +113,8 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 		toggleDarkMode()
 
 		// ACTUALIZAR APP
-		setDocs({ ...state, darkMode: !state.darkMode })
-	}
+		setDocs({ docs: docsRef.current, darkMode: !state.darkMode })
+	}, [docsRef.current])
 
 	return (
 		<>
@@ -110,7 +127,7 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 						setDocs: updateDocs,
 						darkMode: state.darkMode,
 					}}>
-					<Navbar darkMode={state.darkMode} changeDarkMode={changeDarkMode} />
+					<Navbar docs={state.docs} darkMode={state.darkMode} changeDarkMode={changeDarkMode} />
 					<main>{props.children}</main>
 				</appContext.Provider>
 			</AnimatePresence>

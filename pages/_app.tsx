@@ -114,6 +114,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 				body {
 					--pink: #e60f71;
 					--purple: #9c27b0;
+					--deepBlue:  #160f30;
 					--blue: #2196f3;
 					--deepOrange: #ff5722;
 					--mainBackground: #160f30;

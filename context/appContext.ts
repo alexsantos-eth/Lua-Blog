@@ -12,7 +12,7 @@ interface AppContext {
 	lang: ILangPackage
 	darkMode: boolean
 	setDocs: (docs: Document[]) => any
-	docs: Document[]
+	docs: Document[] | null
 }
 
 // CONTEXTO
@@ -20,7 +20,7 @@ const defaultAppContext: AppContext = {
 	lang: Strings.es,
 	darkMode: false,
 	setDocs: () => null,
-	docs: [],
+	docs: null,
 }
 
 // CREAR CONTEXTO

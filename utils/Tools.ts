@@ -9,7 +9,7 @@ import 'firebase/messaging'
 import { Document } from 'prismic-javascript/d.ts/documents'
 
 // CLIENT SIDE
-import { showAlert } from './Fx'
+import { showAlert, showToast } from './Fx'
 import { useEffect } from 'react'
 import { colors } from './Global'
 
@@ -266,7 +266,84 @@ const calculateScrollDistance = () => {
 	return totalDocScrollLength
 }
 
+// COPIAR AL PORTAPAPELES
+const copyPath = (e: any, text: string) => {
+	// EVITAR LINK
+	e.preventDefault()
+
+	// COPIAR
+	navigator.clipboard.writeText(window.location.href).then(() => showToast({ text }))
+}
+
+const sendLikes = (uid: string, query?: string) => {
+	// ASSETS
+	const likeSrc: string = '/images/posts/like.png'
+	const likeSrcFilled: string = '/images/posts/like-filled.png'
+
+	useEffect(() => {
+		// LIKES
+		const likeList: NodeListOf<HTMLImageElement> = document.querySelectorAll(
+			query || '.post-page-likes > ul > li > img'
+		) as NodeListOf<HTMLImageElement>
+
+		// LIMPIAR/LLENAR LIKES
+		const clearLikes = () => likeList.forEach((likeF: HTMLImageElement) => (likeF.src = likeSrc))
+		const fillLikes = (likeN: number) =>
+			likeList.forEach((likeS: HTMLImageElement, index: number) => {
+				if (index <= likeN) likeS.src = likeSrcFilled
+			})
+
+		// EVITAR HOVER
+		let likeHandler: boolean = false
+
+		// LLENAR DESDE LOCAL
+		fillLikes(parseInt(window.localStorage.getItem(`like-${uid}`) || '', 10))
+
+		// RECORRER LIKES
+		likeList.forEach((like: HTMLImageElement) => {
+			// OBTENER NUMERO DE LIKE
+			const likeN: number = parseInt(like.getAttribute('data-like') || '', 10)
+
+			// HOVER
+			like.addEventListener('mouseover', () => {
+				if (!likeHandler) {
+					clearLikes()
+					fillLikes(likeN)
+				}
+			})
+
+			// SALIDA
+			like.addEventListener('mouseout', () => {
+				if (!likeHandler) clearLikes()
+			})
+
+			// GUARDAR LIKE
+			like.addEventListener('click', () => {
+				// CAMBIAR LIKES
+				clearLikes()
+				fillLikes(likeN)
+
+				// GUARDAR EN LOCAL
+				window.localStorage.setItem(`like-${uid}`, likeN.toString())
+
+				// ENVIAR A FIREBASE
+				saveLikes(uid, likeN + 1)
+				likeHandler = true
+			})
+		})
+	}, [])
+}
+
+const parseString = (str: string) =>
+	str
+		.trim()
+		.toLowerCase()
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
+
 export {
+	parseString,
+	sendLikes,
 	linkResolver,
 	hrefResolver,
 	formateDate,
@@ -275,4 +352,5 @@ export {
 	getSortPopular,
 	calculateScrollDistance,
 	toggleDarkMode,
+	copyPath,
 }

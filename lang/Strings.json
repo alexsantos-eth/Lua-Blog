@@ -9,6 +9,7 @@
 			"toast": "URL copiada correctamente"
 		},
 		"navbar": {
+			"searchPlaceholder": "Buscar artículos",
 			"title": "LUA Development Studio",
 			"routes": ["Inicio", "Nosotros", "Soluciones", "Equipo", "Blog", "Hablemos"]
 		},

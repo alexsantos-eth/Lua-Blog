@@ -1,23 +1,100 @@
 // CONTEXTO
-import { useContext } from 'react'
+import {
+	useContext,
+	Dispatch,
+	SetStateAction,
+	useState,
+	ChangeEvent,
+	useEffect,
+	RefObject,
+	useRef,
+} from 'react'
 import { appContext } from 'context/appContext'
+
+// PRISMIC
+import { Document } from 'prismic-javascript/d.ts/documents'
+import SearchCard from './SearchCard'
+import { useRouter } from 'next/router'
+
+// @ts-ignore
+import { RichText } from 'prismic-reactjs'
+import { parseString } from 'utils/Tools'
 
 // INTERFAZ
 interface NavProps {
+	docs: Document[] | null
 	changeDarkMode?: () => any
 	darkMode?: boolean
+}
+
+// ESTADO
+interface INavState {
+	foundDocs: Document[] | null
 }
 
 const Navbar: React.FC<NavProps> = (props: NavProps) => {
 	// LENGUAJE
 	const { lang } = useContext(appContext)
 
+	// ESTADO
+	const defNavState: INavState = { foundDocs: props.docs }
+	const [navState, setState]: [INavState, Dispatch<SetStateAction<INavState>>] = useState(
+		defNavState
+	)
+
+	// REFERENCIAS
+	const searchInp: RefObject<HTMLInputElement> = useRef(null)
+	const drawerInp: RefObject<HTMLInputElement> = useRef(null)
+
+	// ROUTER
+	useEffect(() => {
+		if (searchInp.current && drawerInp.current)
+			searchInp.current.checked = drawerInp.current.checked = false
+	}, [useRouter().asPath])
+
 	// CAMBIAR DARKMODE
 	const changeDarkMode = () => props.changeDarkMode && props.changeDarkMode()
 
+	// BUSCAR DOCUMENTOS
+	const searchDocs = (ev: ChangeEvent<HTMLInputElement>) => {
+		// LEER INPUT
+		const input: HTMLInputElement = ev.target as HTMLInputElement
+		const val: string = parseString(input.value)
+
+		if (props.docs?.length) {
+			// DOCUMENTOS ENCONTRADOS
+			const tmpDocs: Document[] | null = []
+
+			// FOR EN LUGAR DE FOREACH O MAP PARA VELOCIDAD
+			// tslint:disable-next-line: prefer-for-of
+			for (let i = 0; i < props.docs.length; i++) {
+				// DOCUMENTO
+				const doc: Document = props.docs[i]
+
+				// INDEX OF EN LUGAR DE INCLUDES O MATCH
+				if (
+					parseString(RichText.asText(doc.data.title)).indexOf(val) >= 0 ||
+					parseString(doc.data.author).indexOf(val) >= 0 ||
+					parseString(RichText.asText(doc.data.description)).indexOf(val) >= 0 ||
+					parseString(RichText.asText(doc.data.content)).indexOf(val) >= 0
+				)
+					tmpDocs.push(doc)
+			}
+
+			// ACTUALIZAR DOCUMENTOS
+			setState({ foundDocs: tmpDocs })
+		}
+	}
+
+	// ACTUALIZAR DOCS
+	useEffect(() => {
+		setState({ foundDocs: props.docs })
+	}, [props.docs])
+
 	return (
 		<nav>
-			<input type='checkbox' id='showMenu' />
+			<input type='checkbox' id='showMenu' ref={drawerInp} />
+			<input type='checkbox' id='showSearch' ref={searchInp} />
 			<div id='nav-logo'>
 				<img src='/images/general/logo.png' alt='Logo' />
 				<div id='nav-title'>
@@ -42,14 +119,14 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 				</ul>
 			</div>
 			<div id='nav-btns'>
-				<span>
+				<label htmlFor='showSearch'>
 					<i className='lni lni-search-alt' />
-				</span>
+				</label>
 				<span onClick={changeDarkMode}>
 					<i className={`lni lni-${props.darkMode ? 'sun' : 'night'}`} />
 				</span>
 				<a href='https://wearelua.com/hablemos' className='btn talkBtn'>
-					Hablemos
+					{lang.navbar.routes[5]}
 				</a>
 				<ul>
 					<li>
@@ -65,8 +142,20 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					<span />
 				</label>
 			</div>
+			<div className='searchBox'>
+				<div className='searchInp'>
+					<input type='search' placeholder={lang.navbar.searchPlaceholder} onChange={searchDocs} />
+					<label htmlFor='showSearch' className='lni lni-close' />
+				</div>
+				<div className='foundDocs'>
+					{navState.foundDocs?.map((doc: Document, key: number) => (
+						<SearchCard doc={doc} key={key} delay={key * 0.3} />
+					))}
+				</div>
+			</div>
 			<style jsx>{`
-				#showMenu {
+				#showMenu,
+				#showSearch {
 					display: none;
 				}
 				nav {
@@ -82,6 +171,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					color: var(--postText);
 					overflow: hidden;
 					box-shadow: 0 5px 5px rgba(0, 0, 0, 0.05);
+					--cols: ${(props.docs?.length || 0) < 4 ? props.docs?.length || 0 : 4};
 				}
 				nav::before {
 					content: '';
@@ -230,9 +320,71 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					font-weight: 500;
 					font-size: 1em;
 				}
-				nav > #nav-btns > span {
+				nav > #nav-btns > label {
 					cursor: pointer;
 				}
+
+				.searchBox {
+					position: fixed;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5));
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: flex-start;
+					padding-top: 22px;
+					opacity: 0;
+					transform: scale(0);
+					transition: opacity 0.3s ease-in-out, transform 0s linear 0.3s;
+					z-index: 10;
+				}
+
+				.searchInp {
+					display: flex;
+					align-items: center;
+				}
+
+				.searchBox > .searchInp > input {
+					appearance: none;
+					border: none;
+					outline: none;
+					background: #fff;
+					border-radius: 100px;
+					font-size: 1.2em;
+					width: 400px;
+					color: var(--deepBlue);
+					padding: 10px 20px;
+				}
+
+				.searchBox > .searchInp > label {
+					font-size: 1.5em;
+					margin-left: 15px;
+					cursor: pointer;
+				}
+
+				.foundDocs {
+					margin-top: 30px;
+					display: grid;
+					grid-template-columns: repeat(var(--cols), auto);
+					grid-template-rows: repeat(3, auto);
+					column-gap: 30px;
+				}
+
+				#showSearch:checked ~ .searchBox {
+					opacity: 1;
+					transform: scale(1);
+					transition: opacity 0.3s ease-in-out, transform 0s linear 0s;
+				}
+
+				@media screen and (max-width: 1380px) {
+					nav {
+						--cols: ${(props.docs?.length || 0) < 3 ? props.docs?.length || 0 : 3};
+					}
+				}
+
 				@media screen and (max-width: 1150px) {
 					nav > #nav-sections {
 						position: relative;
@@ -249,6 +401,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					nav {
 						font-size: 14px;
 						padding: 15px 40px;
+						--cols: ${(props.docs?.length || 0) < 2 ? props.docs?.length || 0 : 2};
 					}
 					nav > #nav-sections {
 						position: fixed;
@@ -331,6 +484,19 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 						border-color: var(--navCTA);
 					}
 				}
+				@media screen and (max-width: 600px) {
+					nav {
+						--cols: 1;
+					}
+
+					.foundDocs {
+						column-gap: 0;
+						row-gap: 30px;
+					}
+					.searchBox > .searchInp > input {
+						width: 280px;
+					}
+				}
 				@media screen and (max-width: 460px) {
 					nav {
 						padding: 15px 20px;
@@ -348,6 +514,17 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					}
 					nav > #nav-logo > div {
 						display: none;
+					}
+				}
+
+				@media screen and (max-width: 360px) {
+					.searchBox > .searchInp > input {
+						width: 200px;
+					}
+					.foundDocs {
+						grid-template-columns: calc(100% - 60px);
+						justify-content: center;
+						row-gap: 30px;
 					}
 				}
 			`}</style>
