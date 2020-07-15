@@ -13,10 +13,9 @@ import { hrefResolver, linkResolver } from 'utils/Tools'
 // PROPIEDADES
 interface ISearchCardProps {
 	doc: Document
-	delay: number
 }
 
-const SearchCard: React.FC<ISearchCardProps> = ({ doc, delay }: ISearchCardProps) => {
+const SearchCard: React.FC<ISearchCardProps> = ({ doc }: ISearchCardProps) => {
 	return (
 		<Link href={hrefResolver(doc)} as={linkResolver(doc)}>
 			<div>
