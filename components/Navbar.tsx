@@ -149,7 +149,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 				</div>
 				<div className='foundDocs'>
 					{navState.foundDocs?.map((doc: Document, key: number) => (
-						<SearchCard doc={doc} key={key} delay={key * 0.3} />
+						<SearchCard doc={doc} key={key}/>
 					))}
 				</div>
 			</div>
