@@ -132,16 +132,20 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				const mChild: HTMLElement = msChild as HTMLElement
 
 				// SALTOS DE LINEA
-				if (mChild.tagName === 'P' && mChild.textContent === '')
-					mChild.replaceWith(document.createElement('br'))
+				if (mChild.tagName === 'P' && mChild.textContent === '') {
+					const br: HTMLBRElement = document.createElement('br')
+					if (mChild.hasChildNodes()) mChild.childNodes[0].replaceWith(br)
+					else mChild.appendChild(br)
+				}
 
 				// CÓDIGO EN GIST
 				if (mChild.getAttribute('data-oembed')?.includes('github')) {
 					// URL DEL GIST
 					const dataLink: string = mChild.getAttribute('data-oembed') || ''
+					const iframeOrDiv = mChild.childNodes[0] as HTMLElement
 
 					// ACTUALIZAR CLASS NAME EN DARKMODE
-					if (mChild.tagName === 'IFRAME')
+					if (iframeOrDiv.tagName === 'IFRAME')
 						mChild.classList.value = darkMode ? 'darkGist' : 'lightGist'
 					// SINO CREAR IFRAME
 					else {
@@ -159,7 +163,8 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					</body>`
 
 						// REMPLAZAR NODO
-						mChild.replaceWith(iGFrame)
+						if (mChild.hasChildNodes()) mChild.childNodes[0].replaceWith(iGFrame)
+						else mChild.appendChild(iGFrame)
 					}
 				}
 			})
@@ -636,7 +641,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					font-weight: bold;
 				}
 
-				.post-page-main > iframe {
+				.post-page-main > div > iframe {
 					width: 100%;
 					min-height: 250px;
 					opacity: 1;
