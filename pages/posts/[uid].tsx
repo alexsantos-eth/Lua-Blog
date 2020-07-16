@@ -414,7 +414,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 
 				.post-page-content-text {
 					width: 100%;
-					margin-bottom: 50px;
+					margin-bottom: 30px;
 				}
 
 				.post-page-content-text > h1 {
@@ -520,7 +520,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 
 				.post-page-likes {
 					width: 100%;
-					margin-bottom: 50px;
+					margin-bottom: 30px;
 					padding-bottom: 10px;
 					border-bottom: 2px solid var(--postText);
 					display: flex;
@@ -689,6 +689,12 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					outline: none;
 					margin: 25px 0;
 					transition: filter 0.3s ease-in-out;
+				}
+
+				#disqus_thread > iframe {
+					border-radius: 10px;
+					padding: 30px;
+					background: #0d091d;
 				}
 			`}</style>
 		</section>
