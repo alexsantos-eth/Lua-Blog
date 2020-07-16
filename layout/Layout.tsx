@@ -113,7 +113,7 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 		toggleDarkMode()
 
 		// ACTUALIZAR APP
-		setDocs({ docs: docsRef.current, darkMode: !state.darkMode })
+		setDocs({ docs: docsRef.current, darkMode: !currentDark })
 	}, [docsRef.current])
 
 	return (

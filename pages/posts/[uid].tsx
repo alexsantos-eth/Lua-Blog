@@ -64,7 +64,7 @@ const likeSrcFilled: string = '/images/posts/like-filled.png'
 
 const Post: NextPage<PostProps> = ({ post }) => {
 	// CONTEXTO
-	const { docs, lang, setDocs } = useContext(appContext)
+	const { docs, lang, setDocs, darkMode } = useContext(appContext)
 
 	// REFERENCIAS
 	const progressScroll: RefObject<HTMLProgressElement> = useRef(null)
@@ -116,6 +116,44 @@ const Post: NextPage<PostProps> = ({ post }) => {
 			setState({ ...state, subtitles })
 		}
 	}, [sPost, state.likesAverage])
+
+	// RENDERIZAR
+	useEffect(() => {
+		// RENDERIZADO
+		const desc: HTMLDivElement | null = document.querySelector('.post-page-desc')
+		const mainC: HTMLDivElement | null = document.querySelector('.post-page-main')
+
+		if (desc && mainC) {
+			const mainChilds: NodeListOf<ChildNode> = mainC.childNodes
+
+			// RECORRER HIJOS
+			mainChilds.forEach((msChild: ChildNode) => {
+				const mChild: HTMLElement = msChild as HTMLElement
+
+				// SALTOS DE LINEA
+				if (mChild.tagName === 'P' && mChild.textContent === '')
+					mChild.replaceWith(document.createElement('br'))
+
+				if (mChild.getAttribute('data-oembed')?.includes('github')) {
+					const dataLink: string = mChild.getAttribute('data-oembed') || ''
+
+					if (mChild.tagName === 'IFRAME')
+						mChild.classList.value = darkMode ? 'darkGist' : 'lightGist'
+					else {
+						const iGFrame = document.createElement('iframe')
+						iGFrame.classList.value = darkMode ? 'darkGist' : 'lightGist'
+						iGFrame.setAttribute('data-oembed', dataLink)
+						iGFrame.src = `data:text/html;charset=utf-8,
+					<head><base target='_blank' /></head>
+					<body><script src='${dataLink}'></script>
+					</body>`
+
+						mChild.replaceWith(iGFrame)
+					}
+				}
+			})
+		}
+	}, [darkMode])
 
 	// OBTENER LIKES
 	getLikesAverage(uid, [state.subtitles, state.post], (likesAverage: string) =>
@@ -577,6 +615,23 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					font-size: 1.7em;
 					opacity: 0.9;
 					font-weight: bold;
+				}
+
+				.post-page-main > h3 {
+					margin: 15px 0;
+					font-size: 1.4em;
+					opacity: 0.9;
+					font-weight: bold;
+				}
+
+				.post-page-main > iframe {
+					width: 100%;
+					min-height: 250px;
+					opacity: 1;
+					border: none;
+					outline: none;
+					margin: 25px 0;
+					transition: filter 0.3s ease-in-out;
 				}
 			`}</style>
 		</section>

@@ -26,7 +26,6 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 			<Component {...pageProps} key={router.route} />
 			<style jsx global>{`
 				/* GENERALES */
-
 				@font-face {
 					src: url('./fonts/Futura-Book.ttf');
 					font-family: 'Futura';
@@ -196,6 +195,14 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 				p {
 					font-weight: 300;
 					font-family: 'OpenSans';
+				}
+
+				.darkGist{
+					filter: saturate(200%) invert(90%);
+				}
+
+				.lightGist{
+					filter: none;
 				}
 
 				/* BOTONES */

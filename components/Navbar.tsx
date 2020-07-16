@@ -144,12 +144,13 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 			</div>
 			<div className='searchBox'>
 				<div className='searchInp'>
+					<i className='lni lni-search-alt' />
 					<input type='search' placeholder={lang.navbar.searchPlaceholder} onChange={searchDocs} />
 					<label htmlFor='showSearch' className='lni lni-close' />
 				</div>
 				<div className='foundDocs'>
 					{navState.foundDocs?.map((doc: Document, key: number) => (
-						<SearchCard doc={doc} key={key}/>
+						<SearchCard doc={doc} key={key} />
 					))}
 				</div>
 			</div>
@@ -330,7 +331,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					left: 0;
 					width: 100%;
 					height: 100%;
-					background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5));
+					background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
 					display: flex;
 					flex-direction: column;
 					align-items: center;
@@ -354,7 +355,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					background: #fff;
 					border-radius: 100px;
 					font-size: 1.2em;
-					width: 400px;
+					width: 570px;
 					color: var(--deepBlue);
 					padding: 10px 20px;
 				}
@@ -363,6 +364,14 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					font-size: 1.5em;
 					margin-left: 15px;
 					cursor: pointer;
+					color: #fff;
+				}
+
+				.searchBox > .searchInp > i {
+					font-size: 1.5em;
+					margin-right: 15px;
+					cursor: pointer;
+					color: #fff;
 				}
 
 				.foundDocs {
@@ -371,6 +380,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					grid-template-columns: repeat(var(--cols), auto);
 					grid-template-rows: repeat(3, auto);
 					column-gap: 30px;
+					row-gap: 30px;
 				}
 
 				#showSearch:checked ~ .searchBox {
@@ -494,7 +504,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 						row-gap: 30px;
 					}
 					.searchBox > .searchInp > input {
-						width: 280px;
+						width: 270px;
 					}
 				}
 				@media screen and (max-width: 460px) {
