@@ -1,5 +1,14 @@
 // REACT
-import { useEffect, SetStateAction, useState, Dispatch, RefObject, useRef, useContext } from 'react'
+import {
+	useEffect,
+	SetStateAction,
+	useState,
+	Dispatch,
+	RefObject,
+	useRef,
+	useContext,
+	MouseEvent,
+} from 'react'
 
 // NEXT
 import { NextPage, NextPageContext } from 'next'
@@ -18,6 +27,7 @@ import { motion, Variants } from 'framer-motion'
 // @ts-ignore
 import { RichText } from 'prismic-reactjs'
 import Meta from 'components/Meta'
+import { DiscussionEmbed } from 'disqus-react'
 
 // HERRAMIENTAS
 import {
@@ -197,13 +207,29 @@ const Post: NextPage<PostProps> = ({ post }) => {
 		? Array.from(state.subtitles).map((subtitle: HTMLHeadingElement) => () => goTo(subtitle))
 		: []
 
+	// COMPARTIR EN FACEBOOK
+	const shareBtn = (ev: MouseEvent<HTMLAnchorElement>) => {
+		if (navigator.share) {
+			ev.preventDefault()
+
+			navigator
+				.share({
+					title: RichText.asText(sPost.data.title),
+					text: `Mira este artículo sobre ${sPost.tags.join(', ')}`,
+					url: window.location.href,
+				})
+				.then(() => console.log('Successfully share'))
+				.catch((error: Error) => console.log('Error sharing', error))
+		}
+	}
+
 	// COPIAR URL
 	const copyPaths = (e: any) => copyPath(e, lang.postPage.toast)
 
 	// META TAGS
 	const title: string = sPost
 		? RichText.asText(sPost.data.title)
-		: 'Error al cargar el articulo (404)'
+		: 'Error al cargar el artículo (404)'
 	const description: string = sPost
 		? sPost.data.description
 		: 'Lo sentimos no hemos podido encontrar el post, intenta verificar la dirección o intenta nuevamente.'
@@ -262,7 +288,8 @@ const Post: NextPage<PostProps> = ({ post }) => {
 											<a
 												href='https://twitter.com/weareluastudio?lang=es'
 												title='@weareluastudio'
-												target='_blank'>
+												target='_blank'
+												rel='noreferrer noopener'>
 												<i className='lni lni-twitter' />
 											</a>
 										</li>
@@ -270,15 +297,18 @@ const Post: NextPage<PostProps> = ({ post }) => {
 											<a
 												href='https://www.linkedin.com/company/weareluastudio/'
 												title='Linkedin - LUA Development Studio'
-												target='_blank'>
+												target='_blank'
+												rel='noreferrer noopener'>
 												<i className='lni lni-linkedin' />
 											</a>
 										</li>
 										<li>
 											<a
+												onClick={shareBtn}
 												href='https://www.facebook.com/weareluastudio'
 												title='Facebook - LUA Development Studio'
-												target='_blank'>
+												target='_blank'
+												rel='noreferrer noopener'>
 												<i className='lni lni-facebook' />
 											</a>
 										</li>
@@ -289,6 +319,15 @@ const Post: NextPage<PostProps> = ({ post }) => {
 										</li>
 									</ul>
 								</div>
+								<DiscussionEmbed
+									shortname='weareluastudio'
+									config={{
+										url: `https://blog.wearelua.com/posts/${sPost.uid}`,
+										identifier: sPost.uid,
+										title: RichText.asText(sPost.data.title),
+										language: 'es_MX',
+									}}
+								/>
 							</div>
 							<div className='post-page-index'>
 								<div className='post-page-index-list'>
@@ -375,6 +414,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 
 				.post-page-content-text {
 					width: 100%;
+					margin-bottom: 50px;
 				}
 
 				.post-page-content-text > h1 {
