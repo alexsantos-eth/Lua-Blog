@@ -120,40 +120,51 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	// RENDERIZAR
 	useEffect(() => {
 		// RENDERIZADO
-		const desc: HTMLDivElement | null = document.querySelector('.post-page-desc')
 		const mainC: HTMLDivElement | null = document.querySelector('.post-page-main')
 
-		if (desc && mainC) {
-			const mainChilds: NodeListOf<ChildNode> = mainC.childNodes
+		// VERIFICAR TEXTOS
+		if (mainC) {
+			// OBTENER
+			const mainChildren: NodeListOf<ChildNode> = mainC.childNodes
 
 			// RECORRER HIJOS
-			mainChilds.forEach((msChild: ChildNode) => {
+			mainChildren.forEach((msChild: ChildNode) => {
 				const mChild: HTMLElement = msChild as HTMLElement
 
 				// SALTOS DE LINEA
 				if (mChild.tagName === 'P' && mChild.textContent === '')
 					mChild.replaceWith(document.createElement('br'))
 
+				// CÓDIGO EN GIST
 				if (mChild.getAttribute('data-oembed')?.includes('github')) {
+					// URL DEL GIST
 					const dataLink: string = mChild.getAttribute('data-oembed') || ''
 
+					// ACTUALIZAR CLASS NAME EN DARKMODE
 					if (mChild.tagName === 'IFRAME')
 						mChild.classList.value = darkMode ? 'darkGist' : 'lightGist'
+					// SINO CREAR IFRAME
 					else {
+						// CREAR ELEMENTO
 						const iGFrame = document.createElement('iframe')
+
+						// AGREGAR PROPIEDADES
 						iGFrame.classList.value = darkMode ? 'darkGist' : 'lightGist'
 						iGFrame.setAttribute('data-oembed', dataLink)
+
+						// CREAR DOCUMENTO HTML
 						iGFrame.src = `data:text/html;charset=utf-8,
 					<head><base target='_blank' /></head>
 					<body><script src='${dataLink}'></script>
 					</body>`
 
+						// REMPLAZAR NODO
 						mChild.replaceWith(iGFrame)
 					}
 				}
 			})
 		}
-	}, [darkMode])
+	}, [darkMode, sPost])
 
 	// OBTENER LIKES
 	getLikesAverage(uid, [state.subtitles, state.post], (likesAverage: string) =>
@@ -181,6 +192,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 		? Array.from(state.subtitles).map((subtitle: HTMLHeadingElement) => () => goTo(subtitle))
 		: []
 
+	// COPIAR URL
 	const copyPaths = (e: any) => copyPath(e, lang.postPage.toast)
 
 	// META TAGS
@@ -196,7 +208,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 		<section className='page post'>
 			<progress ref={progressScroll} className='post-progress' value='0' />
 			<Head>
-				<title>{`${lang.navbar.title} - ${title}`}</title>
+				<title>{title}</title>
 				<Meta
 					title={`${lang.navbar} - ${title}`}
 					desc={sPost ? RichText.asText(description) : description}
