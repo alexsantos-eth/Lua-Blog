@@ -172,7 +172,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	}, [darkMode, sPost])
 
 	// OBTENER LIKES
-	getLikesAverage(uid, [state.subtitles, state.post], (likesAverage: string) =>
+	getLikesAverage(uid, [state.subtitles, sPost], (likesAverage: string) =>
 		setState({ ...state, likesAverage })
 	)
 
@@ -187,7 +187,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 
 		// AVANZAR
 		window.scrollTo({
-			top: window.scrollY + (scroll - navHeight),
+			top: window.scrollY + (scroll - navHeight - 10),
 			behavior: 'smooth',
 		})
 	}
