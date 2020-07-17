@@ -305,7 +305,7 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 }
 
 // OBTENER DATOS DE PRISMIC
-Index.getInitialProps = async ({ res, req }: NextPageContext) => {
+Index.getInitialProps = async ({ res }: NextPageContext) => {
 	// CONFIGURAR SPR VERCEL
 	if (res) res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
 
