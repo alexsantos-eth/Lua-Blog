@@ -68,10 +68,6 @@ const DefState: PostState = {
 	subtitles: undefined,
 }
 
-// ASSETS
-const likeSrc: string = '/images/posts/like.png'
-const likeSrcFilled: string = '/images/posts/like-filled.png'
-
 const Post: NextPage<PostProps> = ({ post }) => {
 	// CONTEXTO
 	const { docs, lang, setDocs, darkMode } = useContext(appContext)
@@ -273,13 +269,13 @@ const Post: NextPage<PostProps> = ({ post }) => {
 
 								<h2 className='post-page-likes-title'>
 									{lang.postPage.likes}
-									<span>{state.likesAverage}</span> <img src={likeSrcFilled} alt='Like' />
+									<span>{state.likesAverage}</span> <i className='lni lni-star-filled' />
 								</h2>
 								<div className='post-page-likes'>
 									<ul>
 										{'likes'.split('').map((_char: string, key: number) => (
 											<li key={key} data-like={key}>
-												<img src={likeSrc} alt='Like' data-like={key} />
+												<i className='lni lni-star' data-like={key} />
 											</li>
 										))}
 									</ul>
@@ -512,9 +508,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					margin:0 10px;
 				}
 
-				.post-page-likes-title > img{
-					filter: invert(47%) sepia(33%) saturate(6181%) hue-rotate(346deg) brightness(101%) contrast(101%);
-										width: 20px;
+				.post-page-likes-title > i{
 					cursor: pointer;
 				}
 
@@ -537,10 +531,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					display: flex;
 				}
 
-				.post-page-likes > ul:first-child > li {
-					width: 50px;
-				}
-
 				.post-page-likes > ul:last-child > li {
 					margin-left: 10px;
 				}
@@ -556,13 +546,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 
 				.post-page-likes > ul:last-child > li > a > i {
 					font-size: 1.8em;
-				}
-
-				.post-page-likes > ul:first-child > li > img {
-					filter: invert(47%) sepia(33%) saturate(6181%) hue-rotate(346deg) brightness(101%) contrast(101%);
-					width: 100%;
-					cursor: pointer;
-					padding: 0 10px;
 				}
 
 				@media screen and (max-width: 1000px) {
@@ -631,10 +614,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 						width: 30px;
 					}
 
-					.post-page-likes > ul:first-child > li > img {
-						padding: 0 5px;
-					}
-
 					.post-page-likes > ul:last-child > li > a > i {
 						font-size: 1.5em;
 					}
@@ -695,6 +674,18 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					border-radius: 10px;
 					padding: 30px;
 					background: #0d091d;
+				}
+
+				.post-page-likes > ul:first-child > li i {
+					font-size: 1.6em;
+					cursor: pointer;
+					padding: 0 10px;
+				}
+
+				@media screen and (max-width: 500px) {
+					.post-page-likes > ul:first-child > li > i {
+						padding: 0 5px;
+					}
 				}
 			`}</style>
 		</section>

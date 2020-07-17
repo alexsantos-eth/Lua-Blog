@@ -276,21 +276,18 @@ const copyPath = (e: any, text: string) => {
 }
 
 const sendLikes = (uid: string, query?: string) => {
-	// ASSETS
-	const likeSrc: string = '/images/posts/like.png'
-	const likeSrcFilled: string = '/images/posts/like-filled.png'
-
 	useEffect(() => {
 		// LIKES
-		const likeList: NodeListOf<HTMLImageElement> = document.querySelectorAll(
-			query || '.post-page-likes > ul > li > img'
+		const likeList: NodeListOf<HTMLElement> = document.querySelectorAll(
+			query || '.post-page-likes > ul > li > i'
 		) as NodeListOf<HTMLImageElement>
 
 		// LIMPIAR/LLENAR LIKES
-		const clearLikes = () => likeList.forEach((likeF: HTMLImageElement) => (likeF.src = likeSrc))
+		const clearLikes = () =>
+			likeList.forEach((likeF: HTMLElement) => (likeF.classList.value = 'lni lni-star'))
 		const fillLikes = (likeN: number) =>
-			likeList.forEach((likeS: HTMLImageElement, index: number) => {
-				if (index <= likeN) likeS.src = likeSrcFilled
+			likeList.forEach((likeS: HTMLElement, index: number) => {
+				if (index <= likeN) likeS.classList.value = 'lni lni-star-filled'
 			})
 
 		// EVITAR HOVER
@@ -300,7 +297,7 @@ const sendLikes = (uid: string, query?: string) => {
 		fillLikes(parseInt(window.localStorage.getItem(`like-${uid}`) || '', 10))
 
 		// RECORRER LIKES
-		likeList.forEach((like: HTMLImageElement) => {
+		likeList.forEach((like: HTMLElement) => {
 			// OBTENER NUMERO DE LIKE
 			const likeN: number = parseInt(like.getAttribute('data-like') || '', 10)
 
