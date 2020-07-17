@@ -1,9 +1,6 @@
 // COMPONENTES
 import Document, { Html, Main, Head, NextScript, DocumentContext } from 'next/document'
 
-// REPO NAME
-import { repo } from 'prismic-configuration'
-
 interface DocProps {
 	lang: ILangPackage
 	langCode: string
@@ -91,7 +88,6 @@ class LuaDoc extends Document<DocProps> {
 				<body>
 					<Main />
 					<NextScript />
-					<script async defer src={`//static.cdn.prismic.io/prismic.js?repo=${repo}&new=true`} />
 				</body>
 			</Html>
 		)
