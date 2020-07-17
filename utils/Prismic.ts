@@ -1,5 +1,5 @@
 // CLIENTE DE PRISMIC
-import ApiSearchResponse from 'prismic-javascript/d.ts/ApiSearchResponse'
+import ApiSearchResponse from 'prismic-javascript/types/ApiSearchResponse'
 import Prismic from 'prismic-javascript'
 import PrismicClient from '../prismic-configuration'
 
