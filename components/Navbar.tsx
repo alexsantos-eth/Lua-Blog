@@ -12,7 +12,7 @@ import {
 import { appContext } from 'context/appContext'
 
 // PRISMIC
-import { Document } from 'prismic-javascript/d.ts/documents'
+import { Document } from 'prismic-javascript/types/documents'
 import SearchCard from './SearchCard'
 import { useRouter } from 'next/router'
 

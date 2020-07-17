@@ -6,7 +6,7 @@ import 'firebase/firestore'
 import 'firebase/messaging'
 
 // RESOLVER LINKS
-import { Document } from 'prismic-javascript/d.ts/documents'
+import { Document } from 'prismic-javascript/types/documents'
 
 // CLIENT SIDE
 import { showAlert, showToast } from './Fx'

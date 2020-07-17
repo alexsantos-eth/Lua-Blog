@@ -5,7 +5,7 @@ import React from 'react'
 import Strings from '../lang/Strings.json'
 
 // PRISMIC
-import { Document } from 'prismic-javascript/d.ts/documents'
+import { Document } from 'prismic-javascript/types/documents'
 
 // HOC GENERAL DE LA APLICACIÓN
 interface AppContext {

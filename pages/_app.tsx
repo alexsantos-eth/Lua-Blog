@@ -27,84 +27,84 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 			<style jsx global>{`
 				/* GENERALES */
 				@font-face {
-					src: url('./fonts/Futura-Book.ttf');
+					src: url('/fonts/Futura-Book.ttf');
 					font-family: 'Futura';
 					font-display: block;
 					font-weight: 300;
 				}
 
 				@font-face {
-					src: url('./fonts/Futura-Medium.ttf');
+					src: url('/fonts/Futura-Medium.ttf');
 					font-family: 'Futura';
 					font-display: block;
 					font-weight: 400;
 				}
 
 				@font-face {
-					src: url('./fonts/OpenSans-Light.ttf');
+					src: url('/fonts/OpenSans-Light.ttf');
 					font-family: 'OpenSans';
 					font-display: block;
 					font-weight: 200;
 				}
 
 				@font-face {
-					src: url('./fonts/OpenSans-Regular.ttf');
+					src: url('/fonts/OpenSans-Regular.ttf');
 					font-family: 'OpenSans';
 					font-display: block;
 					font-weight: 300;
 				}
 
 				@font-face {
-					src: url('./fonts/OpenSans-SemiBold.ttf');
+					src: url('/fonts/OpenSans-SemiBold.ttf');
 					font-family: 'OpenSans';
 					font-display: block;
 					font-weight: 400;
 				}
 
 				@font-face {
-					src: url('./fonts/OpenSans-Bold.ttf');
+					src: url('/fonts/OpenSans-Bold.ttf');
 					font-family: 'OpenSans';
 					font-display: block;
 					font-weight: 500;
 				}
 
 				@font-face {
-					src: url('./fonts/OpenSans-ExtraBold.ttf');
+					src: url('/fonts/OpenSans-ExtraBold.ttf');
 					font-family: 'OpenSans';
 					font-display: block;
 					font-weight: 600;
 				}
 
 				@font-face {
-					src: url('./fonts/Manrope-Light.ttf');
+					src: url('/fonts/Manrope-Light.ttf');
 					font-family: 'Manrope';
 					font-display: block;
 					font-weight: 200;
 				}
 
 				@font-face {
-					src: url('./fonts/Manrope-Medium.ttf');
+					src: url('/fonts/Manrope-Medium.ttf');
 					font-family: 'Manrope';
 					font-display: block;
 					font-weight: 300;
 				}
 
 				@font-face {
-					src: url('./fonts/Manrope-Regular.ttf');
+					src: url('/fonts/Manrope-Regular.ttf');
 					font-family: 'Manrope';
 					font-display: block;
 					font-weight: 400;
 				}
 
 				@font-face {
-					src: url('./fonts/Manrope-Bold.ttf');
+					src: url('/fonts/Manrope-Bold.ttf');
 					font-family: 'Manrope';
 					font-display: block;
 					font-weight: 500;
 				}
 
 				@font-face {
-					src: url('./fonts/Manrope-ExtraBold.ttf');
+					src: url('/fonts/Manrope-ExtraBold.ttf');
 					font-family: 'Manrope';
 					font-display: block;
 					font-weight: 600;

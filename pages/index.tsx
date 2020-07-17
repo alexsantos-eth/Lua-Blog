@@ -1,5 +1,5 @@
 // NEXT, REACT Y PRISMIC
-import { Document } from 'prismic-javascript/d.ts/documents'
+import { Document } from 'prismic-javascript/types/documents'
 import { NextPage, NextPageContext } from 'next'
 import {
 	useEffect,
@@ -305,7 +305,7 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 }
 
 // OBTENER DATOS DE PRISMIC
-Index.getInitialProps = async ({ res }: NextPageContext) => {
+Index.getInitialProps = async ({ res, req }: NextPageContext) => {
 	// CONFIGURAR SPR VERCEL
 	if (res) res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
 

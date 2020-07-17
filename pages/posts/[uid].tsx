@@ -17,8 +17,8 @@ import Link from 'next/link'
 import Head from 'next/head'
 
 // PRISMIC
-import { Document } from 'prismic-javascript/d.ts/documents'
 import PrismicClient from 'prismic-configuration'
+import { Document } from 'prismic-javascript/types/documents'
 
 // ANIMACIONES
 import { motion, Variants } from 'framer-motion'
@@ -646,21 +646,43 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					line-height: 20px;
 				}
 
-				.post-page-main > h2 {
+				.post-page-main h2 {
 					margin: 15px 0;
 					font-size: 1.7em;
 					opacity: 0.9;
 					font-weight: bold;
 				}
 
-				.post-page-main > h3 {
+				.post-page-main h3 {
 					margin: 15px 0;
 					font-size: 1.4em;
 					opacity: 0.9;
 					font-weight: bold;
 				}
 
-				.post-page-main > div > iframe {
+				.post-page-main a {
+					color: var(--deepOrange);
+				}
+
+				.post-page-main strong,
+				.post-page-main strong a {
+					font-weight: bold;
+				}
+
+				.post-page-main ul,
+				.post-page-main ol {
+					margin: 20px 30px;
+				}
+
+				.post-page-main ul {
+					list-style: disc;
+				}
+
+				.post-page-main ol {
+					list-style: decimal;
+				}
+
+				.post-page-main div > iframe {
 					width: 100%;
 					min-height: 250px;
 					opacity: 1;
@@ -670,7 +692,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					transition: filter 0.3s ease-in-out;
 				}
 
-				#disqus_thread > iframe {
+				#disqus_thread iframe {
 					border-radius: 10px;
 					padding: 30px;
 					background: #0d091d;

@@ -3,9 +3,9 @@ import Prismic from 'prismic-javascript'
 import PrismicClient from 'prismic-configuration'
 
 // TIPOS
-import ApiSearchResponse from 'prismic-javascript/d.ts/ApiSearchResponse'
+import ApiSearchResponse from 'prismic-javascript/types/ApiSearchResponse'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { Document } from 'prismic-javascript/d.ts/documents'
+import { Document } from 'prismic-javascript/types/documents'
 
 // @ts-ignore
 import { RichText } from 'prismic-reactjs'

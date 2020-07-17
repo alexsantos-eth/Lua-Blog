@@ -2,7 +2,7 @@
 import Dexie from 'dexie'
 
 // TIPOS
-import { Document } from 'prismic-javascript/d.ts/documents'
+import { Document } from 'prismic-javascript/types/documents'
 import PrismicClient from 'prismic-configuration'
 
 // DB DE POSTS

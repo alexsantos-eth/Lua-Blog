@@ -28,7 +28,7 @@ import { requestPush, initFCM, toggleDarkMode } from 'utils/Tools'
 import { showAlert, showToast } from 'utils/Fx'
 
 // PRISMIC
-import { Document } from 'prismic-javascript/d.ts/documents'
+import { Document } from 'prismic-javascript/types/documents'
 
 // ESTADO
 interface AppState {

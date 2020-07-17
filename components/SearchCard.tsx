@@ -1,5 +1,5 @@
 // PRISMIC
-import { Document } from 'prismic-javascript/d.ts/documents'
+import { Document } from 'prismic-javascript/types/documents'
 
 // @ts-ignore
 import { RichText } from 'prismic-reactjs'
