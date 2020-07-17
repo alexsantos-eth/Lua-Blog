@@ -14,10 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	// @ts-ignore
 	res.setPreviewData({ ref: token })
 
-	res.write(
-		`<!DOCTYPE html><html><head><meta http-equiv="Refresh" content="0; url=${redirectUrl}" />
-    <script>window.location.href = '${redirectUrl}'</script>
-    </head>`
-	)
+	res.writeHead(302, { Location: redirectUrl })
+
 	res.end()
 }
