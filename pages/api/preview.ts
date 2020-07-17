@@ -12,7 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (!redirectUrl) return res.status(401).json({ message: 'Invalid token' })
 
 	// @ts-ignore
-	res.setPreviewData({ token })
+	res.setPreviewData({ ref: token })
 
 	res.write(
 		`<!DOCTYPE html><html><head><meta http-equiv="Refresh" content="0; url=${redirectUrl}" />
