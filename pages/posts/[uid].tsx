@@ -8,6 +8,7 @@ import {
 	useRef,
 	useContext,
 	MouseEvent,
+	MutableRefObject,
 } from 'react'
 
 // NEXT
@@ -76,6 +77,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 
 	// REFERENCIAS
 	const progressScroll: RefObject<HTMLProgressElement> = useRef(null)
+	const relatedPostRef: MutableRefObject<Document[] | null> = useRef(null)
 
 	// BUSCAR POR ID
 	const path: string = useRouter().asPath
@@ -124,8 +126,11 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					if (doc.tags.some((tag) => tags.includes(tag)) && doc.uid !== uid) relatedPost.push(doc)
 				})
 
+			// ASIGNAR REFERENCIA
+			relatedPostRef.current = relatedPost
+
 			// ACTUALIZAR ESTADO
-			setState({ ...state, post: nPost, relatedPost })
+			setState({ ...state, post: nPost, relatedPost: relatedPostRef.current })
 		}
 	}, [docs, uid])
 
@@ -221,9 +226,9 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	}, [uid, state.subSubtitles, state.subtitles])
 
 	// OBTENER LIKES
-	getLikesAverage(uid, [state.subtitles, sPost], (likesAverage: string) =>
-		setState({ ...state, likesAverage })
-	)
+	getLikesAverage(uid, [state.subtitles, sPost], (likesAverage: string) => {
+		setState({ ...state, likesAverage, relatedPost: relatedPostRef.current })
+	})
 
 	// AVANZAR A SECCIONES
 	const goTo = (h: HTMLHeadingElement | null) => {
