@@ -17,14 +17,15 @@ interface ISearchCardProps {
 
 const SearchCard: React.FC<ISearchCardProps> = ({ doc }: ISearchCardProps) => {
 	return (
-		<Link href={hrefResolver(doc)} as={linkResolver(doc)}>
-			<div>
+		<Link href={hrefResolver(doc)} as={linkResolver(doc)} passHref>
+			<a title={RichText.asText(doc.data.title)}>
 				<img src={doc.data.banner.url} title={`${doc.uid} Banner`} />
 				<h1>
 					{RichText.asText(doc.data.title)} - <span>{doc.data.author}</span>
 				</h1>
 				<style jsx>{`
-					div {
+					a {
+						display: block;
 						cursor: pointer;
 						width: 300px;
 						padding: 20px;
@@ -33,7 +34,7 @@ const SearchCard: React.FC<ISearchCardProps> = ({ doc }: ISearchCardProps) => {
 						background: var(--navbarBackground);
 					}
 
-					div > img {
+					a > img {
 						width: 100%;
 						height: 100px;
 						object-fit: cover;
@@ -41,49 +42,49 @@ const SearchCard: React.FC<ISearchCardProps> = ({ doc }: ISearchCardProps) => {
 						margin-bottom: 15px;
 					}
 
-					div > h1 {
+					a > h1 {
 						font-family: 'OpenSans';
 						font-weight: 500;
 						font-size: 1.2em;
 						color: var(--postText);
 					}
 
-					div > h1 > span {
+					a > h1 > span {
 						opacity: 0.8;
 						font-size: 0.9em;
 					}
 
 					@media screen and (max-width: 1100px) {
-						div {
+						a {
 							width: 250px;
 						}
 					}
 
 					@media screen and (max-width: 965px) {
-						div {
+						a {
 							width: 300px;
 						}
 					}
 
 					@media screen and (max-width: 750px) {
-						div {
+						a {
 							width: 230px;
 						}
 					}
 
 					@media screen and (max-width: 600px) {
-						div {
+						a {
 							width: 300px;
 						}
 					}
 
 					@media screen and (max-width: 360px) {
-						div {
+						a {
 							width: 100%;
 						}
 					}
 				`}</style>
-			</div>
+			</a>
 		</Link>
 	)
 }

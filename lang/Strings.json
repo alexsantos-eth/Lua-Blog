@@ -4,6 +4,7 @@
 			"title": "LUA Development Studio - Blog"
 		},
 		"postPage": {
+			"related": "Post relacionados",
 			"subtitle": "Contenido",
 			"likes": "Calificación",
 			"toast": "URL copiada correctamente"

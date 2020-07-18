@@ -42,12 +42,15 @@ import { findByUID } from 'utils/LocalDB'
 // CONTEXTO
 import { appContext } from 'context/appContext'
 import fetchPosts from 'utils/Prismic'
+import SearchCard from 'components/SearchCard'
 
 // INTERFAZ DE ESTADO
 interface PostState {
 	likesAverage: string
-	post: Document | undefined
-	subtitles: NodeListOf<HTMLHeadingElement> | undefined
+	post?: Document
+	subtitles?: NodeListOf<HTMLHeadingElement>
+	subSubtitles?: NodeListOf<HTMLHeadingElement>
+	relatedPost: Document[] | null
 }
 
 // PROPIEDADES INICIALES
@@ -64,8 +67,7 @@ const PostPageVariant: Variants = {
 // ESTADO INICIAL
 const DefState: PostState = {
 	likesAverage: '0',
-	post: undefined,
-	subtitles: undefined,
+	relatedPost: null,
 }
 
 const Post: NextPage<PostProps> = ({ post }) => {
@@ -76,7 +78,8 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	const progressScroll: RefObject<HTMLProgressElement> = useRef(null)
 
 	// BUSCAR POR ID
-	const uid: string = useRouter().asPath.substr(7)
+	const path: string = useRouter().asPath
+	const uid: string = path.substr(7)
 	DefState.post = docs ? findByUID(uid, docs) : undefined
 
 	// ESTADO DEL POST
@@ -102,11 +105,29 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	sendLikes(uid)
 
 	useEffect(() => {
-		setState({ ...state, post: docs ? findByUID(uid, docs) : undefined })
+		setState({ ...state, post: docs ? findByUID(uid, docs) : sPost })
 	}, [uid])
 
 	// POST ACTUAL
 	const sPost: Document | undefined = post || state.post
+
+	useEffect(() => {
+		if (docs?.length) {
+			// OBTENER TAGS
+			const nPost = findByUID(uid, docs)
+			const tags: string[] | undefined = nPost?.tags
+			const relatedPost: Document[] = []
+
+			// BUSCAR TAGS
+			if (tags)
+				docs?.forEach((doc: Document) => {
+					if (doc.tags.some((tag) => tags.includes(tag)) && doc.uid !== uid) relatedPost.push(doc)
+				})
+
+			// ACTUALIZAR ESTADO
+			setState({ ...state, post: nPost, relatedPost })
+		}
+	}, [docs, uid])
 
 	useEffect(() => {
 		if (sPost) {
@@ -118,8 +139,12 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				'.post-page-main > h2'
 			) as NodeListOf<HTMLHeadingElement>
 
+			const subSubtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
+				'.post-page-main > h3'
+			) as NodeListOf<HTMLHeadingElement>
+
 			// ACTUALIZAR ESTADO
-			setState({ ...state, subtitles })
+			setState({ ...state, subtitles, subSubtitles })
 		}
 	}, [sPost, state.likesAverage])
 
@@ -148,34 +173,52 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				if (mChild.getAttribute('data-oembed')?.includes('github')) {
 					// URL DEL GIST
 					const dataLink: string = mChild.getAttribute('data-oembed') || ''
-					const iframeOrDiv = mChild.childNodes[0] as HTMLElement
 
-					// ACTUALIZAR CLASS NAME EN DARKMODE
-					if (iframeOrDiv.tagName === 'IFRAME')
-						mChild.classList.value = darkMode ? 'darkGist' : 'lightGist'
-					// SINO CREAR IFRAME
-					else {
-						// CREAR ELEMENTO
-						const iGFrame = document.createElement('iframe')
+					// CREAR ELEMENTO
+					const iGFrame = document.createElement('iframe')
 
-						// AGREGAR PROPIEDADES
-						iGFrame.classList.value = darkMode ? 'darkGist' : 'lightGist'
-						iGFrame.setAttribute('data-oembed', dataLink)
+					// AGREGAR PROPIEDADES
+					iGFrame.classList.value = darkMode ? 'darkGist' : 'lightGist'
+					iGFrame.setAttribute('data-oembed', dataLink)
 
-						// CREAR DOCUMENTO HTML
-						iGFrame.src = `data:text/html;charset=utf-8,
-					<head><base target='_blank' /></head>
-					<body><script src='${dataLink}'></script>
-					</body>`
+					// CREAR DOCUMENTO HTML
+					iGFrame.src = `data:text/html;charset=utf-8,
+					<head><base target='_blank' /><link rel='stylesheet' href='https://cdn.rawgit.com/lonekorean/gist-syntax-themes/${
+						darkMode ? '848d6580' : 'd49b91b3'
+					}/stylesheets/${darkMode ? 'monokai' : 'solarized-light'}.css' /></head>
+					<body><script src='${dataLink}'></script></body>`
 
-						// REMPLAZAR NODO
-						if (mChild.hasChildNodes()) mChild.childNodes[0].replaceWith(iGFrame)
-						else mChild.appendChild(iGFrame)
-					}
+					// REMPLAZAR NODO
+					if (mChild.hasChildNodes()) mChild.childNodes[0].replaceWith(iGFrame)
+					else mChild.appendChild(iGFrame)
 				}
 			})
 		}
 	}, [darkMode, sPost])
+
+	// SCROLL PARA SUB TÍTULOS
+	useEffect(() => {
+		if (state.subSubtitles?.length && state.subtitles?.length) {
+			// OBTENER HASH
+			const hashQuery: string = path.substr(path.indexOf('#') + 1)
+			const hash: string | null = new URLSearchParams('sub=' + hashQuery).get('sub')
+
+			// SUBTITULO
+			let subElement: HTMLHeadingElement | null = null
+
+			// BUSCAR SUBTITULO
+			state.subtitles?.forEach((subTitle: HTMLHeadingElement) => {
+				if (hash && subTitle.textContent?.includes(hash)) subElement = subTitle
+			})
+
+			state.subSubtitles?.forEach((subSubtitle: HTMLHeadingElement) => {
+				if (hash && subSubtitle.textContent?.includes(hash)) subElement = subSubtitle
+			})
+
+			// HACER SCROLL
+			goTo(subElement)
+		}
+	}, [uid, state.subSubtitles, state.subtitles])
 
 	// OBTENER LIKES
 	getLikesAverage(uid, [state.subtitles, sPost], (likesAverage: string) =>
@@ -183,9 +226,9 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	)
 
 	// AVANZAR A SECCIONES
-	const goTo = (h: HTMLHeadingElement) => {
+	const goTo = (h: HTMLHeadingElement | null) => {
 		// OBTENER DIMENSIONES
-		const scroll: number = h.getBoundingClientRect().top
+		const scroll: number = h?.getBoundingClientRect().top || 0
 		const navHeight: number = parseInt(
 			getComputedStyle(document.body).getPropertyValue('--navHeight').replace('px', ''),
 			10
@@ -202,12 +245,20 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	const linkResolvers = state.subtitles
 		? Array.from(state.subtitles).map((subtitle: HTMLHeadingElement) => () => goTo(subtitle))
 		: []
+	const subLinkResolvers = state.subSubtitles
+		? Array.from(state.subSubtitles).map((subSubtitle: HTMLHeadingElement) => () =>
+				goTo(subSubtitle)
+		  )
+		: []
 
 	// COMPARTIR EN FACEBOOK
 	const shareBtn = (ev: MouseEvent<HTMLAnchorElement>) => {
+		// VERIFICAR SI ESTA DISPONIBLE LA API
 		if (navigator.share) {
+			// EVITAR LINK
 			ev.preventDefault()
 
+			// COMPARTIR
 			navigator
 				.share({
 					title: RichText.asText(sPost.data.title),
@@ -331,17 +382,41 @@ const Post: NextPage<PostProps> = ({ post }) => {
 									<ul>
 										{state.subtitles &&
 											Array.from(state.subtitles).map((subtitle: HTMLHeadingElement, i: number) => (
-												<li key={i}>
+												<li key={`sub-${i}`}>
 													<a
 														href={`#${subtitle.textContent}`}
 														title={subtitle.textContent || ''}
 														onClick={linkResolvers[i]}>
 														{subtitle.textContent}
 													</a>
+													<ul>
+														{state.subSubtitles &&
+															Array.from(state.subSubtitles).map(
+																(subSubtitle: HTMLHeadingElement, ind: number) =>
+																	subSubtitle.textContent?.startsWith(`${(i + 1).toString()}.`) && (
+																		<li key={`subSub-${ind}`}>
+																			<a
+																				href={`#${subSubtitle.textContent}`}
+																				title={subSubtitle.textContent || ''}
+																				onClick={subLinkResolvers[ind]}>
+																				{subSubtitle.textContent}
+																			</a>
+																		</li>
+																	)
+															)}
+													</ul>
 												</li>
 											))}
 									</ul>
 								</div>
+								{state.relatedPost?.length && (
+									<div className='post-page-related'>
+										<h2>{lang.postPage.related}</h2>
+										{state.relatedPost.map((relatedPost: Document, key: number) => (
+											<SearchCard key={key} doc={relatedPost} />
+										))}
+									</div>
+								)}
 							</div>
 						</div>
 					</div>
@@ -437,7 +512,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					align-items: flex-end;
 				}
 
-				.post-page-index-list {
+				.post-page-index > div{
 					position: relative;
 					color: var(--postText);
 					width: 300px;
@@ -448,7 +523,11 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					overflow: hidden;
 				}
 
-				.post-page-index-list::before {
+				.post-page-index > .post-page-related{
+					padding: 10px 30px;
+				}
+
+				.post-page-index > div::before {
 					content: '';
 					width: 100%;
 					height: 100%;
@@ -460,7 +539,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					transition: background 0.3s ease-in-out;
 				}
 
-				.post-page-index-list::after {
+				.post-page-index > div::after {
 					content: '';
 					width: 100%;
 					height: 100%;
@@ -471,7 +550,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					z-index: -1;
 				}
 
-				.post-page-index-list > h2 {
+				.post-page-index > div > h2 {
 					text-align: center;
 					font-weight: 500;
 					margin-bottom: 35px;
@@ -479,16 +558,29 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					font-size: 1.4em;
 				}
 
-				.post-page-index-list > ul {
+				.post-page-index > div > ul {
 					list-style: initial;
 				}
 
-				.post-page-index-list > ul > li {
+				.post-page-index > div > ul > li {
 					margin-bottom: 20px;
 				}
 
-				.post-page-index-list > ul > li > a {
+				.post-page-index > div > ul > li > a {
 					color: var(--postText);
+				}
+
+				.post-page-index > div > ul > li > ul{
+					margin-left: 20px;
+				}
+
+				.post-page-index > div > ul > li > ul > li{
+					line-height: 25px;
+				}
+
+				.post-page-index > div > ul > li > ul > li > a {
+					color: var(--postText);
+					opacity: 0.8;
 				}
 
 				.post-page-likes-title{
@@ -682,6 +774,10 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					list-style: decimal;
 				}
 
+				.post-page-main div {
+					opacity: 1;
+				}
+
 				.post-page-main div > iframe {
 					width: 100%;
 					min-height: 250px;
@@ -689,7 +785,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					border: none;
 					outline: none;
 					margin: 25px 0;
-					transition: filter 0.3s ease-in-out;
 				}
 
 				#disqus_thread iframe {
@@ -702,6 +797,12 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					font-size: 1.6em;
 					cursor: pointer;
 					padding: 0 10px;
+				}
+
+				.post-page-index > .post-page-related > a {
+					width: 100%;
+					box-shadow: none;
+					margin-bottom: 20px;
 				}
 
 				@media screen and (max-width: 500px) {

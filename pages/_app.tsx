@@ -197,14 +197,6 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 					font-family: 'OpenSans';
 				}
 
-				.darkGist{
-					filter: saturate(200%) invert(90%);
-				}
-
-				.lightGist{
-					filter: none;
-				}
-
 				/* BOTONES */
 
 				.btn {

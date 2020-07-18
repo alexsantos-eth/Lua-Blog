@@ -17,6 +17,7 @@ interface ILangPackage {
 	}
 	postPage: {
 		subtitle: string
+		related: string
 		likes: string
 		toast: string
 	}
