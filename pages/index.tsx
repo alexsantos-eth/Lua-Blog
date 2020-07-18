@@ -235,6 +235,7 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 					margin-bottom: 35px;
 					margin-top: 10px;
 					font-size: 1.4em;
+					font-family: 'Futura';
 				}
 
 				.postClip > ul {
@@ -247,6 +248,7 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 
 				.postClip > ul > li > a {
 					color: var(--postText);
+					font-family: 'Futura';
 				}
 
 				.selectIcon {

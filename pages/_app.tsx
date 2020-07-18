@@ -245,7 +245,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 				.toast > span {
 					font-size: 1em;
 					color: #fff;
-					font-weight: 600;
+					font-weight: 500;
 					font-family: 'OpenSans';
 				}
 

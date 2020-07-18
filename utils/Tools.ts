@@ -20,13 +20,17 @@ let fcmHandler: number = 0
 // =========== NOTIFICACIONES ============
 // INICIAR NOTIFICACIONES
 export const initFCM = () => {
-	const messaging = firebase.messaging()
-	if (fcmHandler === 0)
-		messaging?.usePublicVapidKey(
-			'BDM98MXqg-XsmTo9DYFfSp1lN61_4NcfYyYiBuQ_2RWtAu0z7w6XaeVMgraUfsPGcBnOKDb_d6NebCI18UJCefQ'
-		)
-	fcmHandler++
-	return messaging
+	try {
+		const messaging = firebase.messaging()
+		if (fcmHandler === 0)
+			messaging?.usePublicVapidKey(
+				'BDM98MXqg-XsmTo9DYFfSp1lN61_4NcfYyYiBuQ_2RWtAu0z7w6XaeVMgraUfsPGcBnOKDb_d6NebCI18UJCefQ'
+			)
+		fcmHandler++
+		return messaging
+	} catch (err) {
+		console.log(err)
+	}
 }
 
 // ENVIAR TOKEN A LA DB
@@ -78,25 +82,27 @@ export const getRandomInt = (min: number, max: number) =>
 
 export const updateApp = () => {
 	// ACTUALIZAR APP
-	window.navigator.serviceWorker
-		.getRegistration()
-		.then((reg: ServiceWorkerRegistration | undefined) => {
-			reg?.addEventListener('updatefound', () => {
-				const worker = reg.installing
-				worker?.addEventListener('statechange', () => {
-					if (worker.state === 'installed') {
-						showAlert({
-							type: 'confirm',
-							body: 'Hay una nueva actualización disponible, ¿deseas actualizar?',
-							title: 'Nueva actualización',
-							confirmBtn: 'Recargar',
-							onConfirm: () => window.location.reload(),
-						})
-						worker.postMessage({ type: 'SKIP_WAITING' })
-					}
+	if (window.navigator.serviceWorker) {
+		window.navigator.serviceWorker
+			.getRegistration()
+			.then((reg: ServiceWorkerRegistration | undefined) => {
+				reg?.addEventListener('updatefound', () => {
+					const worker = reg.installing
+					worker?.addEventListener('statechange', () => {
+						if (worker.state === 'installed') {
+							showAlert({
+								type: 'confirm',
+								body: 'Hay una nueva actualización disponible, ¿deseas actualizar?',
+								title: 'Nueva actualización',
+								confirmBtn: 'Recargar',
+								onConfirm: () => window.location.reload(),
+							})
+							worker.postMessage({ type: 'SKIP_WAITING' })
+						}
+					})
 				})
 			})
-		})
+	}
 }
 
 // OBTENER LINK CON UID

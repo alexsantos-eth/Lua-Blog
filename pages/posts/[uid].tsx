@@ -9,6 +9,7 @@ import {
 	useContext,
 	MouseEvent,
 	MutableRefObject,
+	useCallback,
 } from 'react'
 
 // NEXT
@@ -257,23 +258,26 @@ const Post: NextPage<PostProps> = ({ post }) => {
 		: []
 
 	// COMPARTIR EN FACEBOOK
-	const shareBtn = (ev: MouseEvent<HTMLAnchorElement>) => {
-		// VERIFICAR SI ESTA DISPONIBLE LA API
-		if (navigator.share) {
-			// EVITAR LINK
-			ev.preventDefault()
+	const shareBtn = useCallback(
+		(ev: MouseEvent<HTMLAnchorElement>) => {
+			// VERIFICAR SI ESTA DISPONIBLE LA API
+			if (navigator.share) {
+				// EVITAR LINK
+				ev.preventDefault()
 
-			// COMPARTIR
-			navigator
-				.share({
-					title: RichText.asText(sPost.data.title),
-					text: `Mira este artículo sobre ${sPost.tags.join(', ')}`,
-					url: window.location.href,
-				})
-				.then(() => console.log('Successfully share'))
-				.catch((error: Error) => console.log('Error sharing', error))
-		}
-	}
+				// COMPARTIR
+				navigator
+					.share({
+						title: RichText.asText(sPost.data.title),
+						text: `Mira este artículo sobre ${sPost.tags.join(', ')}`,
+						url: window.location.href,
+					})
+					.then(() => console.log('Successfully share'))
+					.catch((error: Error) => console.log('Error sharing', error))
+			}
+		},
+		[sPost]
+	)
 
 	// COPIAR URL
 	const copyPaths = (e: any) => copyPath(e, lang.postPage.toast)
@@ -494,7 +498,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				}
 
 				.post-page-content-text > h1 {
-					font-weight: 600;
+					font-weight: 500;
 					font-size: 2em;
 				}
 
@@ -517,7 +521,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					align-items: flex-end;
 				}
 
-				.post-page-index > div{
+				.post-page-index > div {
 					position: relative;
 					color: var(--postText);
 					width: 300px;
@@ -528,7 +532,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					overflow: hidden;
 				}
 
-				.post-page-index > .post-page-related{
+				.post-page-index > .post-page-related {
 					padding: 10px 30px;
 				}
 
@@ -561,6 +565,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					margin-bottom: 35px;
 					margin-top: 10px;
 					font-size: 1.4em;
+					font-family: 'Futura';
 				}
 
 				.post-page-index > div > ul {
@@ -573,39 +578,41 @@ const Post: NextPage<PostProps> = ({ post }) => {
 
 				.post-page-index > div > ul > li > a {
 					color: var(--postText);
+					font-family: 'Futura';
 				}
 
-				.post-page-index > div > ul > li > ul{
+				.post-page-index > div > ul > li > ul {
 					margin-left: 20px;
 				}
 
-				.post-page-index > div > ul > li > ul > li{
+				.post-page-index > div > ul > li > ul > li {
 					line-height: 25px;
 				}
 
 				.post-page-index > div > ul > li > ul > li > a {
 					color: var(--postText);
 					opacity: 0.8;
+					font-family: 'Futura';
 				}
 
-				.post-page-likes-title{
+				.post-page-likes-title {
 					margin-top: 30px;
 					margin-bottom: 10px;
 					display: flex;
 					align-items: center;
-					font-family: 'Manrope'
+					font-family: 'Manrope';
 					color: var(--postText);
 					font-size: 1.1em;
 					opacity: 0.7;
 					font-weight: 400;
 				}
 
-				.post-page-likes-title > span{
+				.post-page-likes-title > span {
 					font-weight: 500;
-					margin:0 10px;
+					margin: 0 10px;
 				}
 
-				.post-page-likes-title > i{
+				.post-page-likes-title > i {
 					cursor: pointer;
 				}
 
@@ -632,7 +639,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					margin-left: 10px;
 				}
 
-				.post-page-likes > ul:last-child > li:nth-child(3){
+				.post-page-likes > ul:last-child > li:nth-child(3) {
 					margin-left: 5px;
 					margin-right: -5px;
 				}
@@ -729,7 +736,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				.post-page-desc > * {
 					font-family: 'OpenSans';
 					color: var(--postText);
-					font-weight: 500;
+					font-weight: 400;
 					font-size: 1.2em;
 					line-height: 20px;
 					opacity: 0.7;
@@ -747,14 +754,14 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					margin: 15px 0;
 					font-size: 1.7em;
 					opacity: 0.9;
-					font-weight: bold;
+					font-weight: 400;
 				}
 
 				.post-page-main h3 {
 					margin: 15px 0;
 					font-size: 1.4em;
 					opacity: 0.9;
-					font-weight: bold;
+					font-weight: 400;
 				}
 
 				.post-page-main a {
