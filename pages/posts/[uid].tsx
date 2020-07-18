@@ -297,7 +297,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 			<Head>
 				<title>{title}</title>
 				<Meta
-					title={`${lang.navbar} - ${title}`}
+					title={title}
 					desc={sPost ? RichText.asText(description) : description}
 					banner={sPost?.data.banner.url || ''}
 					url={`posts/${sPost?.uid || ''}`}
