@@ -418,7 +418,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 											))}
 									</ul>
 								</div>
-								{state.relatedPost?.length && (
+								{state.relatedPost && state.relatedPost.length > 0 && (
 									<div className='post-page-related'>
 										<h2>{lang.postPage.related}</h2>
 										{state.relatedPost.map((relatedPost: Document, key: number) => (

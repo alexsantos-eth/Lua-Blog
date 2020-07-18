@@ -70,16 +70,18 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 
 	// GUARDAR DOCS EN LOCAL DB
 	useEffect(() => {
-		// OBTENER DOCUMENTOS DESTACADOS
-		getSortPopular(posts).then((popular: Document[]) =>
-			setPosts({ docs: postsState.docs, notSort: postsState.notSort, popular })
-		)
-
 		// GUARDAR POSTS
 		saveDocs(posts)
 
 		// CARGAR DESDE CACHE
 		setDocs(posts)
+	}, [])
+
+	useEffect(() => {
+		// OBTENER DOCUMENTOS DESTACADOS
+		getSortPopular(posts).then((popular: Document[]) =>
+			setPosts({ docs: postsState.docs, notSort: postsState.notSort, popular })
+		)
 	}, [postsState.docs, postsState.notSort])
 
 	// CAMBIAR ENTRE DESTACADOS Y RECIENTES
