@@ -7,7 +7,6 @@ import {
 	ComponentProps,
 	MutableRefObject,
 	useRef,
-	useCallback,
 } from 'react'
 
 // ANIMACIONES
@@ -33,11 +32,13 @@ import { Document } from 'prismic-javascript/types/documents'
 // ESTADO
 interface AppState {
 	docs: Document[] | null
+	dict: Document | null
 	darkMode: boolean
 }
 
 // ESTADO POR DEFECTO
 const DefState: AppState = {
+	dict: null,
 	docs: null,
 	darkMode: false,
 }
@@ -51,6 +52,8 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 
 	// REFERENCIAS
 	const docsRef: MutableRefObject<Document[] | null> = useRef(null)
+	const dictRef: MutableRefObject<Document | null> = useRef(null)
+	const darkRef: MutableRefObject<boolean> = useRef(true)
 
 	useEffect(() => {
 		// INICIAR FCM
@@ -92,17 +95,23 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 		toggleDarkMode()
 
 		// ACTUALIZAR APP
-		setDocs({ docs: docsRef.current, darkMode: currentDark })
-	}, [docsRef.current])
+		darkRef.current = currentDark
+		setDocs({ docs: docsRef.current, darkMode: currentDark, dict: dictRef.current })
+	}, [])
 
 	// ACTUALIZAR DOCUMENTOS
 	const updateDocs = (docs: Document[]) => {
 		docsRef.current = docs
-		setDocs({ darkMode: state.darkMode, docs })
+		setDocs({ darkMode: darkRef.current, docs, dict: dictRef.current })
+	}
+
+	const updateDict = (docs: Document | null) => {
+		dictRef.current = docs
+		setDocs({ darkMode: darkRef.current, docs: docsRef.current, dict: docs })
 	}
 
 	// CAMBIAR DARKMODE
-	const changeDarkMode = useCallback(() => {
+	const changeDarkMode = () => {
 		// OBTENER VALOR ACTUAL
 		const currentDark: boolean = window.localStorage.getItem('darkMode') === '1'
 
@@ -113,8 +122,9 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 		toggleDarkMode()
 
 		// ACTUALIZAR APP
-		setDocs({ docs: docsRef.current, darkMode: !currentDark })
-	}, [docsRef.current])
+		darkRef.current = !currentDark
+		setDocs({ docs: docsRef.current, darkMode: !currentDark, dict: dictRef.current })
+	}
 
 	return (
 		<>
@@ -125,6 +135,7 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 						lang,
 						docs: state.docs,
 						setDocs: updateDocs,
+						setDict: updateDict,
 						darkMode: state.darkMode,
 					}}>
 					<Navbar docs={state.docs} darkMode={state.darkMode} changeDarkMode={changeDarkMode} />

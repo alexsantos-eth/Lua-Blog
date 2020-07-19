@@ -20,9 +20,9 @@ import Meta from 'components/Meta'
 import PostCard from 'components/PostCard'
 
 // HERRAMIENTAS
-import fetchPosts from 'utils/Prismic'
+import fetchPosts, { fetchDictionary } from 'utils/Prismic'
 import { linkResolver, hrefResolver, getSortPopular } from 'utils/Tools'
-import { saveDocs } from 'utils/LocalDB'
+import { saveDocs, saveDict } from 'utils/LocalDB'
 
 // PRISMIC REACT
 // @ts-ignore
@@ -50,11 +50,12 @@ interface IndexState {
 // PROPIEDADES INICIALES
 interface PageProps {
 	posts: Document[]
+	dictionary: Document
 }
 
-const Index: NextPage<PageProps> = ({ posts }) => {
+const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 	// CONTEXTO
-	const { lang, setDocs } = useContext(appContext)
+	const { lang, setDocs, setDict } = useContext(appContext)
 
 	// ESTADO INICIAL
 	const DefState: IndexState = {
@@ -72,9 +73,11 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 	useEffect(() => {
 		// GUARDAR POSTS
 		saveDocs(posts)
+		saveDict(dictionary)
 
 		// CARGAR DESDE CACHE
 		setDocs(posts)
+		setDict(dictionary)
 	}, [])
 
 	useEffect(() => {
@@ -168,6 +171,12 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 					position: relative;
 					margin-top: 30px;
 					width: 1100px;
+				}
+
+				.postClip > ul > li > a {
+					font-family: 'OpenSans';
+					font-size: 1.1em;
+					color: var(--dark);
 				}
 
 				@media screen and (max-width: 1200px) {
@@ -297,13 +306,6 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 					}
 				}
 			`}</style>
-			<style jsx global>{`
-				.postClip > ul > li > a {
-					font-family: 'OpenSans';
-					font-size: 1.1em;
-					color: var(--dark);
-				}
-			`}</style>
 		</section>
 	)
 }
@@ -315,9 +317,10 @@ Index.getInitialProps = async ({ res }: NextPageContext) => {
 
 	// OBTENER POSTS
 	const posts: Document[] = await fetchPosts()
+	const dictionary: Document = await fetchDictionary()
 
 	// CREAR PROPS
-	const initProps: PageProps = { posts }
+	const initProps: PageProps = { posts, dictionary }
 
 	// RETORNAR PROPS
 	return initProps

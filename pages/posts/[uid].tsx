@@ -39,11 +39,11 @@ import {
 	copyPath,
 	sendLikes,
 } from 'utils/Tools'
-import { findByUID } from 'utils/LocalDB'
+import { findByUID, usePrismicData } from 'utils/LocalDB'
 
 // CONTEXTO
 import { appContext } from 'context/appContext'
-import fetchPosts from 'utils/Prismic'
+import fetchPosts, { htmlSerializer } from 'utils/Prismic'
 import SearchCard from 'components/SearchCard'
 
 // INTERFAZ DE ESTADO
@@ -108,7 +108,12 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	sendLikes(uid)
 
 	useEffect(() => {
-		setState({ ...state, post: docs ? findByUID(uid, docs) : sPost })
+		// LEER DATOS LOCALES
+		usePrismicData(uid).then((pDoc: Document | undefined) => {
+			// ACTUALIZAR A CUALQUIER DOCUMENTO QUE HAYA DISPONIBLE
+			// CARGAR DESDE DOCUMENTOS (CONTEXT API) SINO CON INDEXED DB SINO CON INITIAL PROPS
+			setState({ ...state, post: docs ? findByUID(uid, docs) : pDoc ? pDoc : sPost })
+		})
 	}, [uid])
 
 	// POST ACTUAL
@@ -140,6 +145,11 @@ const Post: NextPage<PostProps> = ({ post }) => {
 			// ACTUALIZAR PROGRESS BAR
 			if (progressScroll.current) progressScroll.current.max = calculateScrollDistance()
 
+			// ACTUALIZAR EN CARGA
+			setTimeout(() => {
+				if (progressScroll.current) progressScroll.current.max = calculateScrollDistance()
+			}, 3000)
+
 			// OBTENER INDICES
 			const subtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
 				'.post-page-main > h2'
@@ -154,53 +164,16 @@ const Post: NextPage<PostProps> = ({ post }) => {
 		}
 	}, [sPost, state.likesAverage])
 
-	// RENDERIZAR
-	useEffect(() => {
-		// RENDERIZADO
-		const mainC: HTMLDivElement | null = document.querySelector('.post-page-main')
-
-		// VERIFICAR TEXTOS
-		if (mainC) {
-			// OBTENER
-			const mainChildren: NodeListOf<ChildNode> = mainC.childNodes
-
-			// RECORRER HIJOS
-			mainChildren.forEach((msChild: ChildNode) => {
-				const mChild: HTMLElement = msChild as HTMLElement
-
-				// SALTOS DE LINEA
-				if (mChild.tagName === 'P' && mChild.textContent === '') {
-					const br: HTMLBRElement = document.createElement('br')
-					if (mChild.hasChildNodes()) mChild.childNodes[0].replaceWith(br)
-					else mChild.appendChild(br)
-				}
-
-				// CÓDIGO EN GIST
-				if (mChild.getAttribute('data-oembed')?.includes('github')) {
-					// URL DEL GIST
-					const dataLink: string = mChild.getAttribute('data-oembed') || ''
-
-					// CREAR ELEMENTO
-					const iGFrame = document.createElement('iframe')
-
-					// AGREGAR PROPIEDADES
-					iGFrame.classList.value = darkMode ? 'darkGist' : 'lightGist'
-					iGFrame.setAttribute('data-oembed', dataLink)
-
-					// CREAR DOCUMENTO HTML
-					iGFrame.src = `data:text/html;charset=utf-8,
-					<head><base target='_blank' /><link rel='stylesheet' href='https://cdn.rawgit.com/lonekorean/gist-syntax-themes/${
-						darkMode ? '848d6580' : 'd49b91b3'
-					}/stylesheets/${darkMode ? 'monokai' : 'solarized-light'}.css' /></head>
-					<body><script src='${dataLink}'></script></body>`
-
-					// REMPLAZAR NODO
-					if (mChild.hasChildNodes()) mChild.childNodes[0].replaceWith(iGFrame)
-					else mChild.appendChild(iGFrame)
-				}
-			})
-		}
-	}, [darkMode, sPost])
+	// tslint:disable-next-line: only-arrow-functions
+	function uidSerializer<T>(
+		type: any,
+		element: any,
+		content: string | null,
+		children: T,
+		key: number
+	) {
+		return htmlSerializer(type, element, content, children, key, darkMode)
+	}
 
 	// SCROLL PARA SUB TÍTULOS
 	useEffect(() => {
@@ -325,7 +298,9 @@ const Post: NextPage<PostProps> = ({ post }) => {
 								</div>
 
 								<div className='post-page-desc'>{RichText.render(description)}</div>
-								<div className='post-page-main'>{RichText.render(sPost.data.content)}</div>
+								<div className='post-page-main'>
+									<RichText render={sPost.data.content} htmlSerializer={uidSerializer} />
+								</div>
 
 								<h2 className='post-page-likes-title'>
 									{lang.postPage.likes}
@@ -790,13 +765,20 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					opacity: 1;
 				}
 
-				.post-page-main div > iframe {
+				.post-page-main iframe {
 					width: 100%;
-					min-height: 250px;
 					opacity: 1;
 					border: none;
 					outline: none;
 					margin: 25px 0;
+					margin-bottom: 15px;
+				}
+
+				.post-page-main iframe + iframe,
+				.post-page-main iframe + iframe + iframe,
+				.post-page-main iframe + iframe + iframe + iframe,
+				.post-page-main iframe + iframe + iframe + iframe + iframe {
+					margin-top: 0;
 				}
 
 				#disqus_thread iframe {

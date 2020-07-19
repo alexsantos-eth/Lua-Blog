@@ -12,6 +12,7 @@ interface AppContext {
 	lang: ILangPackage
 	darkMode: boolean
 	setDocs: (docs: Document[]) => any
+	setDict: (dic: Document | null) => any
 	docs: Document[] | null
 }
 
@@ -19,6 +20,7 @@ interface AppContext {
 const defaultAppContext: AppContext = {
 	lang: Strings.es,
 	darkMode: false,
+	setDict: () => null,
 	setDocs: () => null,
 	docs: null,
 }

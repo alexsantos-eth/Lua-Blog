@@ -3,7 +3,6 @@ import Dexie from 'dexie'
 
 // TIPOS
 import { Document } from 'prismic-javascript/types/documents'
-import PrismicClient from 'prismic-configuration'
 
 // DB DE POSTS
 interface IPostsDB {
@@ -12,8 +11,8 @@ interface IPostsDB {
 }
 
 // DB DE USUARIOS
-interface IUsersDB {
-	users: any
+interface IDictionaryDB {
+	dict: Document
 	id: number
 }
 
@@ -23,10 +22,16 @@ interface ICommentsDB {
 	id: number
 }
 
+interface IUsersDB {
+	user: any
+	id: number
+}
+
 export class LocalDB extends Dexie {
 	// DECLARAR TABLAS
 	posts: Dexie.Table<IPostsDB, string>
 	users: Dexie.Table<IUsersDB, number>
+	dict: Dexie.Table<IDictionaryDB, number>
 	comments: Dexie.Table<ICommentsDB, number>
 
 	// CONSTRUCTOR
@@ -38,12 +43,14 @@ export class LocalDB extends Dexie {
 			posts: 'uid, post',
 			users: 'id, users',
 			comments: 'id, comments',
+			dict: 'id, dict',
 		})
 
 		// CREAR TABLAS
 		this.posts = this.table('posts')
 		this.users = this.table('users')
 		this.comments = this.table('comments')
+		this.dict = this.table('dict')
 	}
 }
 
@@ -58,7 +65,7 @@ export const clearDocs = async () => iLocalDB.posts.clear()
 
 // AGREGAR TODOS LOS POSTS
 export const saveDocs = async (posts: Document[]) => {
-	// MAPEAR POSTS DE DOCUMENT[]
+	// POSTS DE DOCUMENT[]
 	const postsDB: IPostsDB[] = posts.map((doc: Document) => {
 		return {
 			uid: doc.uid || '',
@@ -70,6 +77,11 @@ export const saveDocs = async (posts: Document[]) => {
 	iLocalDB.posts.bulkPut(postsDB)
 }
 
+export const saveDict = async (dict: Document) => {
+	// GUARDAR
+	iLocalDB.dict.put({ dict, id: 0 })
+}
+
 // AGREGAR POST A LOCAL
 export const pushDoc = async (post: Document, uid: string) => iLocalDB.posts.put({ uid, post })
 
@@ -79,30 +91,16 @@ export const getPosts = async () => iLocalDB.posts.toArray()
 // LEER UN POST
 export const getPost = async (uid: string) => iLocalDB.posts.get(uid)
 
-export const usePrismicData = async (inferUID: string | boolean, prevPost?: Document) => {
+export const usePrismicData = async (inferUID: string | boolean) => {
 	// OBTENER UID DE NAVEGADOR
 	const uid: string =
 		typeof inferUID === 'string'
 			? inferUID
 			: location.pathname.substr(location.pathname.lastIndexOf('/') + 1)
 
-	// VERIFICAR SI HAY CONEXION
-	if (window.navigator.onLine) {
-		const doc: Document | undefined = prevPost || (await PrismicClient.getByUID('post', uid, {}))
-
-		// GUARDAR EN BASE LOCAL
-		await pushDoc(doc, uid)
-
-		// RETORNAR POST
-		return doc
-	}
-
-	// SINO RETORNAR DEL LOCAL
-	else {
-		// OBTENER DEL LOCAL Y RETORNAR
-		const doc: IPostsDB | undefined = await getPost(uid)
-		return doc?.post
-	}
+	// OBTENER DEL LOCAL Y RETORNAR
+	const doc: IPostsDB | undefined = await getPost(uid)
+	return doc?.post
 }
 
 export const findByUID = (uid: string, docs: Document[]) => {
