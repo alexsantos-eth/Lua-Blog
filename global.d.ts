@@ -14,6 +14,7 @@ interface ILangPackage {
 	index: {
 		postTitle: string
 		postTitle_2: string
+		postTitle_3: string
 	}
 	postPage: {
 		subtitle: string
@@ -21,7 +22,9 @@ interface ILangPackage {
 		likes: string
 		toast: string
 	}
-
+	dictionaryPage: {
+		title: string
+	}
 	layout: ILayoutStrings
 }
 
@@ -41,4 +44,10 @@ interface IColor {
 	name: string
 	value: string
 	darkValue: string
+}
+
+// CONTENIDO DE SLICE
+interface ISlice {
+	image: any
+	content: any
 }

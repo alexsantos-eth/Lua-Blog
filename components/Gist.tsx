@@ -49,7 +49,16 @@ const Gist: React.FC<GistProps> = (props: GistProps) => {
 		}
 	}, [props.theme])
 
-	return <iframe style={props.style} ref={frameRef} id={`gist-${id}`} />
+	return (
+		<iframe
+			// @ts-ignore
+			loading='lazy'
+			title={`Gist ${id}`}
+			style={props.style}
+			ref={frameRef}
+			id={`gist-${id}`}
+		/>
+	)
 }
 
 export default Gist

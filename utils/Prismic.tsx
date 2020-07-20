@@ -4,7 +4,7 @@ import Prismic from 'prismic-javascript'
 import PrismicClient from '../prismic-configuration'
 import { Document } from 'prismic-javascript/types/documents'
 
-// import Gist from 'react-gist'
+// COMPONENTES
 import Gist from 'components/Gist'
 
 // @ts-ignore
@@ -37,22 +37,30 @@ function htmlSerializer<T>(
 	element: any,
 	content: string | null,
 	children: T,
-	_key: number,
+	key: number,
 	darkMode: boolean
 ) {
 	switch (type) {
 		case Elements.paragraph:
-			if (element.text === '') return <br />
-			else return <p>{children}</p>
+			if (element.text === '') return <br key={key} />
+			else return <p key={key}>{children}</p>
 		case Elements.embed:
 			if (element.oembed.embed_url.includes('gist.github.com'))
 				return (
-					<Gist src={element.oembed.embed_url} theme={darkMode ? 'monokai' : 'solarized-light'} />
+					<Gist
+						key={key}
+						src={element.oembed.embed_url}
+						theme={darkMode ? 'monokai' : 'solarized-light'}
+					/>
 				)
-			else return <iframe src={element.oembed.embed_url} />
+			else {
+				// @ts-ignore
+				return <iframe title='Embedded' key={key} src={element.oembed.embed_url} loading='lazy' />
+			}
 		case Elements.hyperlink:
 			return (
 				<a
+					key={key}
 					target={element.data.target}
 					href={element.data.url}
 					rel='noreferrer noopener'

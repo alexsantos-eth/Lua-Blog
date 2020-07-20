@@ -29,7 +29,6 @@ import { motion, Variants } from 'framer-motion'
 // @ts-ignore
 import { RichText } from 'prismic-reactjs'
 import Meta from 'components/Meta'
-import { DiscussionEmbed } from 'disqus-react'
 
 // HERRAMIENTAS
 import {
@@ -39,7 +38,7 @@ import {
 	copyPath,
 	sendLikes,
 } from 'utils/Tools'
-import { findByUID, usePrismicData } from 'utils/LocalDB'
+import { findByUID, usePrismicData, saveDocs } from 'utils/LocalDB'
 
 // CONTEXTO
 import { appContext } from 'context/appContext'
@@ -96,11 +95,12 @@ const Post: NextPage<PostProps> = ({ post }) => {
 
 		// ENVIAR DOCUMENTOS
 		setTimeout(() => {
-			if (post && !docs?.length)
-				fetchPosts().then((fDocs: Document[]) =>
+			if (post && docs?.length === 0)
+				fetchPosts().then((fDocs: Document[]) => {
 					// GUARDAR EN LOCAL
 					setDocs(fDocs)
-				)
+					saveDocs(fDocs)
+				})
 		}, 3000)
 	}, [])
 
@@ -350,15 +350,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 										</li>
 									</ul>
 								</div>
-								<DiscussionEmbed
-									shortname='weareluastudio'
-									config={{
-										url: `https://blog.wearelua.com/posts/${sPost.uid}`,
-										identifier: sPost.uid,
-										title: RichText.asText(sPost.data.title),
-										language: 'es_MX',
-									}}
-								/>
 							</div>
 							<div className='post-page-index'>
 								<div className='post-page-index-list'>
@@ -779,12 +770,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				.post-page-main iframe + iframe + iframe + iframe,
 				.post-page-main iframe + iframe + iframe + iframe + iframe {
 					margin-top: 0;
-				}
-
-				#disqus_thread iframe {
-					border-radius: 10px;
-					padding: 30px;
-					background: #0d091d;
 				}
 
 				.post-page-likes > ul:first-child > li i {

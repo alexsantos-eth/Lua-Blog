@@ -88,6 +88,8 @@ export const pushDoc = async (post: Document, uid: string) => iLocalDB.posts.put
 // LEER DE LOCAL
 export const getPosts = async () => iLocalDB.posts.toArray()
 
+export const getDict = async () => iLocalDB.dict.toArray()
+
 // LEER UN POST
 export const getPost = async (uid: string) => iLocalDB.posts.get(uid)
 

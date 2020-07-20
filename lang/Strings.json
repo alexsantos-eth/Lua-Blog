@@ -16,7 +16,11 @@
 		},
 		"index": {
 			"postTitle": "Post Recientes",
-			"postTitle_2": "Post Destacados"
+			"postTitle_2": "Post Destacados",
+			"postTitle_3": "Diccionario"
+		},
+		"dictionaryPage": {
+			"title": "LUA Development Studio - Diccionario"
 		},
 		"layout": {
 			"toast": {

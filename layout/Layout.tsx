@@ -29,6 +29,9 @@ import { showAlert, showToast } from 'utils/Fx'
 // PRISMIC
 import { Document } from 'prismic-javascript/types/documents'
 
+// ENVIRONMENT
+import { env } from 'process'
+
 // ESTADO
 interface AppState {
 	docs: Document[] | null
@@ -75,16 +78,17 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 		if (!online) showToast({ text: lang.layout.toast.offline })
 
 		// PERMISO PARA NOTIFICACIONES
-		setTimeout(() => {
-			if (!window.localStorage.getItem('token'))
-				showAlert({
-					title: lang.layout.alerts.title,
-					body: lang.layout.alerts.body,
-					confirmBtn: lang.layout.alerts.btn,
-					type: 'confirm',
-					onConfirm: requestPush,
-				})
-		}, 3000)
+		if (env.NODE_ENV === 'production')
+			setTimeout(() => {
+				if (!window.localStorage.getItem('token'))
+					showAlert({
+						title: lang.layout.alerts.title,
+						body: lang.layout.alerts.body,
+						confirmBtn: lang.layout.alerts.btn,
+						type: 'confirm',
+						onConfirm: requestPush,
+					})
+			}, 3000)
 	}, [])
 
 	useEffect(() => {

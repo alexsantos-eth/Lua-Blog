@@ -106,8 +106,8 @@ export const updateApp = () => {
 }
 
 // OBTENER LINK CON UID
-const linkResolver = (doc: Document) => {
-	if (doc.type === 'page') return '/page/' + doc.uid
+const linkResolver = (doc: Document, item?: ISlice) => {
+	if (doc.type === 'dictionary') return '/diccionario#' + item?.content[0].text
 	else if (doc.type === 'post') return '/posts/' + doc.uid
 	return '/'
 }

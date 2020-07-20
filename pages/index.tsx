@@ -22,7 +22,7 @@ import PostCard from 'components/PostCard'
 // HERRAMIENTAS
 import fetchPosts, { fetchDictionary } from 'utils/Prismic'
 import { linkResolver, hrefResolver, getSortPopular } from 'utils/Tools'
-import { saveDocs, saveDict } from 'utils/LocalDB'
+import IPostsDB, { saveDocs, saveDict, getPosts } from 'utils/LocalDB'
 
 // PRISMIC REACT
 // @ts-ignore
@@ -78,6 +78,13 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 		// CARGAR DESDE CACHE
 		setDocs(posts)
 		setDict(dictionary)
+
+		// CARGAR DESDE INDEXED DB
+		if (!posts || !window.navigator.onLine) {
+			getPosts().then((iPost: IPostsDB[]) => {
+				setPosts({ ...postsState, docs: iPost.map((post: IPostsDB) => post.post) })
+			})
+		}
 	}, [])
 
 	useEffect(() => {
@@ -161,6 +168,21 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 								})}
 							</ul>
 						</div>
+
+						{dictionary && (
+							<div className='bestPosts postClip'>
+								<h2>{lang.index.postTitle_3}</h2>
+								<ul>
+									{dictionary.data.body[0].items.map((item: ISlice, key: number) => (
+										<li key={key}>
+											<Link href={linkResolver(dictionary, item)}>
+												<a>{item.content[0].text}</a>
+											</Link>
+										</li>
+									))}
+								</ul>
+							</div>
+						)}
 					</div>
 				</motion.div>
 			)}
