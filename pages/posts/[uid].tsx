@@ -4,7 +4,6 @@ import {
 	SetStateAction,
 	useState,
 	Dispatch,
-	RefObject,
 	useRef,
 	useContext,
 	MouseEvent,
@@ -31,13 +30,7 @@ import { RichText } from 'prismic-reactjs'
 import Meta from 'components/Meta'
 
 // HERRAMIENTAS
-import {
-	formateDate,
-	getLikesAverage,
-	calculateScrollDistance,
-	copyPath,
-	sendLikes,
-} from 'utils/Tools'
+import { formateDate, getLikesAverage, copyPath, sendLikes } from 'utils/Tools'
 import { findByUID, usePrismicData, saveDocs } from 'utils/LocalDB'
 
 // CONTEXTO
