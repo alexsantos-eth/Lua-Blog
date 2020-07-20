@@ -79,6 +79,11 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 		setDocs(posts)
 		setDict(dictionary)
 
+		// ORDENAR DICCIONARIO
+		dictionary.data.body[0].items.sort(
+			(a: ISlice, b: ISlice) => a.content[0].text > b.content[0].text
+		)
+
 		// CARGAR DESDE INDEXED DB
 		if (!posts || !window.navigator.onLine) {
 			getPosts().then((iPost: IPostsDB[]) => {
@@ -170,7 +175,7 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 						</div>
 
 						{dictionary && (
-							<div className='bestPosts postClip'>
+							<div className='dicClip postClip'>
 								<h2>{lang.index.postTitle_3}</h2>
 								<ul>
 									{dictionary.data.body[0].items.map((item: ISlice, key: number) => (
@@ -276,6 +281,14 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 				}
 
 				.postClip > ul > li {
+					margin-bottom: 20px;
+				}
+
+				.postClip:last-child > ul > li {
+					margin-bottom: 10px;
+				}
+
+				.postClip:last-child > ul > li:last-child {
 					margin-bottom: 20px;
 				}
 

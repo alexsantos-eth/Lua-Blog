@@ -44,6 +44,7 @@ import { findByUID, usePrismicData, saveDocs } from 'utils/LocalDB'
 import { appContext } from 'context/appContext'
 import fetchPosts, { htmlSerializer } from 'utils/Prismic'
 import SearchCard from 'components/SearchCard'
+import ScrollObserver from 'components/ScrollObserver'
 
 // INTERFAZ DE ESTADO
 interface PostState {
@@ -76,7 +77,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	const { docs, lang, setDocs, darkMode } = useContext(appContext)
 
 	// REFERENCIAS
-	const progressScroll: RefObject<HTMLProgressElement> = useRef(null)
 	const relatedPostRef: MutableRefObject<Document[] | null> = useRef(null)
 
 	// BUSCAR POR ID
@@ -88,11 +88,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	const [state, setState]: [PostState, Dispatch<SetStateAction<PostState>>] = useState(DefState)
 
 	useEffect(() => {
-		// SCROLL
-		window.addEventListener('scroll', () => {
-			if (progressScroll.current) progressScroll.current.value = window.scrollY
-		})
-
 		// ENVIAR DOCUMENTOS
 		setTimeout(() => {
 			if (post && docs?.length === 0)
@@ -142,14 +137,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 
 	useEffect(() => {
 		if (sPost) {
-			// ACTUALIZAR PROGRESS BAR
-			if (progressScroll.current) progressScroll.current.max = calculateScrollDistance()
-
-			// ACTUALIZAR EN CARGA
-			setTimeout(() => {
-				if (progressScroll.current) progressScroll.current.max = calculateScrollDistance()
-			}, 3000)
-
 			// OBTENER INDICES
 			const subtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
 				'.post-page-main > h2'
@@ -266,7 +253,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	// COMPONENTE
 	return (
 		<section className='page post'>
-			<progress ref={progressScroll} className='post-progress' value='0' />
 			<Head>
 				<title>{title}</title>
 				<Meta
@@ -277,6 +263,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 					keys={['LUA', 'blog'].concat(sPost?.tags || [''])}
 				/>
 			</Head>
+			<ScrollObserver />
 			{sPost && (
 				<motion.div initial='init' animate='in' exit='in' variants={PostPageVariant}>
 					<div className='post-page-content'>
@@ -398,19 +385,6 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				</motion.div>
 			)}
 			<style jsx>{`
-				.post-progress {
-					appearance: none;
-					border: none;
-					outline: none;
-					background: transparent;
-					height: 3px;
-					position: fixed;
-					top: 0;
-					left: 0;
-					width: 100%;
-					z-index: 5;
-				}
-
 				.post-page-content {
 					position: relative;
 					max-width: 1300px;
@@ -464,6 +438,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				}
 
 				.post-page-content-text > h1 {
+					font-family: 'Manrope';
 					font-weight: 500;
 					font-size: 2em;
 				}
@@ -732,11 +707,13 @@ const Post: NextPage<PostProps> = ({ post }) => {
 
 				.post-page-main a {
 					color: var(--deepOrange);
+					opacity: 1;
 				}
 
 				.post-page-main strong,
 				.post-page-main strong a {
 					font-weight: bold;
+					opacity: 1;
 				}
 
 				.post-page-main ul,

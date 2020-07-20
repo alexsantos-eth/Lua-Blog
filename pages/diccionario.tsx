@@ -16,13 +16,19 @@ import { appContext } from 'context/appContext'
 
 // COMPONENTES
 import Meta from 'components/Meta'
+import ScrollObserver from 'components/ScrollObserver'
 
 // @ts-ignore
 import { RichText } from 'prismic-reactjs'
 
 // FRAMER
 import { motion, Variants } from 'framer-motion'
+
+// ROUTER
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+// HERRAMIENTAS
 import { saveDict } from 'utils/LocalDB'
 
 // PROPIEDADES INICIALES
@@ -41,12 +47,44 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 	// CONTEXTO
 	const { setDict, lang } = useContext(appContext)
 
+	// RUTA
+	const path = useRouter().asPath
+
 	// GUARDAR DICCIONARIO
 	useEffect(() => {
 		// GUARDAR DICCIONARIO LOCALMENTE
 		setDict(dictionary)
 		saveDict(dictionary)
-	}, [])
+
+		// SCROLL
+		const slices: NodeListOf<HTMLDivElement> = document.querySelectorAll('.slice')
+
+		if (slices) {
+			// OBTENER HASH
+			const hashQuery: string = path.substr(path.indexOf('#') + 1)
+			const hash: string | null = new URLSearchParams('sub=' + hashQuery).get('sub')
+
+			// ELEMENTO A SCROLL
+			let concept: HTMLDivElement | undefined
+
+			// RECORRER SLICES
+			slices.forEach((slice: HTMLDivElement) => {
+				const cContent: HTMLDivElement = slice.childNodes[1] as HTMLDivElement
+				if (hash && cContent.childNodes[0].textContent?.includes(hash)) concept = slice
+			})
+
+			// SCROLL Y CLASE
+			if (concept) {
+				concept.classList.add('active-concept')
+				window.scrollTo({ top: concept.offsetTop - 20, behavior: 'smooth' })
+			}
+		}
+	}, [path])
+
+	// ORDENAR DICCIONARIO
+	dictionary.data.body[0].items.sort(
+		(a: ISlice, b: ISlice) => a.content[0].text > b.content[0].text
+	)
 
 	return (
 		<section className='page dictionary'>
@@ -60,7 +98,7 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 					keys={['LUA', 'blog', 'diccionario']}
 				/>
 			</Head>
-
+			<ScrollObserver />
 			<motion.div
 				className='slices'
 				initial='init'
@@ -100,11 +138,15 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 					display: flex;
 					width: 100%;
 					align-items: center;
+					padding: 20px;
+					border-radius: 10px;
 				}
 
 				.slice > img {
 					width: 100px;
 					height: 100px;
+					min-width: 100px;
+					min-height: 100px;
 					object-fit: cover;
 					border-radius: 10px;
 					margin-right: 20px;
@@ -115,6 +157,7 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 					justify-content: space-between;
 					width: 100%;
 					margin-bottom: 30px;
+					font-size: 0.9em;
 				}
 
 				.slices-index {
@@ -128,7 +171,7 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 					width: 100%;
 					grid-template-columns: 1fr 1fr;
 					column-gap: 30px;
-					row-gap: 30px;
+					row-gap: 0px;
 					margin-top: 30px;
 				}
 
@@ -153,6 +196,11 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 				}
 			`}</style>
 			<style jsx global>{`
+				.active-concept {
+					background: var(--shadow);
+					border-top: 5px solid var(--deepOrange);
+				}
+
 				.slices {
 					display: flex;
 					flex-direction: column;
