@@ -1,5 +1,5 @@
 // UI
-import { showAlert } from './Fx'
+import { showAlert, showToast } from './Fx'
 import { colors } from './Global'
 
 // FORMATO PARA FECHAS
@@ -88,7 +88,7 @@ export const toggleDarkMode = () => {
 	colors.forEach((color: IColor) => changeColor(color, darkValue))
 }
 
-// CALCULAR PIXELES
+// CALCULAR PIXELS
 const getDocHeight = () => {
 	return Math.max(
 		document.body.scrollHeight,
