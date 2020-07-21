@@ -87,3 +87,34 @@ export const toggleDarkMode = () => {
 	// RECORRER CAMBIOS
 	colors.forEach((color: IColor) => changeColor(color, darkValue))
 }
+
+// CALCULAR PIXELES
+const getDocHeight = () => {
+	return Math.max(
+		document.body.scrollHeight,
+		document.documentElement.scrollHeight,
+		document.body.offsetHeight,
+		document.documentElement.offsetHeight,
+		document.body.clientHeight,
+		document.documentElement.clientHeight
+	)
+}
+
+// CALCULAR ALTURA MAXIMA
+export const calculateScrollDistance = () => {
+	const windowHeight = window.innerHeight
+	const docHeight = getDocHeight()
+
+	const totalDocScrollLength = docHeight - windowHeight
+
+	return totalDocScrollLength
+}
+
+// COPIAR AL PORTAPAPELES
+export const copyPath = (e: any, text: string) => {
+	// EVITAR LINK
+	e.preventDefault()
+
+	// COPIAR
+	navigator.clipboard.writeText(window.location.href).then(() => showToast({ text }))
+}

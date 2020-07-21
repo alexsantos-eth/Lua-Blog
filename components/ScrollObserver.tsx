@@ -5,7 +5,7 @@ import { RefObject, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 // HERRAMIENTAS
-import { calculateScrollDistance } from 'utils/Tools'
+import { calculateScrollDistance } from 'utils/ToolsAux'
 
 const ScrollObserver: React.FC = () => {
 	// REFERENCIA

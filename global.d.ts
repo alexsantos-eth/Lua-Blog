@@ -51,3 +51,8 @@ interface ISlice {
 	image: any
 	content: any
 }
+
+// INTERFAZ DE DOCUMENTOS DE FIRESTORE
+interface LikeDoc {
+	count: number[]
+}

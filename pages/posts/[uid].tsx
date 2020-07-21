@@ -27,12 +27,15 @@ import { RichText } from 'prismic-reactjs'
 import Meta from 'components/Meta'
 
 // HERRAMIENTAS
-import { formateDate, getLikesAverage, copyPath, sendLikes } from 'utils/Tools'
 import { findByUID, usePrismicData, saveDocs } from 'utils/LocalDB'
+import { useLikesAverage, useLikes } from 'utils/Hooks'
+import { formateDate, copyPath } from 'utils/ToolsAux'
+import fetchPosts from 'utils/Prismic'
 
 // CONTEXTO
 import { appContext } from 'context/appContext'
-import fetchPosts from 'utils/Prismic'
+
+// COMPONENTES
 import HTMLSerializer from 'components/HTMLSerializer'
 import SearchCard from 'components/SearchCard'
 import ScrollObserver from 'components/ScrollObserver'
@@ -86,8 +89,8 @@ const Post: NextPage<PostProps> = ({ post }) => {
 		}, 3000)
 	}, [])
 
-	// PLUGIN DE LIKES DE LIKES
-	sendLikes(uid)
+	// PLUGIN DE LIKES
+	useLikes(uid)
 
 	useEffect(() => {
 		// LEER DATOS LOCALES
@@ -172,7 +175,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	}, [uid, state.subSubtitles, state.subtitles])
 
 	// OBTENER LIKES
-	getLikesAverage(uid, [state.subtitles, sPost], (likesAverage: string) => {
+	useLikesAverage(uid, [state.subtitles, sPost], (likesAverage: string) => {
 		setState({ ...state, likesAverage, relatedPost: relatedPostRef.current })
 	})
 
