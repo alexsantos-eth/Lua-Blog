@@ -10,9 +10,6 @@ import Gist from 'components/Gist'
 // @ts-ignore
 import { RichText, Elements } from 'prismic-reactjs'
 
-// NEXT
-import Link from 'next/link'
-
 const fetchPosts = async () => {
 	// LEER API
 	const response: ApiSearchResponse = await PrismicClient.query(
