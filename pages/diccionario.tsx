@@ -1,5 +1,5 @@
 // REACT
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, MouseEvent } from 'react'
 
 // PRISMIC
 import { Document } from 'prismic-javascript/types/documents'
@@ -25,7 +25,6 @@ import { RichText } from 'prismic-reactjs'
 import { motion, Variants } from 'framer-motion'
 
 // ROUTER
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 // HERRAMIENTAS
@@ -48,7 +47,8 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 	const { setDict, lang } = useContext(appContext)
 
 	// RUTA
-	const path = useRouter().asPath
+	const router = useRouter()
+	const path = router.asPath
 
 	// GUARDAR DICCIONARIO
 	useEffect(() => {
@@ -86,6 +86,12 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 		(a: ISlice, b: ISlice) => a.content[0].text > b.content[0].text
 	)
 
+	// GO BACK
+	const goBack = (ev: MouseEvent<HTMLAnchorElement>) => {
+		ev.preventDefault()
+		router.back()
+	}
+
 	return (
 		<section className='page dictionary'>
 			<Head>
@@ -105,11 +111,9 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 				animate='in'
 				exit='in'
 				variants={PostPageVariant}>
-				<Link as='/' href='/' passHref>
-					<a title='Regresar' className='post-page-back'>
-						<i className='lni lni-chevron-left' />
-					</a>
-				</Link>
+				<a title='Regresar' href='/' className='post-page-back' onClick={goBack}>
+					<i className='lni lni-chevron-left' />
+				</a>
 
 				<img src='/images/dictionary/dictionary.jpg' alt='Background' />
 				<div className='slices-content'>
@@ -140,6 +144,11 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 					align-items: center;
 					padding: 20px;
 					border-radius: 10px;
+				}
+
+				.slide:hover {
+					background: var(--shadow);
+					border-left: 5px solid var(--deepOrange);
 				}
 
 				.slice > img {
@@ -198,7 +207,7 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 			<style jsx global>{`
 				.active-concept {
 					background: var(--shadow);
-					border-top: 5px solid var(--deepOrange);
+					border-left: 5px solid var(--deepOrange);
 				}
 
 				.slices {
