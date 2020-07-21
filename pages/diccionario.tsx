@@ -146,7 +146,7 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 					border-radius: 10px;
 				}
 
-				.slide:hover {
+				.slice:hover {
 					background: var(--shadow);
 					border-left: 5px solid var(--deepOrange);
 				}
