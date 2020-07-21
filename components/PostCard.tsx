@@ -2,7 +2,8 @@
 import Link from 'next/link'
 
 // HERRAMIENTAS
-import { linkResolver, hrefResolver, formateDate } from 'utils/Tools'
+import { linkResolver, hrefResolver } from 'utils/Prismic'
+import { formateDate } from 'utils/ToolsAux'
 
 // PRISMIC
 import { Document } from 'prismic-javascript/types/documents'

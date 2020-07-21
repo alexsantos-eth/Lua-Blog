@@ -1,5 +1,5 @@
 // TIPOS DE DATOS
-import React from 'react'
+import { createContext } from 'react'
 
 // JSON DE LENGUAJES
 import Strings from '../lang/Strings.json'
@@ -26,7 +26,7 @@ const defaultAppContext: AppContext = {
 }
 
 // CREAR CONTEXTO
-const appContext: React.Context<AppContext> = React.createContext(defaultAppContext)
+const appContext: React.Context<AppContext> = createContext(defaultAppContext)
 
 // EXPORTAR
 export { appContext }

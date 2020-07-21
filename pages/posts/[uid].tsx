@@ -21,9 +21,6 @@ import Head from 'next/head'
 import PrismicClient from 'prismic-configuration'
 import { Document } from 'prismic-javascript/types/documents'
 
-// ANIMACIONES
-import { motion, Variants } from 'framer-motion'
-
 // COMPONENTES
 // @ts-ignore
 import { RichText } from 'prismic-reactjs'
@@ -52,12 +49,6 @@ interface PostState {
 // PROPIEDADES INICIALES
 interface PostProps {
 	post: Document
-}
-
-// ANIMACIONES
-const PostPageVariant: Variants = {
-	init: { y: -100, opacity: 0 },
-	in: { y: 0, opacity: 1, transition: { delay: 0.5 } },
 }
 
 // ESTADO INICIAL
@@ -259,7 +250,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 			</Head>
 			<ScrollObserver />
 			{sPost && (
-				<motion.div initial='init' animate='in' exit='in' variants={PostPageVariant}>
+				<div>
 					<div className='post-page-content'>
 						<Link as='/' href='/' passHref>
 							<a title='Regresar' className='post-page-back'>
@@ -376,7 +367,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 							</div>
 						</div>
 					</div>
-				</motion.div>
+				</div>
 			)}
 			<style jsx>{`
 				.post-page-content {

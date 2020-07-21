@@ -22,9 +22,6 @@ import ScrollObserver from 'components/ScrollObserver'
 // @ts-ignore
 import { RichText } from 'prismic-reactjs'
 
-// FRAMER
-import { motion, Variants } from 'framer-motion'
-
 // ROUTER
 import { useRouter } from 'next/router'
 
@@ -34,12 +31,6 @@ import { saveDict } from 'utils/LocalDB'
 // PROPIEDADES INICIALES
 interface IDPageProps {
 	dictionary: Document
-}
-
-// ANIMACIONES
-const PostPageVariant: Variants = {
-	init: { y: -100, opacity: 0 },
-	in: { y: 0, opacity: 1, transition: { delay: 0.5 } },
 }
 
 // COMPONENTE
@@ -106,12 +97,7 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 				/>
 			</Head>
 			<ScrollObserver />
-			<motion.div
-				className='slices'
-				initial='init'
-				animate='in'
-				exit='in'
-				variants={PostPageVariant}>
+			<div className='slices'>
 				<a title='Regresar' href='/' className='post-page-back' onClick={goBack}>
 					<i className='lni lni-chevron-left' />
 				</a>
@@ -131,7 +117,7 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 					</div>
 					<div className='slices-index' />
 				</div>
-			</motion.div>
+			</div>
 
 			<style jsx>{`
 				.dictionary {

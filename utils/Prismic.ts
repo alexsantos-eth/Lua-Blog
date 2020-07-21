@@ -16,7 +16,7 @@ const fetchPosts = async () => {
 }
 
 // DICCIONARIO
-const fetchDictionary = async () => {
+export const fetchDictionary = async () => {
 	// LEER API
 	const response: Document = await PrismicClient.getSingle('dictionary', {})
 
@@ -25,18 +25,17 @@ const fetchDictionary = async () => {
 }
 
 // OBTENER LINK CON UID
-const linkResolver = (doc: Document, item?: ISlice) => {
+export const linkResolver = (doc: Document, item?: ISlice) => {
 	if (doc.type === 'dictionary') return '/diccionario#' + item?.content[0].text
 	else if (doc.type === 'post') return '/posts/' + doc.uid
 	return '/'
 }
 
 // OBTENER URL CON UID
-const hrefResolver = (doc: Document) => {
+export const hrefResolver = (doc: Document) => {
 	if (doc.type === 'post') return '/posts/[uid]'
 	else if (doc.type === 'page') return '/page/[uid]'
 	else return '/'
 }
 
 export default fetchPosts
-export { fetchDictionary, linkResolver, hrefResolver }

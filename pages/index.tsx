@@ -31,15 +31,6 @@ import { RichText } from 'prismic-reactjs'
 // CONTEXTO
 import { appContext } from 'context/appContext'
 
-// ANIMACIONES
-import { Variants, motion } from 'framer-motion'
-
-// VARIANTES
-const contentV: Variants = {
-	initial: { x: -100, opacity: 0 },
-	in: { x: 0, opacity: 1, transition: { delay: 0.5 } },
-}
-
 // ESTADO
 interface IndexState {
 	docs: Document[]
@@ -125,14 +116,9 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 				/>
 			</Head>
 			{postsState.docs && (
-				<motion.div
-					variants={contentV}
-					initial='initial'
-					animate='in'
-					exit='initial'
-					className='homeContainer'>
+				<div className='homeContainer'>
 					<div className='selectPost'>
-						<select onChange={changeDocs} id='selectPost' aria-labelledby='downIcon'>
+						<select onChange={changeDocs} id='selectPost' aria-label='Order posts'>
 							<option>{lang.index.postTitle}</option>
 							<option>{lang.index.postTitle_2}</option>
 						</select>
@@ -195,7 +181,7 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 							</div>
 						)}
 					</div>
-				</motion.div>
+				</div>
 			)}
 			<style jsx global>{`
 				.homeContainer {
