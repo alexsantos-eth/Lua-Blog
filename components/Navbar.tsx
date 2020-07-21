@@ -107,7 +107,9 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					{lang.navbar.routes.map((route: string, key: number) => (
 						<li key={key}>
 							<a
-								href={key === 4 ? '/' : `https://wearelua.com/${route === 'Inicio' ? '' : route}`}
+								href={
+									key === 4 ? '/' : `https://wearelua.com/${route === 'LUA Inicio' ? '' : route}`
+								}
 								title={route}
 								className={
 									key === 5 ? 'btn talkBtn' : key === 4 ? 'enable-route' : 'disable-route'
@@ -144,8 +146,13 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 			</div>
 			<div className='searchBox'>
 				<div className='searchInp'>
-					<i className='lni lni-search-alt' />
-					<input type='search' placeholder={lang.navbar.searchPlaceholder} onChange={searchDocs} />
+					<label htmlFor='searchInput' className='lni lni-search-alt' />
+					<input
+						id='searchInput'
+						type='search'
+						placeholder={lang.navbar.searchPlaceholder}
+						onChange={searchDocs}
+					/>
 					<label htmlFor='showSearch' className='lni lni-close' />
 				</div>
 				<div className='foundDocs'>
@@ -367,11 +374,9 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					color: #fff;
 				}
 
-				.searchBox > .searchInp > i {
-					font-size: 1.5em;
+				.searchBox > .searchInp > label:first-child {
+					margin-left: 0;
 					margin-right: 15px;
-					cursor: pointer;
-					color: #fff;
 				}
 
 				.foundDocs {

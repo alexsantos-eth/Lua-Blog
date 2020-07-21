@@ -43,8 +43,8 @@ import ScrollObserver from 'components/ScrollObserver'
 interface PostState {
 	likesAverage: string
 	post?: Document
-	subtitles?: NodeListOf<HTMLHeadingElement>
-	subSubtitles?: NodeListOf<HTMLHeadingElement>
+	subtitles: NodeListOf<HTMLHeadingElement> | null
+	subSubtitles: NodeListOf<HTMLHeadingElement> | null
 	relatedPost: Document[] | null
 }
 
@@ -61,6 +61,8 @@ const PostPageVariant: Variants = {
 
 // ESTADO INICIAL
 const DefState: PostState = {
+	subSubtitles: null,
+	subtitles: null,
 	likesAverage: '0',
 	relatedPost: null,
 }
@@ -129,19 +131,17 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	}, [docs, uid])
 
 	useEffect(() => {
-		if (sPost) {
-			// OBTENER INDICES
-			const subtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
-				'.post-page-main > h2'
-			) as NodeListOf<HTMLHeadingElement>
+		// OBTENER INDICES
+		const subtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
+			'.post-page-main > h2'
+		) as NodeListOf<HTMLHeadingElement>
 
-			const subSubtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
-				'.post-page-main > h3'
-			) as NodeListOf<HTMLHeadingElement>
+		const subSubtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
+			'.post-page-main > h3'
+		) as NodeListOf<HTMLHeadingElement>
 
-			// ACTUALIZAR ESTADO
-			setState({ ...state, subtitles, subSubtitles })
-		}
+		// ACTUALIZAR ESTADO
+		setState({ ...state, subtitles, subSubtitles })
 	}, [sPost, state.likesAverage])
 
 	// tslint:disable-next-line: only-arrow-functions
@@ -242,7 +242,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	const description: string = sPost
 		? sPost.data.description
 		: 'Lo sentimos no hemos podido encontrar el post, intenta verificar la dirección o intenta nuevamente.'
-
+	console.log(state)
 	// COMPONENTE
 	return (
 		<section className='page post'>

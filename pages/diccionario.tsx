@@ -81,16 +81,16 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 		}
 	}, [path])
 
-	// ORDENAR DICCIONARIO
-	dictionary.data.body[0].items.sort(
-		(a: ISlice, b: ISlice) => a.content[0].text > b.content[0].text
-	)
-
 	// GO BACK
 	const goBack = (ev: MouseEvent<HTMLAnchorElement>) => {
 		ev.preventDefault()
 		router.back()
 	}
+
+	// ORDENAR DICCIONARIO
+	dictionary.data.body[0].items.sort(
+		(a: ISlice, b: ISlice) => a.content[0].text > b.content[0].text
+	)
 
 	return (
 		<section className='page dictionary'>
@@ -143,12 +143,14 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 					width: 100%;
 					align-items: center;
 					padding: 20px;
+					transition: background 0.3s ease-in-out, border 0.3s ease-in-out;
 					border-radius: 10px;
+					border-left: 5px solid transparent;
 				}
 
 				.slice:hover {
 					background: var(--shadow);
-					border-left: 5px solid var(--deepOrange);
+					border-color: var(--deepOrange);
 				}
 
 				.slice > img {
@@ -207,7 +209,7 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 			<style jsx global>{`
 				.active-concept {
 					background: var(--shadow);
-					border-left: 5px solid var(--deepOrange);
+					border-color: var(--deepOrange) !important;
 				}
 
 				.slices {

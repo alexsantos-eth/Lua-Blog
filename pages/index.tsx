@@ -116,7 +116,7 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 		<section className='page home'>
 			<Head>
 				<title>{lang.general.title}</title>
-				<Meta title={lang.general.title} desc='' banner='' url='' keys={['LUA', 'blog']} />
+				<Meta title={lang.general.title} desc='Blog de tecnología escrito en TypeScript con NextJS, Firebase y continous deploying con Vercel, el proyecto es OpenSource bajo una licencia GNU, contiene Linters y Prettier para el formato estándar.' banner='' url='' keys={['LUA', 'blog']} />
 			</Head>
 			{postsState.docs && (
 				<motion.div
@@ -130,7 +130,7 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 							<option>{lang.index.postTitle}</option>
 							<option>{lang.index.postTitle_2}</option>
 						</select>
-						<i className='lni lni-chevron-down selectIcon' />
+						<label htmlFor='selectPost' className='lni lni-chevron-down selectIcon' />
 					</div>
 
 					<div className='postsList'>

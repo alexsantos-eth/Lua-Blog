@@ -313,7 +313,7 @@ const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 				.alertContainer .alertActions li button {
 					color: #fff;
 					width: 100px;
-					background: var(--deepOrange);
+					background: hsl(14, 100%, 40%);
 					box-shadow: none;
 					overflow: hidden;
 					font-family: 'OpenSans';
