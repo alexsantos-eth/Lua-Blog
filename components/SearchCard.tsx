@@ -8,7 +8,7 @@ import { RichText } from 'prismic-reactjs'
 import Link from 'next/link'
 
 // HERRAMIENTAS
-import { hrefResolver, linkResolver } from 'utils/Tools'
+import { hrefResolver, linkResolver } from 'utils/Prismic'
 
 // PROPIEDADES
 interface ISearchCardProps {

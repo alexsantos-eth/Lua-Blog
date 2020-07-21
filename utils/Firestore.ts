@@ -10,6 +10,12 @@ import { Document } from 'prismic-javascript/types/documents'
 // INSTANCIA
 const db: firebase.firestore.Firestore = firebase.firestore()
 
+// ENVIAR TOKEN A LA DB
+export const sendToken = async (token: string) => {
+	const tokens = await db.collection('tokens')
+	return tokens.add({ upload: new Date().toUTCString(), token })
+}
+
 // INTERFAZ DE DOCUMENTOS DE FIRESTORE
 interface LikeDoc {
 	count: number[]

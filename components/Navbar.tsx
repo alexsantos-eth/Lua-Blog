@@ -13,12 +13,14 @@ import { appContext } from 'context/appContext'
 
 // PRISMIC
 import { Document } from 'prismic-javascript/types/documents'
-import SearchCard from './SearchCard'
 import { useRouter } from 'next/router'
 
 // @ts-ignore
 import { RichText } from 'prismic-reactjs'
-import { parseString } from 'utils/Tools'
+import { parseString } from 'utils/ToolsAux'
+
+// COMPONENTES
+import SearchCard from './SearchCard'
 
 // INTERFAZ
 interface NavProps {

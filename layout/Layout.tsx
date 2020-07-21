@@ -9,9 +9,6 @@ import {
 	useRef,
 } from 'react'
 
-// ANIMACIONES
-import { AnimatePresence } from 'framer-motion'
-
 // TEXTOS
 import Strings from 'lang/Strings.json'
 
@@ -23,14 +20,12 @@ import Navbar from 'components/Navbar'
 import { appContext } from 'context/appContext'
 
 // HERRAMIENTAS
-import { requestPush, initFCM, toggleDarkMode } from 'utils/Tools'
+import { requestPush } from 'utils/FCM'
+import { toggleDarkMode } from 'utils/ToolsAux'
 import { showAlert, showToast } from 'utils/Fx'
 
 // PRISMIC
 import { Document } from 'prismic-javascript/types/documents'
-
-// ENVIRONMENT
-import { env } from 'process'
 
 // ESTADO
 interface AppState {
@@ -59,9 +54,6 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 	const darkRef: MutableRefObject<boolean> = useRef(true)
 
 	useEffect(() => {
-		// INICIAR FCM
-		initFCM()
-
 		// NO MOSTRAR MENSAJE DE PWA
 		window.addEventListener('beforeinstallprompt', (e) => e.preventDefault())
 
@@ -78,17 +70,16 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 		if (!online) showToast({ text: lang.layout.toast.offline })
 
 		// PERMISO PARA NOTIFICACIONES
-		if (env.NODE_ENV === 'production')
-			setTimeout(() => {
-				if (!window.localStorage.getItem('token'))
-					showAlert({
-						title: lang.layout.alerts.title,
-						body: lang.layout.alerts.body,
-						confirmBtn: lang.layout.alerts.btn,
-						type: 'confirm',
-						onConfirm: requestPush,
-					})
-			}, 3000)
+		setTimeout(() => {
+			if (!window.localStorage.getItem('token'))
+				showAlert({
+					title: lang.layout.alerts.title,
+					body: lang.layout.alerts.body,
+					confirmBtn: lang.layout.alerts.btn,
+					type: 'confirm',
+					onConfirm: requestPush,
+				})
+		}, 3000)
 	}, [])
 
 	useEffect(() => {
@@ -133,19 +124,17 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 	return (
 		<>
 			<RouteNProgress />
-			<AnimatePresence exitBeforeEnter>
-				<appContext.Provider
-					value={{
-						lang,
-						docs: state.docs,
-						setDocs: updateDocs,
-						setDict: updateDict,
-						darkMode: state.darkMode,
-					}}>
-					<Navbar docs={state.docs} darkMode={state.darkMode} changeDarkMode={changeDarkMode} />
-					<main>{props.children}</main>
-				</appContext.Provider>
-			</AnimatePresence>
+			<appContext.Provider
+				value={{
+					lang,
+					docs: state.docs,
+					setDocs: updateDocs,
+					setDict: updateDict,
+					darkMode: state.darkMode,
+				}}>
+				<Navbar docs={state.docs} darkMode={state.darkMode} changeDarkMode={changeDarkMode} />
+				<main>{props.children}</main>
+			</appContext.Provider>
 		</>
 	)
 }

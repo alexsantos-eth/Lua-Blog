@@ -9,7 +9,7 @@ import { AppProps } from 'next/app'
 
 // BASE LOCAL Y HERRAMIENTAS
 import { initDB } from 'utils/LocalDB'
-import { updateApp } from 'utils/Tools'
+import { updateApp } from 'utils/ToolsAux'
 
 const BlogApp = ({ Component, pageProps, router }: AppProps) => {
 	useEffect(() => {
