@@ -35,7 +35,8 @@ import { findByUID, usePrismicData, saveDocs } from 'utils/LocalDB'
 
 // CONTEXTO
 import { appContext } from 'context/appContext'
-import fetchPosts, { htmlSerializer } from 'utils/Prismic'
+import fetchPosts from 'utils/Prismic'
+import HTMLSerializer from 'components/HTMLSerializer'
 import SearchCard from 'components/SearchCard'
 import ScrollObserver from 'components/ScrollObserver'
 
@@ -152,7 +153,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 		children: T,
 		key: number
 	) {
-		return htmlSerializer(type, element, content, children, key, darkMode)
+		return HTMLSerializer(type, element, content, children, key, darkMode)
 	}
 
 	// SCROLL PARA SUB TÍTULOS

@@ -20,9 +20,9 @@ import Meta from 'components/Meta'
 import PostCard from 'components/PostCard'
 
 // HERRAMIENTAS
-import fetchPosts, { fetchDictionary } from 'utils/Prismic'
-import { linkResolver, hrefResolver, getSortPopular } from 'utils/Tools'
+import fetchPosts, { fetchDictionary, linkResolver, hrefResolver } from 'utils/Prismic'
 import IPostsDB, { saveDocs, saveDict, getPosts } from 'utils/LocalDB'
+import getSortPopular from 'utils/Firestore'
 
 // PRISMIC REACT
 // @ts-ignore
@@ -116,7 +116,13 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 		<section className='page home'>
 			<Head>
 				<title>{lang.general.title}</title>
-				<Meta title={lang.general.title} desc='Blog de tecnología escrito en TypeScript con NextJS, Firebase y continous deploying con Vercel, el proyecto es OpenSource bajo una licencia GNU, contiene Linters y Prettier para el formato estándar.' banner='' url='' keys={['LUA', 'blog']} />
+				<Meta
+					title={lang.general.title}
+					desc='Blog de tecnología escrito en TypeScript con NextJS, Firebase y continuos deploying con Vercel, el proyecto es OpenSource bajo una licencia GNU, contiene Linters y Prettier para el formato estándar.'
+					banner=''
+					url=''
+					keys={['LUA', 'blog']}
+				/>
 			</Head>
 			{postsState.docs && (
 				<motion.div
@@ -126,11 +132,11 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 					exit='initial'
 					className='homeContainer'>
 					<div className='selectPost'>
-						<select onChange={changeDocs} id='selectPost'>
+						<select onChange={changeDocs} id='selectPost' aria-labelledby='downIcon'>
 							<option>{lang.index.postTitle}</option>
 							<option>{lang.index.postTitle_2}</option>
 						</select>
-						<label htmlFor='selectPost' className='lni lni-chevron-down selectIcon' />
+						<label htmlFor='selectPost' id='downIcon' className='lni lni-chevron-down selectIcon' />
 					</div>
 
 					<div className='postsList'>

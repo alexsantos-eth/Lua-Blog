@@ -9,13 +9,14 @@ import { NextPageContext, NextPage } from 'next'
 import Head from 'next/head'
 
 // OBTENER DICCIONARIOS
-import { fetchDictionary, htmlSerializer } from 'utils/Prismic'
+import { fetchDictionary } from 'utils/Prismic'
 
 // CONTEXTO
 import { appContext } from 'context/appContext'
 
 // COMPONENTES
 import Meta from 'components/Meta'
+import HTMLSerializer from 'components/HTMLSerializer'
 import ScrollObserver from 'components/ScrollObserver'
 
 // @ts-ignore
@@ -123,7 +124,7 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 								<div className='slice' key={key}>
 									<img src={item.image.url} alt='Concept Icon' />
 									<div className='content'>
-										<RichText render={item.content} htmlSerializer={htmlSerializer} />
+										<RichText render={item.content} htmlSerializer={HTMLSerializer} />
 									</div>
 								</div>
 							))}
