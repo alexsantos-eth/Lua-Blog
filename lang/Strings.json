@@ -12,7 +12,7 @@
 		"navbar": {
 			"searchPlaceholder": "Buscar artículos",
 			"title": "LUA Development Studio",
-			"routes": ["LUA Inicio", "Nosotros", "Soluciones", "Equipo", "Blog", "Hablemos"]
+			"routes": ["Inicio", "Nosotros", "Soluciones", "Equipo", "Blog", "Hablemos"]
 		},
 		"index": {
 			"postTitle": "Post Recientes",

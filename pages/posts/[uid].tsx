@@ -6,9 +6,8 @@ import {
 	Dispatch,
 	useRef,
 	useContext,
-	MouseEvent,
 	MutableRefObject,
-	useCallback,
+	MouseEvent,
 } from 'react'
 
 // NEXT
@@ -18,8 +17,8 @@ import Link from 'next/link'
 import Head from 'next/head'
 
 // PRISMIC
-import PrismicClient from 'prismic-configuration'
 import { Document } from 'prismic-javascript/types/documents'
+import PrismicClient from 'prismic-configuration'
 
 // COMPONENTES
 // @ts-ignore
@@ -27,18 +26,19 @@ import { RichText } from 'prismic-reactjs'
 import Meta from 'components/Meta'
 
 // HERRAMIENTAS
+import { formateDate, copyPath, goTo, shareLink } from 'utils/ToolsAux'
 import { findByUID, usePrismicData, saveDocs } from 'utils/LocalDB'
-import { useLikesAverage, useLikes } from 'utils/Hooks'
-import { formateDate, copyPath } from 'utils/ToolsAux'
+import { useLikesAverage, useLikes } from 'utils/LikesHook'
 import fetchPosts from 'utils/Prismic'
 
 // CONTEXTO
 import { appContext } from 'context/appContext'
 
 // COMPONENTES
-import HTMLSerializer from 'components/HTMLSerializer'
-import SearchCard from 'components/SearchCard'
 import ScrollObserver from 'components/ScrollObserver'
+import HTMLSerializer from 'components/HTMLSerializer'
+import ClipSkeleton from 'components/ClipSkeleton'
+import SearchCard from 'components/SearchCard'
 
 // INTERFAZ DE ESTADO
 interface PostState {
@@ -67,12 +67,14 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	const { docs, lang, setDocs, darkMode } = useContext(appContext)
 
 	// REFERENCIAS
-	const relatedPostRef: MutableRefObject<Document[] | null> = useRef(null)
+	const stateRef: MutableRefObject<PostState> = useRef(DefState)
 
 	// BUSCAR POR ID
 	const path: string = useRouter().asPath
 	const uid: string = path.substr(7)
-	DefState.post = docs ? findByUID(uid, docs) : undefined
+	const cPost = docs ? findByUID(uid, docs) : post
+	DefState.post = cPost
+	stateRef.current.post = cPost
 
 	// ESTADO DEL POST
 	const [state, setState]: [PostState, Dispatch<SetStateAction<PostState>>] = useState(DefState)
@@ -80,7 +82,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	useEffect(() => {
 		// ENVIAR DOCUMENTOS
 		setTimeout(() => {
-			if (post && docs?.length === 0)
+			if (post || docs?.length === 0)
 				fetchPosts().then((fDocs: Document[]) => {
 					// GUARDAR EN LOCAL
 					setDocs(fDocs)
@@ -93,16 +95,35 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	useLikes(uid)
 
 	useEffect(() => {
+		// OBTENER INDICES
+		const subtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
+			'.post-page-main > h2'
+		) as NodeListOf<HTMLHeadingElement>
+
+		const subSubtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
+			'.post-page-main > h3'
+		) as NodeListOf<HTMLHeadingElement>
+
+		// GUARDAR REFERENCIA
+		stateRef.current.subtitles = subtitles
+		stateRef.current.subSubtitles = subSubtitles
+
+		// ACTUALIZAR ESTADO
+		setState({ ...stateRef.current })
+	}, [uid, state.post])
+
+	useEffect(() => {
 		// LEER DATOS LOCALES
 		usePrismicData(uid).then((pDoc: Document | undefined) => {
 			// ACTUALIZAR A CUALQUIER DOCUMENTO QUE HAYA DISPONIBLE
 			// CARGAR DESDE DOCUMENTOS (CONTEXT API) SINO CON INDEXED DB SINO CON INITIAL PROPS
-			setState({ ...state, post: docs ? findByUID(uid, docs) : pDoc ? pDoc : sPost })
+			const cachePost: Document | undefined = docs ? findByUID(uid, docs) : pDoc ? pDoc : sPost
+
+			// ACTUALIZAR ESTADO
+			stateRef.current.post = cachePost
+			setState({ ...stateRef.current })
 		})
 	}, [uid])
-
-	// POST ACTUAL
-	const sPost: Document | undefined = post || state.post
 
 	useEffect(() => {
 		if (docs?.length) {
@@ -118,26 +139,13 @@ const Post: NextPage<PostProps> = ({ post }) => {
 				})
 
 			// ASIGNAR REFERENCIA
-			relatedPostRef.current = relatedPost
+			stateRef.current.post = nPost
+			stateRef.current.relatedPost = relatedPost
 
 			// ACTUALIZAR ESTADO
-			setState({ ...state, post: nPost, relatedPost: relatedPostRef.current })
+			setState({ ...stateRef.current })
 		}
 	}, [docs, uid])
-
-	useEffect(() => {
-		// OBTENER INDICES
-		const subtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
-			'.post-page-main > h2'
-		) as NodeListOf<HTMLHeadingElement>
-
-		const subSubtitles: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
-			'.post-page-main > h3'
-		) as NodeListOf<HTMLHeadingElement>
-
-		// ACTUALIZAR ESTADO
-		setState({ ...state, subtitles, subSubtitles })
-	}, [sPost, state.likesAverage])
 
 	// tslint:disable-next-line: only-arrow-functions
 	function uidSerializer<T>(
@@ -170,30 +178,15 @@ const Post: NextPage<PostProps> = ({ post }) => {
 			})
 
 			// HACER SCROLL
-			goTo(subElement)
+			if (subElement) goTo(subElement)
 		}
 	}, [uid, state.subSubtitles, state.subtitles])
 
 	// OBTENER LIKES
-	useLikesAverage(uid, [state.subtitles, sPost], (likesAverage: string) => {
-		setState({ ...state, likesAverage, relatedPost: relatedPostRef.current })
+	useLikesAverage(uid, [uid], (likesAverage: string) => {
+		stateRef.current.likesAverage = likesAverage
+		setState({ ...stateRef.current })
 	})
-
-	// AVANZAR A SECCIONES
-	const goTo = (h: HTMLHeadingElement | null) => {
-		// OBTENER DIMENSIONES
-		const scroll: number = h?.getBoundingClientRect().top || 0
-		const navHeight: number = parseInt(
-			getComputedStyle(document.body).getPropertyValue('--navHeight').replace('px', ''),
-			10
-		)
-
-		// AVANZAR
-		window.scrollTo({
-			top: window.scrollY + (scroll - navHeight - 10),
-			behavior: 'smooth',
-		})
-	}
 
 	// FUNCIONES PARA SCROLL
 	const linkResolvers = state.subtitles
@@ -205,27 +198,16 @@ const Post: NextPage<PostProps> = ({ post }) => {
 		  )
 		: []
 
-	// COMPARTIR EN FACEBOOK
-	const shareBtn = useCallback(
-		(ev: MouseEvent<HTMLAnchorElement>) => {
-			// VERIFICAR SI ESTA DISPONIBLE LA API
-			if (navigator.share) {
-				// EVITAR LINK
-				ev.preventDefault()
+	// POST ACTUAL
+	const sPost: Document | undefined = post || state.post
 
-				// COMPARTIR
-				navigator
-					.share({
-						title: RichText.asText(sPost.data.title),
-						text: `Mira este artículo sobre ${sPost.tags.join(', ')}`,
-						url: window.location.href,
-					})
-					.then(() => console.log('Successfully share'))
-					.catch((error: Error) => console.log('Error sharing', error))
-			}
-		},
-		[sPost]
-	)
+	// COMPARTIR
+	const shareEvent = (ev: MouseEvent<HTMLAnchorElement>) =>
+		shareLink(
+			ev,
+			RichText.asText(sPost.data.title),
+			`Mira este artículo sobre ${sPost.tags.join(', ')}`
+		)
 
 	// COPIAR URL
 	const copyPaths = (e: any) => copyPath(e, lang.postPage.toast)
@@ -237,7 +219,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 	const description: string = sPost
 		? sPost.data.description
 		: 'Lo sentimos no hemos podido encontrar el post, intenta verificar la dirección o intenta nuevamente.'
-	console.log(state)
+
 	// COMPONENTE
 	return (
 		<section className='page post'>
@@ -310,7 +292,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
 										</li>
 										<li>
 											<a
-												onClick={shareBtn}
+												onClick={shareEvent}
 												href='https://www.facebook.com/weareluastudio'
 												title='Facebook - LUA Development Studio'
 												target='_blank'
@@ -359,13 +341,17 @@ const Post: NextPage<PostProps> = ({ post }) => {
 											))}
 									</ul>
 								</div>
-								{state.relatedPost && state.relatedPost.length > 0 && (
-									<div className='post-page-related'>
-										<h2>{lang.postPage.related}</h2>
-										{state.relatedPost.map((relatedPost: Document, key: number) => (
-											<SearchCard key={key} doc={relatedPost} />
-										))}
-									</div>
+								{state.relatedPost ? (
+									state.relatedPost.length > 0 && (
+										<div className='post-page-related'>
+											<h2>{lang.postPage.related}</h2>
+											{state.relatedPost.map((relatedPost: Document, key: number) => (
+												<SearchCard key={key} doc={relatedPost} />
+											))}
+										</div>
+									)
+								) : (
+									<ClipSkeleton />
 								)}
 							</div>
 						</div>

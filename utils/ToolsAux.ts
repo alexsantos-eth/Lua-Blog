@@ -102,11 +102,14 @@ const getDocHeight = () => {
 
 // CALCULAR ALTURA MAXIMA
 export const calculateScrollDistance = () => {
+	// CALCULAR ALTO
 	const windowHeight = window.innerHeight
 	const docHeight = getDocHeight()
 
+	// CALCULAR ESPACIO DE SCROLL
 	const totalDocScrollLength = docHeight - windowHeight
 
+	// RETORNAR TOTAL
 	return totalDocScrollLength
 }
 
@@ -117,4 +120,39 @@ export const copyPath = (e: any, text: string) => {
 
 	// COPIAR
 	navigator.clipboard.writeText(window.location.href).then(() => showToast({ text }))
+}
+
+// AVANZAR A SECCIONES
+export const goTo = (h: HTMLHeadingElement | null) => {
+	// OBTENER DIMENSIONES
+	const scroll: number = h?.getBoundingClientRect().top || 0
+	const navHeight: number = parseInt(
+		getComputedStyle(document.body).getPropertyValue('--navHeight').replace('px', ''),
+		10
+	)
+
+	// AVANZAR
+	window.scrollTo({
+		top: window.scrollY + (scroll - navHeight - 10),
+		behavior: 'smooth',
+	})
+}
+
+// COMPARTIR EN FACEBOOK
+export const shareLink = (ev: any, title: string, text: string) => {
+	// VERIFICAR SI ESTA DISPONIBLE LA API
+	if (navigator.share) {
+		// EVITAR LINK
+		ev.preventDefault()
+
+		// COMPARTIR
+		navigator
+			.share({
+				title,
+				text,
+				url: window.location.href,
+			})
+			.then(() => console.log('Successfully share'))
+			.catch((error: Error) => console.log('Error sharing', error))
+	}
 }

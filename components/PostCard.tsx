@@ -19,7 +19,7 @@ const PostCard: React.FC<IPostProps> = (props: IPostProps) => {
 	return (
 		<Link href={hrefResolver(props.doc)} as={linkResolver(props.doc)}>
 			<div className='postCard'>
-				<img src={props.doc.data.banner.url} alt='Post banner' />
+				<img loading='lazy' src={props.doc.data.banner.url} alt='Post banner' />
 				<h2>{RichText.asText(props.doc.data.title)}</h2>
 				<p>{RichText.asText(props.doc.data.description)}</p>
 				<span>{formateDate(props.doc.first_publication_date, props.doc.data.author)}</span>

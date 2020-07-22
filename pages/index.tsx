@@ -9,6 +9,8 @@ import {
 	useState,
 	ChangeEvent,
 	useCallback,
+	useRef,
+	MutableRefObject,
 } from 'react'
 
 // ROUTER
@@ -30,30 +32,35 @@ import { RichText } from 'prismic-reactjs'
 
 // CONTEXTO
 import { appContext } from 'context/appContext'
+import ClipSkeleton from 'components/ClipSkeleton'
 
 // ESTADO
 interface IndexState {
-	docs: Document[]
-	popular: Document[]
+	docs: Document[] | null
+	popular: Document[] | null
+	dictionary: Document | null
 	notSort: boolean
 }
 
 // PROPIEDADES INICIALES
 interface PageProps {
 	posts: Document[]
-	dictionary: Document
 }
 
-const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
+// ESTADO INICIAL
+const DefState: IndexState = {
+	dictionary: null,
+	docs: null,
+	popular: null,
+	notSort: true,
+}
+
+const Index: NextPage<PageProps> = ({ posts }) => {
 	// CONTEXTO
 	const { lang, setDocs, setDict } = useContext(appContext)
 
-	// ESTADO INICIAL
-	const DefState: IndexState = {
-		docs: posts,
-		popular: posts,
-		notSort: true,
-	}
+	// REFERENCIAS
+	const stateRef: MutableRefObject<IndexState> = useRef(DefState)
 
 	// ESTADO
 	const [postsState, setPosts]: [IndexState, Dispatch<SetStateAction<IndexState>>] = useState(
@@ -64,16 +71,12 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 	useEffect(() => {
 		// GUARDAR POSTS
 		saveDocs(posts)
-		saveDict(dictionary)
 
 		// CARGAR DESDE CACHE
 		setDocs(posts)
-		setDict(dictionary)
 
-		// ORDENAR DICCIONARIO
-		dictionary.data.body[0].items.sort(
-			(a: ISlice, b: ISlice) => a.content[0].text > b.content[0].text
-		)
+		// GUARDAR REFERENCIAS
+		stateRef.current.docs = posts
 
 		// CARGAR DESDE INDEXED DB
 		if (!posts || !window.navigator.onLine) {
@@ -83,12 +86,34 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 		}
 	}, [])
 
+	// FETCH DICCIONARIO
+	useEffect(() => {
+		fetchDictionary().then((dict: Document) => {
+			// ORDENAR DICCIONARIO
+			dict.data.body[0].items.sort((a: ISlice, b: ISlice) => a.content[0].text > b.content[0].text)
+
+			// GUARDAR EN LOCAL
+			setDict(dict)
+			saveDict(dict)
+
+			// GUARDAR EN REFERENCIA
+			stateRef.current.dictionary = dict
+
+			// ACTUALIZAR ESTADO
+			setPosts({ ...postsState, dictionary: dict })
+		})
+	}, [])
+
 	useEffect(() => {
 		// OBTENER DOCUMENTOS DESTACADOS
-		getSortPopular(posts).then((popular: Document[]) =>
-			setPosts({ docs: postsState.docs, notSort: postsState.notSort, popular })
-		)
-	}, [postsState.docs, postsState.notSort])
+		getSortPopular(posts).then((popular: Document[]) => {
+			// REFERENCIA
+			stateRef.current.popular = popular
+
+			// ACTUALIZAR ESTADOS
+			setPosts({ ...postsState, popular })
+		})
+	}, [])
 
 	// CAMBIAR ENTRE DESTACADOS Y RECIENTES
 	const changeDocs = useCallback(
@@ -100,7 +125,7 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 			// CAMBIAR ESTADO
 			setPosts({ ...postsState, notSort: index === 0 })
 		},
-		[postsState.docs, postsState.notSort]
+		[postsState.docs]
 	)
 
 	return (
@@ -125,13 +150,15 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 						<label htmlFor='selectPost' id='downIcon' className='lni lni-chevron-down selectIcon' />
 					</div>
 
-					<div className='postsList'>
-						{(postsState.notSort ? postsState.docs : postsState.popular).map(
-							(doc: Document, key: number) => (
-								<PostCard key={key} doc={doc} />
-							)
-						)}
-					</div>
+					{postsState.docs && (
+						<div className='postsList'>
+							{postsState.docs &&
+								(postsState.notSort
+									? postsState.docs
+									: postsState.popular || postsState.docs
+								).map((doc: Document, key: number) => <PostCard key={key} doc={doc} />)}
+						</div>
+					)}
 
 					<div className='postsC-container'>
 						<div className='postsRecent postClip'>
@@ -150,35 +177,43 @@ const Index: NextPage<PageProps> = ({ posts, dictionary }) => {
 							</ul>
 						</div>
 
-						<div className='bestPosts postClip'>
-							<h2>{lang.index.postTitle_2}</h2>
-							<ul>
-								{postsState.popular.map((doc: Document, key: number) => {
-									if (key < 3)
-										return (
-											<li key={key}>
-												<Link href={hrefResolver(doc)} as={linkResolver(doc)}>
-													<a>{RichText.asText(doc.data.title)}</a>
-												</Link>
-											</li>
-										)
-								})}
-							</ul>
-						</div>
+						{postsState.popular ? (
+							<div className='bestPosts postClip'>
+								<h2>{lang.index.postTitle_2}</h2>
+								<ul>
+									{postsState.popular.map((doc: Document, key: number) => {
+										if (key < 3)
+											return (
+												<li key={key}>
+													<Link href={hrefResolver(doc)} as={linkResolver(doc)}>
+														<a>{RichText.asText(doc.data.title)}</a>
+													</Link>
+												</li>
+											)
+									})}
+								</ul>
+							</div>
+						) : (
+							<ClipSkeleton />
+						)}
 
-						{dictionary && (
+						{postsState.dictionary ? (
 							<div className='dicClip postClip'>
 								<h2>{lang.index.postTitle_3}</h2>
 								<ul>
-									{dictionary.data.body[0].items.map((item: ISlice, key: number) => (
+									{postsState.dictionary.data.body[0].items.map((item: ISlice, key: number) => (
 										<li key={key}>
-											<Link href={linkResolver(dictionary, item)}>
-												<a>{item.content[0].text}</a>
-											</Link>
+											{postsState.dictionary && (
+												<Link href={linkResolver(postsState.dictionary, item)}>
+													<a>{item.content[0].text}</a>
+												</Link>
+											)}
 										</li>
 									))}
 								</ul>
 							</div>
+						) : (
+							<ClipSkeleton />
 						)}
 					</div>
 				</div>
@@ -344,10 +379,9 @@ Index.getInitialProps = async ({ res }: NextPageContext) => {
 
 	// OBTENER POSTS
 	const posts: Document[] = await fetchPosts()
-	const dictionary: Document = await fetchDictionary()
 
 	// CREAR PROPS
-	const initProps: PageProps = { posts, dictionary }
+	const initProps: PageProps = { posts }
 
 	// RETORNAR PROPS
 	return initProps
