@@ -15,9 +15,9 @@ import { fetchDictionary } from 'utils/Prismic'
 import { appContext } from 'context/appContext'
 
 // COMPONENTES
-import Meta from 'components/Meta'
 import HTMLSerializer from 'components/HTMLSerializer'
 import ScrollObserver from 'components/ScrollObserver'
+import Meta from 'components/Meta'
 
 // @ts-ignore
 import { RichText } from 'prismic-reactjs'
@@ -44,6 +44,11 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 
 	// GUARDAR DICCIONARIO
 	useEffect(() => {
+		// ORDENAR DICCIONARIO
+		dictionary.data.body[0].items.sort(
+			(a: ISlice, b: ISlice) => a.content[0].text > b.content[0].text
+		)
+
 		// GUARDAR DICCIONARIO LOCALMENTE
 		setDict(dictionary)
 		saveDict(dictionary)
@@ -204,6 +209,13 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 						grid-template-columns: 1fr;
 					}
 				}
+
+				@media screen and (max-width: 760px) {
+					.post-page-back::before {
+						right: -12px;
+					}
+				}
+
 				@media screen and (max-width: 500px) {
 					.slice {
 						flex-direction: column;
@@ -211,6 +223,12 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 
 					.slice > img {
 						margin-bottom: 20px;
+					}
+				}
+
+				@media screen and (max-width: 460px) {
+					.post-page-back::before {
+						right: -14px;
 					}
 				}
 			`}</style>

@@ -13,7 +13,7 @@ import {
 import Strings from 'lang/Strings.json'
 
 // COMPONENTES
-import RouteNProgress from 'components/Progress'
+import Progress from 'components/Progress'
 import Navbar from 'components/Navbar'
 
 // CONTEXTO
@@ -123,7 +123,7 @@ const Layout: React.FC = (props: ComponentProps<React.FC>) => {
 
 	return (
 		<>
-			<RouteNProgress />
+			<Progress />
 			<appContext.Provider
 				value={{
 					lang,
