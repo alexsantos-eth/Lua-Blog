@@ -192,6 +192,27 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 					height: 2px;
 					background: var(--postText);
 				}
+
+				@media screen and (max-width: 1200px) {
+					.slices-index {
+						display: none;
+					}
+				}
+
+				@media screen and (max-width: 1000px) {
+					.slices-concepts {
+						grid-template-columns: 1fr;
+					}
+				}
+				@media screen and (max-width: 500px) {
+					.slice {
+						flex-direction: column;
+					}
+
+					.slice > img {
+						margin-bottom: 20px;
+					}
+				}
 			`}</style>
 			<style jsx global>{`
 				.active-concept {
@@ -228,6 +249,34 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 					font-size: 1.1em;
 					opacity: 0.7;
 					line-height: 20px;
+				}
+
+				@media screen and (max-width: 1000px) {
+					.slices {
+						width: calc(100% - 100px);
+					}
+				}
+				@media screen and (max-width: 700px) {
+					.slices > img {
+						height: 300px;
+					}
+				}
+
+				@media screen and (max-width: 600px) {
+					.slices > img {
+						height: 200px;
+					}
+				}
+
+				@media screen and (max-width: 500px) {
+					.slices > img {
+						height: 150px;
+					}
+				}
+				@media screen and (max-width: 460px) {
+					.slices {
+						width: calc(100% - 60px);
+					}
 				}
 			`}</style>
 		</section>
