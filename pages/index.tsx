@@ -22,7 +22,7 @@ import Meta from 'components/Meta'
 import PostCard from 'components/PostCard'
 
 // HERRAMIENTAS
-import fetchPosts, { fetchDictionary, linkResolver, hrefResolver } from 'utils/Prismic'
+import fetchPosts, { fetchDictionary, linkResolver } from 'utils/Prismic'
 import IPostsDB, { saveDocs, saveDict, getPosts } from 'utils/LocalDB'
 import getSortPopular from 'utils/Firestore'
 
@@ -32,7 +32,10 @@ import { RichText } from 'prismic-reactjs'
 
 // CONTEXTO
 import { appContext } from 'context/appContext'
+
+// COMPONENTES
 import ClipSkeleton from 'components/ClipSkeleton'
+import SearchCard from 'components/SearchCard'
 
 // ESTADO
 interface IndexState {
@@ -163,35 +166,17 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 					<div className='postsC-container'>
 						<div className='postsRecent postClip'>
 							<h2>{lang.index.postTitle}</h2>
-							<ul>
-								{postsState.docs.map((doc: Document, key: number) => {
-									if (key < 3)
-										return (
-											<li key={key}>
-												<Link href={hrefResolver(doc)} as={linkResolver(doc)}>
-													<a>{RichText.asText(doc.data.title)}</a>
-												</Link>
-											</li>
-										)
-								})}
-							</ul>
+							{postsState.docs.map((doc: Document, key: number) => {
+								if (key < 3) return <SearchCard key={key} doc={doc} />
+							})}
 						</div>
 
 						{postsState.popular ? (
 							<div className='bestPosts postClip'>
 								<h2>{lang.index.postTitle_2}</h2>
-								<ul>
-									{postsState.popular.map((doc: Document, key: number) => {
-										if (key < 3)
-											return (
-												<li key={key}>
-													<Link href={hrefResolver(doc)} as={linkResolver(doc)}>
-														<a>{RichText.asText(doc.data.title)}</a>
-													</Link>
-												</li>
-											)
-									})}
-								</ul>
+								{postsState.popular.map((doc: Document, key: number) => {
+									if (key < 3) return <SearchCard key={key} doc={doc} />
+								})}
 							</div>
 						) : (
 							<ClipSkeleton />
@@ -265,10 +250,14 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 					color: var(--postText);
 					width: 300px;
 					border-radius: 10px;
-					padding: 10px 60px;
+					padding: 10px 30px;
 					box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
 					margin-bottom: 30px;
 					overflow: hidden;
+				}
+
+				.postClip:last-child {
+					padding: 10px 60px;
 				}
 
 				.postClip::before {
@@ -303,7 +292,7 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 					font-family: 'Futura';
 				}
 
-				.postClip > ul {
+				.postClip:last-child > ul {
 					list-style: initial;
 				}
 
@@ -366,6 +355,14 @@ const Index: NextPage<PageProps> = ({ posts }) => {
 					.page {
 						padding: 0 30px;
 					}
+				}
+			`}</style>
+			<style jsx global>{`
+				.postClip > a {
+					display: block;
+					width: 100% !important;
+					box-shadow: none !important;
+					margin-bottom: 20px;
 				}
 			`}</style>
 		</section>

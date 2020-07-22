@@ -41,22 +41,19 @@ const PostCard: React.FC<IPostProps> = (props: IPostProps) => {
 						box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.05);
 					}
 
-					h2,
-					p {
-						font-family: 'OpenSans';
-					}
-
 					span {
 						font-family: 'Manrope';
 					}
 
 					h2 {
+						font-family: 'Manrope';
 						font-size: 1.8em;
 						font-weight: 600;
 						margin-bottom: 10px;
 					}
 
 					p {
+						font-family: 'OpenSans';
 						color: var(--postText);
 						margin-bottom: 10px;
 						font-size: 1.05em;

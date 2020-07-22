@@ -220,7 +220,8 @@ const Post: NextPage<PostProps> = ({ post }) => {
 		? sPost.data.description
 		: 'Lo sentimos no hemos podido encontrar el post, intenta verificar la dirección o intenta nuevamente.'
 
-	// COMPONENTE
+	// COMPONENT
+	console.log(state)
 	return (
 		<section className='page post'>
 			<Head>

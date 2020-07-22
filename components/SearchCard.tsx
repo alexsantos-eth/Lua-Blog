@@ -43,7 +43,7 @@ const SearchCard: React.FC<ISearchCardProps> = ({ doc }: ISearchCardProps) => {
 					}
 
 					a > h1 {
-						font-family: 'OpenSans';
+						font-family: 'Manrope';
 						font-weight: 500;
 						font-size: 1.2em;
 						color: var(--postText);
