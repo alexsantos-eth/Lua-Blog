@@ -80,6 +80,8 @@ class LuaDoc extends Document<DocProps> {
 					<link rel='icon' type='image/png' sizes='32x32' href='/images/icons/favicon-32x32.png' />
 					<link rel='icon' type='image/png' sizes='96x96' href='/images/icons/favicon-96x96.png' />
 					<link rel='icon' type='image/png' sizes='16x16' href='/images/icons/favicon-16x16.png' />
+					<link rel='preconnect' href='https://lua-blog.prismic.io' />
+					<link rel='preconnect' href='https://lua-blog.cdn.prismic.io' />
 					<meta property='og:type' content='website' />
 					<meta name='twitter:card' content='summary_large_image' />
 					<meta property='og:locale' content='es_GT' />
