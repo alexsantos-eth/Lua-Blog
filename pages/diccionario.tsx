@@ -42,6 +42,11 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 	const router = useRouter()
 	const path = router.asPath
 
+	// ORDENAR DICCIONARIO
+	dictionary.data.body[0].items.sort(
+		(a: ISlice, b: ISlice) => a.content[0].text > b.content[0].text
+	)
+
 	// GUARDAR DICCIONARIO
 	useEffect(() => {
 		// ORDENAR DICCIONARIO
@@ -83,11 +88,6 @@ const Dictionary: NextPage<IDPageProps> = ({ dictionary }) => {
 		ev.preventDefault()
 		router.back()
 	}
-
-	// ORDENAR DICCIONARIO
-	dictionary.data.body[0].items.sort(
-		(a: ISlice, b: ISlice) => a.content[0].text > b.content[0].text
-	)
 
 	return (
 		<section className='page dictionary'>
