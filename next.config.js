@@ -52,6 +52,7 @@ module.exports = withCSS(
 				]
 			},
 		},
+		target: 'serverless',
 		distDir: 'build',
 		poweredByHeader: false,
 	})
