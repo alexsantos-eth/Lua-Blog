@@ -6,7 +6,8 @@
 		"dev": "next dev",
 		"build": "next build",
 		"deploy": "vercel",
-		"start": "next start"
+		"start": "next start",
+    		"export": "npm run build && next export"
 	},
 	"dependencies": {
 		"@types/node": "^14.0.5",
