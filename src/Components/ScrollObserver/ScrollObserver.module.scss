@@ -1,0 +1,12 @@
+.progress {
+    appearance: none;
+    border: none;
+    outline: none;
+    background: transparent;
+    height: 3px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 5;
+}

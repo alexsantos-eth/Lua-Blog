@@ -1,0 +1,37 @@
+{
+	"es": {
+		"general": {
+			"title": "LUA Development Studio - Blog"
+		},
+		"postPage": {
+			"related": "Post relacionados",
+			"subtitle": "Contenido",
+			"likes": "Calificación",
+			"toast": "URL copiada correctamente"
+		},
+		"navbar": {
+			"searchPlaceholder": "Buscar artículos",
+			"title": "LUA Development Studio",
+			"routes": ["Inicio", "Nosotros", "Soluciones", "Equipo", "Blog", "Hablemos"]
+		},
+		"index": {
+			"postTitle": "Post Recientes",
+			"postTitle_2": "Post Destacados",
+			"postTitle_3": "Diccionario"
+		},
+		"dictionaryPage": {
+			"title": "LUA Development Studio - Diccionario"
+		},
+		"layout": {
+			"toast": {
+				"online": "De nuevo en linea",
+				"offline": "Sin conexión a internet"
+			},
+			"alerts": {
+				"title": "Notificaciones",
+				"btn": "Permitir",
+				"body": "Hola, gracias por visitar nuestro blog, ¿te gustaría que te notifiquemos sobre nuevos artículos, post, noticias y más?"
+			}
+		}
+	}
+}
