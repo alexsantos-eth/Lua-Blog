@@ -1,0 +1,158 @@
+.page {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.postClip {
+	position: relative;
+	color: var(--postText);
+	width: 300px;
+	border-radius: 10px;
+	padding: 10px 30px;
+	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
+	margin-bottom: 30px;
+	overflow: hidden;
+}
+
+.postClip:last-child {
+	padding: 10px 60px;
+}
+
+.postClip::before {
+	content: '';
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: var(--navbarBackground);
+	z-index: -2;
+	transition: background 0.3s ease-in-out;
+}
+
+.postClip::after {
+	content: '';
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: var(--shadow);
+	z-index: -1;
+}
+
+.postClip > h2 {
+	text-align: center;
+	font-weight: 500;
+	margin-bottom: 35px;
+	margin-top: 10px;
+	font-size: 1.4em;
+	font-family: 'Futura';
+}
+
+.postClip:last-child > ul {
+	list-style: initial;
+}
+
+.postClip > ul > li {
+	margin-bottom: 20px;
+}
+
+.postClip:last-child > ul > li {
+	margin-bottom: 10px;
+}
+
+.postClip:last-child > ul > li:last-child {
+	margin-bottom: 20px;
+}
+
+.postClip > ul > li > a {
+	color: var(--postText);
+	font-family: 'Futura';
+}
+
+.selectIcon {
+	color: var(--postText);
+	font-size: 1.5em;
+	margin-left: 5px;
+}
+
+.selectPost {
+	display: none;
+	align-items: center;
+	margin-bottom: 30px;
+}
+
+select {
+	appearance: none;
+	border: none;
+	outline: none;
+	background: transparent;
+	font-family: 'OpenSans';
+	color: var(--postText);
+	font-size: 2.3em;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 1000px) {
+	.postClip {
+		display: none;
+	}
+
+	.page {
+		padding: 0 50px;
+	}
+
+	.selectPost {
+		display: flex;
+	}
+}
+
+@media screen and (max-width: 460px) {
+	.page {
+		padding: 0 30px;
+	}
+}
+
+.postClip > a {
+	display: block;
+	width: 100% !important;
+	box-shadow: none !important;
+	margin-bottom: 20px;
+}
+
+.homeContainer {
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	margin-top: 30px;
+	width: 1100px;
+}
+
+.postClip > ul > li > a {
+	font-family: 'OpenSans';
+	font-size: 1.1em;
+	color: var(--dark);
+}
+
+@media screen and (max-width: 1200px) {
+	.homeContainer {
+		width: 1030px;
+	}
+}
+
+@media screen and (max-width: 1100px) {
+	.homeContainer {
+		width: 930px;
+	}
+}
+
+@media screen and (max-width: 1000px) {
+	.homeContainer {
+		width: 100%;
+		margin-top: 0;
+		flex-direction: column;
+	}
+}

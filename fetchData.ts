@@ -11,8 +11,11 @@ const _ENDPOINT: string =
 const query: string = `{
 	postCollection {
 		items {
+			url
+			banner
 			title
 			description
+			contentMd
 			author
 		}
 	}

@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-// REACT
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import Index from 'Pages/Index/Index'
 import MainContext from 'Context/MainContext'
 import Navbar from 'Components/Navbar/Navbar'
+import Posts from 'Data/Posts.json'
 import Strings from 'Lang/Strings.json'
 import { isDark } from 'LocalGlobals/Globals'
 
@@ -55,7 +55,7 @@ const App: React.FC = () => {
 	}, [])
 
 	return (
-		<MainContext.Provider value={{ ...appState }}>
+		<MainContext.Provider value={{ ...appState, posts: Posts.postCollection.items }}>
 			<BrowserRouter>
 				<Switch>
 					<Route exact path='/' component={Index} />

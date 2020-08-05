@@ -56,3 +56,11 @@ interface ISlice {
 interface LikeDoc {
 	count: number[]
 }
+
+interface IPostItem {
+	title: string
+	url: string
+	description: string
+	author: string
+	contentMd: string
+}

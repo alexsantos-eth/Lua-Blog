@@ -3,6 +3,7 @@ export const _ENDPOINT: string =
 export const query: string = `{
 	postCollection {
 		items {
+			url
 			title
 			description
 			author

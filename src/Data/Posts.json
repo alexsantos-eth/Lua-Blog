@@ -3,6 +3,8 @@
 		"items": [
 			{
 				"title": "Reduce tu aplicación de React hasta en un 50% 😱",
+				"url": "reducir-aplicacion-en-react",
+				"contentMd": "## Hello on MarkDown\n\n-------\n\n```javascript\n  console.log('hello')\n```\n",
 				"description": "Cuando creas una aplicación en React todo parece magia hasta que ves el chunk final ... 38kb para una app que solo muestra un Hello World 😰, en este artículo mostraremos como disminuir el tamaño final de tu app en 2 sencillos pasos.",
 				"author": "Alex Santos"
 			}
