@@ -1,28 +1,5 @@
-// INSTANCIA DE FIREBASE Y BASE DE DATOS LOCAL
+// BASE DE DATOS LOCAL
 import Dexie from 'dexie'
-
-// DB DE POSTS
-interface IPostsDB {
-	post: IPostItem
-	uid: string
-}
-
-// DB DE USUARIOS
-interface IDictionaryDB {
-	dict: any
-	id: number
-}
-
-// DB DE COMENTARIOS
-interface ICommentsDB {
-	comments: any
-	id: number
-}
-
-interface IUsersDB {
-	user: any
-	id: number
-}
 
 export class LocalDB extends Dexie {
 	// DECLARAR TABLAS
@@ -63,7 +40,7 @@ export const clearDocs = async () => iLocalDB.posts.clear()
 // AGREGAR TODOS LOS POSTS
 export const saveDocs = async (posts: IPostItem[]) => {
 	// POSTS DE DOCUMENT[]
-	const postsDB: IPostsDB[] = posts.map((item:IPostItem) => {
+	const postsDB: IPostsDB[] = posts.map((item: IPostItem) => {
 		return {
 			uid: item.url || '',
 			post: item,
@@ -83,18 +60,6 @@ export const getPosts = async () => iLocalDB.posts.toArray()
 // LEER UN POST
 export const getPost = async (uid: string) => iLocalDB.posts.get(uid)
 
-export const getPostData = async (inferUID: string | boolean) => {
-	// OBTENER UID DE NAVEGADOR
-	const uid: string =
-		typeof inferUID === 'string'
-			? inferUID
-			: location.pathname.substr(location.pathname.lastIndexOf('/') + 1)
-
-	// OBTENER DEL LOCAL Y RETORNAR
-	const doc: IPostsDB | undefined = await getPost(uid)
-	return doc?.post
-}
-
 export const findByUID = (uid: string, items: IPostItem[]) => {
 	// DOCUMENTO
 	let doc: IPostItem | undefined
@@ -107,5 +72,3 @@ export const findByUID = (uid: string, items: IPostItem[]) => {
 	// RETORNAR DOCUMENTO
 	return doc
 }
-
-export default IPostsDB

@@ -6,7 +6,6 @@ import MainContext from 'Context/MainContext'
 import Navbar from 'Components/Navbar/Navbar'
 import Posts from 'Data/Posts.json'
 import Strings from 'Lang/Strings.json'
-import { isDark } from 'LocalGlobals/Globals'
 
 // ESTADO
 interface AppState {
@@ -45,7 +44,9 @@ const App: React.FC = () => {
 		const currentDark: boolean = window.localStorage.getItem('darkmode') === '1'
 
 		// DETECTAR TEMA DE OS
-		if (isDark) window.localStorage.setItem('darkmode', '1')
+		import('LocalGlobals/Globals').then(({ isDark }) =>
+			isDark ? window.localStorage.setItem('darkmode', '1') : null
+		)
 
 		// CAMBIAR CSS
 		import('Utils/Tools').then(({ toggleDarkMode }) => toggleDarkMode())

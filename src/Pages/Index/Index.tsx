@@ -1,21 +1,12 @@
-// HERRAMIENTAS
-import IPostsDB, { getPosts, saveDocs } from 'Utils/LocalDB'
-import React, {
-	ChangeEvent,
-	Dispatch,
-	SetStateAction,
-	useCallback,
-	useContext,
-	useEffect,
-	useState,
-} from 'react'
-
-import ClipSkeleton from 'Components/ClipSkeleton'
+import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
 import MainContext from 'Context/MainContext'
 import Meta from 'Components/Meta/Meta'
 import PostCard from 'Components/PostCard/PostCard'
-import SearchCard from 'Components/SearchCard'
-import getSortPopular from 'Utils/Firebase'
+import SearchCard from 'Components/SearchCard/SearchCard'
+import React, { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
+import { ChevronDown } from 'react-feather'
+
+import Styles from './Index.module.scss'
 
 // ESTADO
 interface IndexState {
@@ -36,87 +27,100 @@ const Index: React.FC = () => {
 	const { lang, posts } = useContext(MainContext)
 
 	// ESTADO
+	DefState.posts = posts
 	const [postsState, setPosts]: [IndexState, Dispatch<SetStateAction<IndexState>>] = useState(
 		DefState
 	)
 
 	// GUARDAR DOCS EN LOCAL DB
 	useEffect(() => {
-		// GUARDAR POSTS
-		saveDocs(posts)
+		import('Utils/LocalDB').then(({ getPosts, saveDocs }) => {
+			// GUARDAR POSTS
+			saveDocs(posts)
 
-		// CARGAR DESDE INDEXED DB
-		if (!posts || !window.navigator.onLine) {
-			getPosts().then((iPost: IPostsDB[]) => {
-				setPosts((prevState: IndexState) => ({
-					...prevState,
-					posts: iPost.map((post: IPostsDB) => post.post),
-				}))
-			})
-		}
-	}, [])
+			// CARGAR DESDE INDEXED DB
+			if (!posts || !window.navigator.onLine) {
+				getPosts().then((iPost: IPostsDB[]) => {
+					setPosts((prevState: IndexState) => ({
+						...prevState,
+						posts: iPost.map((post: IPostsDB) => post.post),
+					}))
+				})
+			}
+		})
+	}, [posts])
 
 	useEffect(() => {
 		// OBTENER DOCUMENTOS DESTACADOS
-		getSortPopular(posts).then((popular: IPostItem[]) =>
-			setPosts((prevState: IndexState) => ({ ...prevState, popular }))
+		import('Utils/Firebase').then(({ getSortPopular }) =>
+			getSortPopular(posts).then((popular: IPostItem[]) =>
+				setPosts((prevState: IndexState) => ({ ...prevState, popular }))
+			)
 		)
-	}, [])
+	}, [posts])
 
 	// CAMBIAR ENTRE DESTACADOS Y RECIENTES
-	const changeDocs = useCallback(
-		(ev: ChangeEvent<HTMLSelectElement>) => {
-			// SELECCIONAR INPUT
-			const select: HTMLSelectElement = ev.target as HTMLSelectElement
-			const index: number = select.selectedIndex
+	const changeDocs = (ev: ChangeEvent<HTMLSelectElement>) => {
+		// SELECCIONAR INPUT
+		const select: HTMLSelectElement = ev.target as HTMLSelectElement
+		const index: number = select.selectedIndex
 
-			// CAMBIAR ESTADO
-			setPosts({ ...postsState, notSort: index === 0 })
-		},
-		[postsState.posts]
-	)
+		// CAMBIAR ESTADO
+		setPosts((prevState: IndexState) => ({ ...prevState, notSort: index === 0 }))
+	}
 
 	return (
-		<section className='page home'>
+		<section className={`${Styles.page} home`}>
 			<Meta
 				title={lang.general.title}
-				desc='Blog de tecnología escrito en TypeScript con NextJS, Firebase y continuos deploying con Vercel, el proyecto es OpenSource bajo una licencia GNU, contiene Linters y Prettier para el formato estándar.'
+				desc='Creamos experiencias digitales e integramos tecnología escalable de alto rendimiento con el objetivo de acelerar el crecimiento de negocios, empresas y startups al rededor del mundo.'
 				banner=''
 				url=''
-				keys={['LUA', 'blog']}
+				keys={'Diseño web, E-commerce, Apps móviles, Inteligencia Artificial, Consultoría IT, Software, Estudio de Desarrollo'.split(
+					', '
+				)}
 			/>
 			{postsState.posts && (
-				<div className='homeContainer'>
-					<div className='selectPost'>
+				<div className={Styles.homeContainer}>
+					<div className={Styles.selectPost}>
 						<select onChange={changeDocs} id='selectPost' aria-label='Order posts'>
 							<option>{lang.index.postTitle}</option>
 							<option>{lang.index.postTitle_2}</option>
 						</select>
-						<label htmlFor='selectPost' id='downIcon' className='lni lni-chevron-down selectIcon' />
+						<label
+							htmlFor='selectPost'
+							id='downIcon'
+							style={{ left: `${postsState.notSort ? '-25px' : '0px'}` }}
+							className={Styles.selectIcon}>
+							<ChevronDown color='var(--primary)' />
+						</label>
 					</div>
 
 					{postsState.posts && (
-						<div className='postsList'>
+						<div className={Styles.postsList}>
 							{postsState.posts &&
-								(postsState.notSort ? postsState.posts : postsState.popular || postsState.docs).map(
-									(post: IPostItem, key: number) => <PostCard key={key} post={post} />
-								)}
+								(postsState.notSort
+									? postsState.posts
+									: postsState.popular || postsState.posts
+								).map((post: IPostItem, key: number) => <PostCard key={key} post={post} />)}
 						</div>
 					)}
 
-					<div className='postsC-container'>
-						<div className='postsRecent postClip'>
+					<div>
+						<div className={`${Styles.postClip} ${Styles.postRecent}`}>
 							<h2>{lang.index.postTitle}</h2>
 							{postsState.posts.map((post: IPostItem, key: number) => {
 								if (key < 3) return <SearchCard key={key} post={post} />
+								else return null
 							})}
 						</div>
 
 						{postsState.popular ? (
-							<div className='bestPosts postClip'>
+							<div className={`${Styles.bestPosts} ${Styles.postClip}`}>
 								<h2>{lang.index.postTitle_2}</h2>
 								{postsState.popular.map((post: IPostItem, key: number) => {
 									if (key < 3) return <SearchCard key={key} post={post} />
+									else return null
 								})}
 							</div>
 						) : (

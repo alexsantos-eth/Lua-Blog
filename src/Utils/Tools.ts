@@ -80,3 +80,9 @@ export const scrollRAF = (cb: (scrollY: number) => any) => {
 	// AGREGAR EVENTO
 	window.addEventListener('scroll', onScroll, false)
 }
+
+// FORMATO DE FECHA
+export const formatDate = (date: Date, lang: ILangPackage) =>
+	`${lang.general.days[date.getDay()]} ${date.getDate()} de ${
+		lang.general.months[date.getMonth()]
+	} del ${date.getFullYear()} ${date.getHours()}:${date.getMinutes()} (GTM-6)`

@@ -9,16 +9,22 @@ const path = require('path')
 const _ENDPOINT: string =
 	'https://graphql.contentful.com/content/v1/spaces/vlyc7nduv4id/?access_token=qT0oOWp1m4Aq2KTPMcHTtC_k7XG58H7gXlMtVXANglU'
 const query: string = `{
-	postCollection {
-		items {
-			url
-			banner
-			title
-			description
-			contentMd
-			author
-		}
-	}
+  postCollection{
+    items{
+			sys{
+        publishedAt
+      }
+      url
+      banner{
+				url
+				title
+      }
+      title
+      description
+      contentMd
+      author
+    }
+  }
 }`
 
 // FETCH
@@ -32,7 +38,7 @@ const start = async () => {
 	const json: string = JSON.stringify(data)
 
 	// ESCRIBIR ARCHIVO
-	fs.writeFile(path.resolve(__dirname, 'src', 'Data', 'posts.json'), json, (err: any) =>
+	fs.writeFile(path.resolve(__dirname, 'src', 'Data', 'Posts.json'), json, (err: any) =>
 		console.log(err ? `Error al escribir archivo ${err}` : 'Posts descargados correctamente.')
 	)
 	// ERROR HANDLING

@@ -2,7 +2,7 @@
 import 'firebase/firestore'
 
 // INSTANCIA DE FIREBASE Y BASE DE DATOS LOCAL
-import firebase from '../keys/firebase'
+import firebase from 'Keys/Firebase'
 
 // INSTANCIA
 export const db: firebase.firestore.Firestore = firebase.firestore()
@@ -14,7 +14,7 @@ export const sendToken = async (token: string) => {
 }
 
 // OBTENER POSTS MAS POPULARES
-const getSortPopular = async (docs: IPostItem[]) => {
+export const getSortPopular = async (docs: IPostItem[]) => {
 	// OBTENER DOCUMENTOS
 	const docLikes = (await db.collection('likes').get()).docs
 
@@ -82,5 +82,3 @@ export const saveLikes = async (uid: string, lCount: number) => {
 		.doc(uid)
 		.set({ count: tmpCount })
 }
-
-export default getSortPopular

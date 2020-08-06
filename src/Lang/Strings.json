@@ -1,7 +1,22 @@
 {
 	"es": {
 		"general": {
-			"title": "LUA Development Studio - Blog"
+			"title": "LUA Development Studio - Blog",
+			"days": ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+			"months": [
+				"Enero",
+				"Febrero",
+				"Marzo",
+				"Abril",
+				"Mayo",
+				"Junio",
+				"Julio",
+				"Agosto",
+				"Septiembre",
+				"Octubre",
+				"Noviembre",
+				"Diciembre"
+			]
 		},
 		"postPage": {
 			"related": "Post relacionados",
