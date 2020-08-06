@@ -1,6 +1,6 @@
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { Moon, Sun } from 'react-feather'
-import React, { RefObject, useContext, useEffect, useRef } from 'react'
+import React, { RefObject, useContext, useEffect, useRef, memo } from 'react'
 
 import Logo from 'Assets/General/logo.png'
 import MainContext from 'Context/MainContext'
@@ -122,4 +122,4 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 	)
 }
 
-export default withRouter(Navbar)
+export default withRouter(memo(Navbar))

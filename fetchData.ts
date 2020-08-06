@@ -13,7 +13,8 @@ const query: string = `{
     items{
 			sys{
         publishedAt
-      }
+			}
+			tags
       url
       banner{
 				url

@@ -3,7 +3,14 @@ import MainContext from 'Context/MainContext'
 import Meta from 'Components/Meta/Meta'
 import PostCard from 'Components/PostCard/PostCard'
 import SearchCard from 'Components/SearchCard/SearchCard'
-import React, { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
+import React, {
+	ChangeEvent,
+	Dispatch,
+	SetStateAction,
+	useContext,
+	useEffect,
+	useState,
+} from 'react'
 import { ChevronDown } from 'react-feather'
 
 import Styles from './Index.module.scss'

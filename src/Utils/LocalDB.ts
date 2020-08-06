@@ -33,10 +33,6 @@ const iLocalDB = new LocalDB()
 
 export const initDB = () => iLocalDB.open()
 
-// ACCIONES EN BASE LOCAL
-// LIMPIAR POSTS
-export const clearDocs = async () => iLocalDB.posts.clear()
-
 // AGREGAR TODOS LOS POSTS
 export const saveDocs = async (posts: IPostItem[]) => {
 	// POSTS DE DOCUMENT[]
@@ -51,24 +47,5 @@ export const saveDocs = async (posts: IPostItem[]) => {
 	iLocalDB.posts.bulkPut(postsDB)
 }
 
-// AGREGAR POST A LOCAL
-export const pushDoc = async (post: IPostItem, uid: string) => iLocalDB.posts.put({ uid, post })
-
 // LEER DE LOCAL
 export const getPosts = async () => iLocalDB.posts.toArray()
-
-// LEER UN POST
-export const getPost = async (uid: string) => iLocalDB.posts.get(uid)
-
-export const findByUID = (uid: string, items: IPostItem[]) => {
-	// DOCUMENTO
-	let doc: IPostItem | undefined
-
-	// RECORRER DOCUMENTOS
-	items.forEach((sDoc: IPostItem) => {
-		if (sDoc.url === uid) doc = sDoc
-	})
-
-	// RETORNAR DOCUMENTO
-	return doc
-}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 
 import Styles from './SearchCard.module.scss'
@@ -19,4 +19,4 @@ const SearchCard: React.FC<ISearchCardProps> = ({ post }: ISearchCardProps) => {
 	)
 }
 
-export default SearchCard
+export default memo(SearchCard)

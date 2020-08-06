@@ -1,6 +1,3 @@
-// GLOBALES
-import { colors } from 'LocalGlobals/Globals'
-
 // CAMBIAR UN COLOR
 const changeColor = (selectedColor: IColor, dark: boolean) => {
 	// SELECCIONAR BODY
@@ -16,7 +13,9 @@ export const toggleDarkMode = () => {
 	const darkValue: boolean = window.localStorage.getItem('darkmode') === '1'
 
 	// RECORRER CAMBIOS
-	colors.forEach((color: IColor) => changeColor(color, darkValue))
+	import('LocalGlobals/Globals').then(({ colors }) =>
+		colors.forEach((color: IColor) => changeColor(color, darkValue))
+	)
 }
 
 // CALCULAR PIXELS
@@ -81,8 +80,32 @@ export const scrollRAF = (cb: (scrollY: number) => any) => {
 	window.addEventListener('scroll', onScroll, false)
 }
 
-// FORMATO DE FECHA
-export const formatDate = (date: Date, lang: ILangPackage) =>
-	`${lang.general.days[date.getDay()]} ${date.getDate()} de ${
-		lang.general.months[date.getMonth()]
-	} del ${date.getFullYear()} ${date.getHours()}:${date.getMinutes()} (GTM-6)`
+// COMPARTIR EN FACEBOOK
+export const shareLink = (ev: any, title: string, text: string) => {
+	// VERIFICAR SI ESTA DISPONIBLE LA API
+	if (navigator.share) {
+		// EVITAR LINK
+		ev.preventDefault()
+
+		// COMPARTIR
+		navigator
+			.share({
+				title,
+				text,
+				url: window.location.href,
+			})
+			.then(() => console.log('Successfully share'))
+			.catch((error: Error) => console.log('Error sharing', error))
+	}
+}
+
+// COPIAR AL PORTAPAPELES
+export const copyPath = (e: any, text: string) => {
+	// EVITAR LINK
+	e.preventDefault()
+
+	// COPIAR
+	import('Utils/Fx').then(({ showToast }) =>
+		navigator.clipboard.writeText(window.location.href).then(() => showToast({ text }))
+	)
+}

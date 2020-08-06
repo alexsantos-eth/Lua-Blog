@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import Index from 'Pages/Index/Index'
+import Post from 'Pages/Post/Post'
 import MainContext from 'Context/MainContext'
 import Navbar from 'Components/Navbar/Navbar'
 import Posts from 'Data/Posts.json'
@@ -60,6 +61,7 @@ const App: React.FC = () => {
 			<BrowserRouter>
 				<Switch>
 					<Route exact path='/' component={Index} />
+					<Route exact path='/posts/:uid' component={Post} />
 				</Switch>
 				<Navbar changeDarkMode={changeDarkMode} />
 			</BrowserRouter>

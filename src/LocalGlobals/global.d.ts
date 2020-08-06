@@ -64,6 +64,7 @@ interface IPostItem {
 		publishedAt: string
 	}
 	title: string
+	tags: string[]
 	url: string
 	description: string
 	author: string

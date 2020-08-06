@@ -1,1 +1,19 @@
-{"postCollection":{"items":[{"sys":{"publishedAt":"2020-08-06T01:46:40.663Z"},"url":"reducir-aplicacion-en-react","banner":{"url":"https://images.ctfassets.net/vlyc7nduv4id/4CEkAGWW1RmFFOm4snUZQJ/3c5af0f63b9c1d05dda37514a02393f1/banner.jpg","title":"banner"},"title":"Reduce tu aplicación de React hasta en un 50% 😱","description":"Cuando creas una aplicación en React todo parece magia hasta que ves el chunk final ... 38kb para una app que solo muestra un Hello World 😰, en este artículo mostraremos como disminuir el tamaño final de tu app en 2 sencillos pasos.","contentMd":"## 1. Instala cra-preact en tu aplicación\n```\nnpm i cra-preact\n```\n\n## 2. Remplaza con react-scripts\nSimplemente cambia los comandos start, build y test de tu package.json por estos:\n\ny listo eso es todo.\n\n__MUCHAS GRACIAS POR LEER ESTE ARTICULO, RECUERDA COMPARTIRLO EN TUS REDES SOCIALES SI TE FUE UTIL Y NO OLVIDES CALIFICAR ESTE POST.__","author":"Alex Santos"}]}}
+{
+	"postCollection": {
+		"items": [
+			{
+				"sys": { "publishedAt": "2020-08-06T14:15:56.290Z" },
+				"tags": ["react"],
+				"url": "reducir-aplicacion-en-react",
+				"banner": {
+					"url": "https://images.ctfassets.net/vlyc7nduv4id/4CEkAGWW1RmFFOm4snUZQJ/3c5af0f63b9c1d05dda37514a02393f1/banner.jpg",
+					"title": "banner"
+				},
+				"title": "Reduce tu aplicación de React hasta en un 50% 😱",
+				"description": "Cuando creas una aplicación en React todo parece magia hasta que ves el chunk final ... 38kb para una app que solo muestra un Hello World 😰, en este artículo mostraremos como disminuir el tamaño final de tu app en 2 sencillos pasos.",
+				"contentMd": "## 1. Instala cra-preact en tu aplicación\n```\nnpm i cra-preact\n```\n\n## 2. Remplaza con react-scripts\nSimplemente cambia los comandos start, build y test de tu package.json por estos:\n\ny listo eso es todo.\n\n__MUCHAS GRACIAS POR LEER ESTE ARTICULO, RECUERDA COMPARTIRLO EN TUS REDES SOCIALES SI TE FUE UTIL Y NO OLVIDES CALIFICAR ESTE POST.__",
+				"author": "Alex Santos"
+			}
+		]
+	}
+}

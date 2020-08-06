@@ -1,7 +1,7 @@
 import MainContext from 'Context/MainContext'
-import React, { useContext } from 'react'
+import React, { useContext, memo } from 'react'
 import { Link } from 'react-router-dom'
-import { formatDate } from 'Utils/Tools'
+import { formatDate } from 'Utils/PostTools'
 
 import Styles from './PostCard.module.scss'
 
@@ -16,7 +16,7 @@ const PostCard: React.FC<IPostProps> = ({ post }: IPostProps) => {
 	return (
 		<Link to={`/posts/${post.url}`}>
 			<div className={Styles.postCard}>
-				<img loading='lazy' src={post.banner.url} alt='Post banner' />
+				<img loading='lazy' height='350' src={post.banner.url} alt='Post banner' />
 				<h2>{post.title}</h2>
 				<p>{post.description}</p>
 				<span>
@@ -27,4 +27,4 @@ const PostCard: React.FC<IPostProps> = ({ post }: IPostProps) => {
 	)
 }
 
-export default PostCard
+export default memo(PostCard)
