@@ -29,27 +29,35 @@ const DefState: IndexState = {
 	notSort: true,
 }
 
+// CARGA INICIAL
+let firstLoad: number = 1
+
 const Index: React.FC = () => {
 	// CONTEXTO
 	const { lang, posts } = useContext(MainContext)
 
 	// ESTADO
 	DefState.posts = posts
+	DefState.popular = window.innerWidth <= 600 ? posts : null
 	const [postsState, setPosts]: [IndexState, Dispatch<SetStateAction<IndexState>>] = useState(
 		DefState
 	)
 
 	// FIRESTORE
 	useEffect(() => {
+		// TIEMPO EN MOVIL
+		const eta: number = window.innerWidth <= 600 ? 5000 : 1000
+
 		window.onload = () => {
 			setTimeout(
 				() =>
 					import('Utils/Firestore').then(({ getSortPopular }) => {
-						getSortPopular(posts).then(popular =>
+						getSortPopular(posts).then(popular => {
+							firstLoad = 0
 							setPosts((prevState: IndexState) => ({ ...prevState, popular }))
-						)
+						})
 					}),
-				500
+				firstLoad * eta
 			)
 		}
 	}, [posts])
