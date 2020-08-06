@@ -1,20 +1,11 @@
 // REACT
-import React, {
-	SetStateAction,
-	useState,
-	Dispatch,
-	useContext,
-	MouseEvent,
-	useCallback,
-} from 'react'
+import React, { useContext, MouseEvent } from 'react'
 
 // NEXT
 import { Link, useLocation } from 'react-router-dom'
 
 // HERRAMIENTAS
 import { formatDate, findByUID, getRelated } from 'Utils/PostTools'
-import { useLikesAverage, useLikes } from 'Utils/LikesHook'
-
 // CONTEXTO
 import MainContext from 'Context/MainContext'
 
@@ -22,19 +13,9 @@ import MainContext from 'Context/MainContext'
 import ScrollObserver from 'Components/ScrollObserver/ScrollObserver'
 import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
 import SearchCard from 'Components/SearchCard/SearchCard'
-import Meta from 'Components/Meta/Meta'
 import { ChevronLeft, Twitter, Linkedin, Facebook, Link as LinkIcon, Star } from 'react-feather'
 import Styles from './Post.module.scss'
-
-// INTERFAZ DE ESTADO
-interface PostState {
-	likesAverage: string
-}
-
-// ESTADO INICIAL
-const DefState: PostState = {
-	likesAverage: '0',
-}
+import useMetas from 'Components/Meta/Meta'
 
 const Post: React.FC = () => {
 	// CONTEXTO
@@ -45,14 +26,7 @@ const Post: React.FC = () => {
 	const sPost: IPostItem | undefined = findByUID(uid, posts)
 
 	// ESTADO DEL POST
-	const [state, setState]: [PostState, Dispatch<SetStateAction<PostState>>] = useState(DefState)
 	const relatedPosts: IPostItem[] = getRelated(sPost, posts, uid)
-
-	// OBTENER LIKES
-	useLikesAverage(uid, useCallback((likesAverage: string) => setState({ likesAverage }), []))
-
-	// PLUGIN DE LIKES
-	useLikes(uid)
 
 	// COMPARTIR
 	const shareEvent = (ev: MouseEvent<HTMLAnchorElement>) => {
@@ -72,20 +46,21 @@ const Post: React.FC = () => {
 
 	// META TAGS
 	const title: string = sPost ? sPost.title : 'Error al cargar el artículo (404)'
-	const description: string = sPost
+	const desc: string = sPost
 		? sPost.description
 		: 'Lo sentimos no hemos podido encontrar el post, intenta verificar la dirección o intenta nuevamente.'
+
+	useMetas({
+		title,
+		desc,
+		banner: sPost ? sPost.banner.url : '',
+		url: `posts/${sPost ? sPost.url : ''}`,
+		keys: ['LUA', 'blog'].concat(sPost ? sPost.tags : ['']),
+	})
 
 	// COMPONENT
 	return (
 		<section>
-			<Meta
-				title={title}
-				desc={description}
-				banner={sPost ? sPost.banner.url : ''}
-				url={`posts/${sPost ? sPost.url : ''}`}
-				keys={['LUA', 'blog'].concat(sPost ? sPost.tags : [''])}
-			/>
 			<ScrollObserver />
 			{sPost && (
 				<div>
@@ -112,7 +87,7 @@ const Post: React.FC = () => {
 
 								<h2 className={Styles.likesTitle}>
 									{lang.postPage.likes}
-									<span>{state.likesAverage}</span> <Star />
+									<span>{0}</span> <Star />
 								</h2>
 								<div className={Styles.likes}>
 									<ul>
