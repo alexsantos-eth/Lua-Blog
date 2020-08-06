@@ -310,26 +310,6 @@ p {
 	transform-origin: bottom right;
 }
 
-// FOOTER
-footer {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 50px;
-	background: var(--invertedPrimary);
-
-	span {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		color: var(--primary);
-		font-size: 1em;
-		font-family: 'Manrope';
-		height: 55px;
-	}
-}
-
 @media screen and (max-width: 965px) {
 	body {
 		font-size: 14px;
@@ -352,10 +332,6 @@ footer {
 @media screen and (max-width: 360px) {
 	body {
 		font-size: 11px;
-	}
-
-	footer span {
-		width: 200px;
 	}
 }
 

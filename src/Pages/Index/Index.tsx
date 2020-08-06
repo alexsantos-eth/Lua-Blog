@@ -2,7 +2,14 @@ import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
 import MainContext from 'Context/MainContext'
 import PostCard from 'Components/PostCard/PostCard'
 import SearchCard from 'Components/SearchCard/SearchCard'
-import React, { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from 'react'
+import React, {
+	ChangeEvent,
+	Dispatch,
+	SetStateAction,
+	useContext,
+	useState,
+	useEffect,
+} from 'react'
 import { ChevronDown } from 'react-feather'
 
 import Styles from './Index.module.scss'
@@ -31,6 +38,21 @@ const Index: React.FC = () => {
 	const [postsState, setPosts]: [IndexState, Dispatch<SetStateAction<IndexState>>] = useState(
 		DefState
 	)
+
+	// FIRESTORE
+	useEffect(() => {
+		window.onload = () => {
+			setTimeout(
+				() =>
+					import('Utils/Firestore').then(({ getSortPopular }) => {
+						getSortPopular(posts).then(popular =>
+							setPosts((prevState: IndexState) => ({ ...prevState, popular }))
+						)
+					}),
+				500
+			)
+		}
+	}, [posts])
 
 	// CAMBIAR ENTRE DESTACADOS Y RECIENTES
 	const changeDocs = (ev: ChangeEvent<HTMLSelectElement>) => {
@@ -90,17 +112,19 @@ const Index: React.FC = () => {
 							})}
 						</div>
 
-						{postsState.popular ? (
-							<div className={`${Styles.bestPosts} ${Styles.postClip}`}>
-								<h2>{lang.index.postTitle_2}</h2>
-								{postsState.popular.map((post: IPostItem, key: number) => {
-									if (key < 3) return <SearchCard key={key} post={post} />
-									else return null
-								})}
-							</div>
-						) : (
-							<ClipSkeleton />
-						)}
+						<div className={Styles.loadContainer}>
+							{postsState.popular ? (
+								<div className={`${Styles.bestPosts} ${Styles.postClip}`}>
+									<h2>{lang.index.postTitle_2}</h2>
+									{postsState.popular.map((post: IPostItem, key: number) => {
+										if (key < 3) return <SearchCard key={key} post={post} />
+										else return null
+									})}
+								</div>
+							) : (
+								<ClipSkeleton />
+							)}
+						</div>
 					</div>
 				</div>
 			)}

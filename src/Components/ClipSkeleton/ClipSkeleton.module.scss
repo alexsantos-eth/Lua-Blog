@@ -7,6 +7,10 @@
 	margin-bottom: 30px;
 	overflow: hidden;
 
+	span {
+		left: -5px;
+	}
+
 	&::before {
 		content: '';
 		width: 100%;
@@ -36,17 +40,7 @@
 		grid-template-rows: auto auto auto;
 		row-gap: 15px;
 
-		li {
-			left: 12px;
-			opacity: 0.4;
-			position: relative;
-			display: block;
-			background: var(--postText);
-			height: 17px;
-			border-radius: 20px;
-			opacity: 0.6;
-			transition: width 0.4s ease-in-out;
-
+		.skeleton {
 			&::before {
 				content: '';
 				position: absolute;
@@ -56,8 +50,20 @@
 				transform: translateY(-50%);
 				height: 7px;
 				width: 7px;
-				background: var(--postText);
+				background: var(--primary);
 			}
 		}
 	}
+}
+
+.skeleton {
+	left: 7px;
+	opacity: 0.4;
+	position: relative;
+	display: block;
+	background: var(--primary);
+	height: 17px;
+	border-radius: 20px;
+	opacity: 0.6;
+	transition: width 0.4s ease-in-out;
 }

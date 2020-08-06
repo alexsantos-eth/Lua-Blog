@@ -25,11 +25,23 @@ const ClipSkeleton: React.FC = () => {
 
 	return (
 		<div className={Styles.container}>
-			<span style={{ width: `${Math.min(state[0] * 100 + 40, 100)}%` }} />
+			<span
+				className={Styles.skeleton}
+				style={{ width: `${Math.min(state[0] * 100 + 40, 100)}%` }}
+			/>
 			<ul>
-				<li style={{ width: `calc(${Math.min(state[1] * 100 + 40, 100)}% - 12px)` }} />
-				<li style={{ width: `calc(${Math.min(state[2] * 100 + 40, 100)}% - 12px)` }} />
-				<li style={{ width: `calc(${Math.min(state[3] * 100 + 40, 100)}% - 12px)` }} />
+				<li
+					className={Styles.skeleton}
+					style={{ width: `calc(${Math.min(state[1] * 100 + 40, 100)}% - 12px)` }}
+				/>
+				<li
+					className={Styles.skeleton}
+					style={{ width: `calc(${Math.min(state[2] * 100 + 40, 100)}% - 12px)` }}
+				/>
+				<li
+					className={Styles.skeleton}
+					style={{ width: `calc(${Math.min(state[3] * 100 + 40, 100)}% - 12px)` }}
+				/>
 			</ul>
 		</div>
 	)

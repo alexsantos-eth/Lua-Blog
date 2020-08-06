@@ -1,0 +1,10 @@
+{
+	"apiKey": "AIzaSyD_CPmcCwXfAegE08_kCpIbQlCeRDviuOE",
+	"authDomain": "luadevstudio-blog.web.app",
+	"databaseURL": "https://luadevstudio-blog.firebaseio.com",
+	"projectId": "luadevstudio-blog",
+	"storageBucket": "luadevstudio-blog.appspot.com",
+	"messagingSenderId": "739614403069",
+	"appId": "1:739614403069:web:25ffb0ff7a606a8a33d194",
+	"measurementId": "G-MBF97NVXMB"
+}
