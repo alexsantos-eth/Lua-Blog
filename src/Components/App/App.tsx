@@ -71,7 +71,7 @@ const App: React.FC = () => {
 					}>
 					<Switch>
 						<Route exact path='/' component={Index} />
-						<Route exact path='/posts/:uid' component={Post} />
+						<Route path='/posts/:uid' component={Post} />
 					</Switch>
 				</Suspense>
 				<Suspense fallback={<></>}>

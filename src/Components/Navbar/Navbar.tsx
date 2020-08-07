@@ -26,7 +26,8 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 		if (drawerInp.current) drawerInp.current.checked = false
 
 		// CAMBIAR RENDER
-		if (props.location.pathname !== '/') window.localStorage.setItem('waitFirestore', '1')
+		if (props.location.pathname !== '/' && !window.localStorage.getItem('waitFirestore'))
+			window.localStorage.setItem('waitFirestore', '1')
 	}, [props.location.pathname])
 
 	// SCROLL

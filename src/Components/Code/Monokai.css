@@ -37,6 +37,7 @@ pre[class*='language-'] {
 }
 
 .code-title {
+	font-family: 'Manrope';
 	background: var(--blackDark);
 	color: var(--white);
 	width: 100%;
@@ -46,6 +47,7 @@ pre[class*='language-'] {
 	left: 0%;
 	top: 0;
 	padding: 10px 25px;
+	font-weight: bold !important;
 }
 
 .token.comment,
