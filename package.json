@@ -42,9 +42,6 @@
 		"eject": "react-scripts eject",
 		"config": "yarn add --dev prettier react-snapshot tslint tslint-config-prettier tslint-plugin-prettier tslint-react node-sass"
 	},
-	"reactSnap": {
-		"sourceMaps": false
-	},
 	"eslintConfig": {
 		"extends": "react-app"
 	},
