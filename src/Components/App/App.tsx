@@ -2,13 +2,13 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import React, { Dispatch, SetStateAction, useEffect, useState, lazy, Suspense } from 'react'
 
 import MainContext from 'Context/MainContext'
-import Navbar from 'Components/Navbar/Navbar'
 import Posts from 'Data/Posts.json'
 import Strings from 'Lang/Strings.json'
 
 // PAGINAS
 const Index = lazy(() => import('Pages/Index/Index'))
 const Post = lazy(() => import('Pages/Post/Post'))
+const Navbar = lazy(() => import('Components/Navbar/Navbar'))
 
 // ESTADO
 interface AppState {
@@ -61,13 +61,18 @@ const App: React.FC = () => {
 	return (
 		<MainContext.Provider value={{ ...appState, posts: Posts.postCollection.items }}>
 			<BrowserRouter>
-				<Suspense fallback={<span>Cargando ...</span>}>
+				<Suspense
+					fallback={
+						<h1 style={{ textAlign: 'center', marginTop: '-30px' }}>Espera un momento ...</h1>
+					}>
 					<Switch>
 						<Route exact path='/' component={Index} />
 						<Route exact path='/posts/:uid' component={Post} />
 					</Switch>
 				</Suspense>
-				<Navbar changeDarkMode={changeDarkMode} />
+				<Suspense fallback={<></>}>
+					<Navbar changeDarkMode={changeDarkMode} />
+				</Suspense>
 			</BrowserRouter>
 		</MainContext.Provider>
 	)

@@ -24,6 +24,9 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 	useEffect(() => {
 		// OCULTAR DRAWER EN CAMBIO DE RUTA
 		if (drawerInp.current) drawerInp.current.checked = false
+
+		// CAMBIAR RENDER
+		if (props.location.pathname !== '/') window.localStorage.setItem('waitFirestore', '1')
 	}, [props.location.pathname])
 
 	// SCROLL

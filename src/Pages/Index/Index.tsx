@@ -48,7 +48,9 @@ const Index: React.FC = () => {
 		// TIEMPO EN MOVIL
 		const eta: number = window.innerWidth <= 600 ? 7000 : 1000
 
-		window.onload = () => {
+		// ONLOAD
+		const onload = () => {
+			console.log('render')
 			setTimeout(
 				() =>
 					import('Utils/Firestore').then(({ getSortPopular }) => {
@@ -60,6 +62,14 @@ const Index: React.FC = () => {
 				localPopular === null ? eta : 0
 			)
 		}
+
+		if (window.localStorage.getItem('waitFirestore') === '1') onload()
+
+		// AGREGAR EVENTO
+		window.addEventListener('load', onload)
+
+		// QUITAR EVENTO
+		return () => window.removeEventListener('load', onload)
 	}, [posts])
 
 	// CAMBIAR ENTRE DESTACADOS Y RECIENTES
