@@ -8,7 +8,7 @@ const Code = React.lazy(() => import('Components/Code/Code'));
 export const GetTitles = (md?: string, sub?: boolean) => {
 	if(md){
 	const lines: string[] = md?.split('\n')
-	return lines.filter((line: string) => (sub ? line.startsWith('###') : line.startsWith('##'))).map((line:string) => sub?line.substr(3):line.substr(2))
+	return lines.filter((line: string) => (sub ? line.startsWith('### ') : line.startsWith('## '))).map((line:string) => sub?line.substr(3):line.substr(2))
 	} else return ['']
 }
 
@@ -21,19 +21,9 @@ const Serializer = (md: string) => {
 	let codeLang: string = ''
 
 	const render: (JSX.Element | null)[] = lines.map((line: string, key: number) => {
-		// BREAKS
-		if (line === '') return <br key={`Post_${key}_br`} />
-		// HEADINGS
-		else if (line.startsWith('# ')) return <h1 id={line.replace(/ /g, '-').substr(6)} key={`Post_${key}_h1`}>{line.substr(3)}</h1>
-		else if (line.startsWith('## ')) return <h2 id={line.replace(/ /g, '-').substr(6)} key={`Post_${key}_h2`}>{line.substr(3)}</h2>
-		else if (line.startsWith('### ')) return <h3 id={line.replace(/ /g, '-').substr(6)} key={`Post_${key}_h3`}>{line.substr(3)}</h3>
-		// TEXT
-		else if (line.startsWith('__'))
-			return (
-				<strong key={`Post_${key}_strong`}>{line.substr(2, line.lastIndexOf('__') - 2)}</strong>
-			)
+
 		// CODE
-		else if (line.startsWith('```')) {
+		if (line.startsWith('```')) {
 			if (!codeTagToggle) codeLang = line.substr(3)
 			codeTagToggle = !codeTagToggle
 		}
@@ -57,6 +47,20 @@ const Serializer = (md: string) => {
 				</Suspense>
 			)
 		}
+
+		// BREAKS
+		else if (line === '') return <br key={`Post_${key}_br`} />
+
+		// HEADINGS
+		else if (line.startsWith('# ')) return <h1 id={line.replace(/ /g, '-').substr(5)} key={`Post_${key}_h1`}>{line.substr(3)}</h1>
+		else if (line.startsWith('## ')) return <h2 id={line.replace(/ /g, '-').substr(6)} key={`Post_${key}_h2`}>{line.substr(3)}</h2>
+		else if (line.startsWith('### ')) return <h3 id={line.replace(/ /g, '-').substr(8)} key={`Post_${key}_h3`}>{line.substr(3)}</h3>
+
+		// TEXT
+		else if (line.startsWith('__'))
+			return (
+				<strong key={`Post_${key}_strong`}>{line.substr(2, line.lastIndexOf('__') - 2)}</strong>
+			)
 
 		// DEVOLVER UN P PARA CUALQUIER ELEMENTO NO RECONOCIDO
 		else return <p key={`Post_${key}_p`}>{line}</p>

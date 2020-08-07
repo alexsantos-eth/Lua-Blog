@@ -11,13 +11,18 @@ import { formatDate, findByUID, getRelated } from 'Utils/PostTools'
 import MainContext from 'Context/MainContext'
 
 // COMPONENTES
+import Meta from 'Components/Meta/Meta'
+import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
 import ScrollObserver from 'Components/ScrollObserver/ScrollObserver'
 import Serializer, { GetTitles } from 'Components/Serializer/Serializer'
-import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
-import { ChevronLeft, Twitter, Linkedin, Facebook, Link as LinkIcon, Star } from 'react-feather'
-import Styles from './Post.module.scss'
-import Meta from 'Components/Meta/Meta'
 
+// ICONOS
+import { ChevronLeft, Twitter, Linkedin, Facebook, Link as LinkIcon, Star } from 'react-feather'
+
+// ESTILOS
+import Styles from './Post.module.scss'
+
+// LAZY COMPONENTS
 const SearchCard = lazy(() => import('Components/SearchCard/SearchCard'))
 
 const Post: React.FC = () => {
@@ -154,10 +159,10 @@ const Post: React.FC = () => {
 														{subsubtitles &&
 															Array.from(subsubtitles).map(
 																(subSubtitle: string, ind: number) =>
-																	subSubtitle?.startsWith(`${(i + 1).toString()}.`) && (
+																	subSubtitle?.startsWith(` ${(i + 1).toString()}.`) && (
 																		<li key={`subSub-${ind}`}>
 																			<a
-																				href={`#${subtitle.replace(/ /g, '-').substr(5)}`}
+																				href={`#${subSubtitle.replace(/ /g, '-').substr(5)}`}
 																				title={subSubtitle}>
 																				{subSubtitle}
 																			</a>

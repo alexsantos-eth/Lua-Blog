@@ -1,9 +1,5 @@
-import React from 'react'
-import 'prismjs'
-
-// @ts-ignore
-import PrismCode from 'react-prism'
-import 'prismjs/themes/prism-tomorrow.css'
+import React, { RefObject, useRef, useEffect } from 'react'
+import './Monokai.css'
 
 interface CodeProps {
 	codeStr: string
@@ -11,7 +7,23 @@ interface CodeProps {
 }
 
 const Code: React.FC<CodeProps> = (props: CodeProps) => {
-	return <PrismCode className={`language-${props.type}`}>{props.codeStr}</PrismCode>
+	// REFERENCIAS
+	const codeRef: RefObject<HTMLElement> = useRef(null)
+
+	// HIGHLIGHT
+	useEffect(() => {
+		import('prismjs').then(Prism => {
+			if (codeRef.current) Prism.highlightElement(codeRef.current, true)
+		})
+	}, [])
+
+	return (
+		<pre>
+			<code ref={codeRef} className={`language-${props.type}`}>
+				{props.codeStr}
+			</code>
+		</pre>
+	)
 }
 
 export default Code

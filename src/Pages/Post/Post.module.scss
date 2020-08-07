@@ -116,7 +116,8 @@
 						ul {
 							margin-left: 20px;
 							li {
-								line-height: 25px;
+								line-height: 1.1;
+								margin: 20px 0;
 
 								a {
 									color: var(--primary);
@@ -236,6 +237,19 @@
 		font-size: 1.7em;
 		opacity: 1;
 		font-weight: 400;
+	}
+
+	pre {
+		margin: 40px 0 !important;
+		border-radius: 10px;
+		width: 100%;
+		height: auto;
+		overflow: scroll;
+		padding: 30px !important;
+	}
+
+	pre + h2 {
+		margin-top: 15px;
 	}
 
 	code {

@@ -1,5 +1,4 @@
-import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
-import MainContext from 'Context/MainContext'
+// REACT
 import React, {
 	ChangeEvent,
 	Dispatch,
@@ -10,11 +9,21 @@ import React, {
 	lazy,
 	Suspense,
 } from 'react'
+
+// ICONOS
 import { ChevronDown } from 'react-feather'
 
+// ESTILOS
 import Styles from './Index.module.scss'
-import Meta from 'Components/Meta/Meta'
 
+// CONTEXTO
+import MainContext from 'Context/MainContext'
+
+// COMPONENTES
+import Meta from 'Components/Meta/Meta'
+import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
+
+// LAZY COMPONENTS
 const SearchCard = lazy(() => import('Components/SearchCard/SearchCard'))
 const PostCard = lazy(() => import('Components/PostCard/PostCard'))
 
@@ -53,7 +62,6 @@ const Index: React.FC = () => {
 
 		// ONLOAD
 		const onload = () => {
-			console.log('render')
 			setTimeout(
 				() =>
 					import('Utils/Firestore').then(({ getSortPopular }) => {

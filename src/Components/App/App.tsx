@@ -1,13 +1,17 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+// REACT Y ROUTER
 import React, { Dispatch, SetStateAction, useEffect, useState, lazy, Suspense } from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
+// CONTEXTO
 import MainContext from 'Context/MainContext'
+
+// DATA
 import Posts from 'Data/Posts.json'
 import Strings from 'Lang/Strings.json'
 
-// PAGINAS
-const Index = lazy(() => import('Pages/Index/Index'))
+// PAGINAS Y LAZY
 const Post = lazy(() => import('Pages/Post/Post'))
+const Index = lazy(() => import('Pages/Index/Index'))
 const Navbar = lazy(() => import('Components/Navbar/Navbar'))
 
 // ESTADO
