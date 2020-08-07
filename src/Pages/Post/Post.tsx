@@ -6,11 +6,13 @@ import { Link, useLocation } from 'react-router-dom'
 
 // HERRAMIENTAS
 import { formatDate, findByUID, getRelated } from 'Utils/PostTools'
+
 // CONTEXTO
 import MainContext from 'Context/MainContext'
 
 // COMPONENTES
 import ScrollObserver from 'Components/ScrollObserver/ScrollObserver'
+import Serializer, { GetTitles } from 'Components/Serializer/Serializer'
 import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
 import SearchCard from 'Components/SearchCard/SearchCard'
 import { ChevronLeft, Twitter, Linkedin, Facebook, Link as LinkIcon, Star } from 'react-feather'
@@ -27,6 +29,8 @@ const Post: React.FC = () => {
 
 	// ESTADO DEL POST
 	const relatedPosts: IPostItem[] = getRelated(sPost, posts, uid)
+	const subtitles:string[] = GetTitles(sPost?.contentMd, false)
+	const subsubtitles:string[] = GetTitles(sPost?.contentMd, true)
 
 	// COMPARTIR
 	const shareEvent = (ev: MouseEvent<HTMLAnchorElement>) => {
@@ -82,7 +86,7 @@ const Post: React.FC = () => {
 								</div>
 
 								<div className={Styles.desc}>{sPost.description}</div>
-								<div className={Styles.main}>{sPost.contentMd}</div>
+								<div className={Styles.main}>{Serializer(sPost.contentMd)}</div>
 
 								<h2 className={Styles.likesTitle}>
 									{lang.postPage.likes}
@@ -136,6 +140,33 @@ const Post: React.FC = () => {
 							<div className={Styles.index}>
 								<div className={Styles.indexList}>
 									<h2>{lang.postPage.subtitle}</h2>
+									<ul>
+										{subtitles &&
+											Array.from(subtitles).map((subtitle: string, i: number) => (
+												<li key={`sub-${i}`}>
+													<a
+														href={`#${subtitle.replace(/ /g, '-').substr(4)}`}
+														title={subtitle}>
+														{subtitle}
+													</a>
+													<ul>
+														{subsubtitles &&
+															Array.from(subsubtitles).map(
+																(subSubtitle: string, ind: number) =>
+																	subSubtitle?.startsWith(`${(i + 1).toString()}.`) && (
+																		<li key={`subSub-${ind}`}>
+																			<a
+																				href={`#${subtitle.replace(/ /g, '-').substr(5)}`}
+																				title={subSubtitle}>
+																				{subSubtitle}
+																			</a>
+																		</li>
+																	)
+															)}
+													</ul>
+												</li>
+											))}
+									</ul>
 								</div>
 								{relatedPosts ? (
 									relatedPosts.length > 0 && (

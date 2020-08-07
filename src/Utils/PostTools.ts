@@ -18,6 +18,7 @@ export const findByUID = (uid: string, items: IPostItem[]) => {
 	return post
 }
 
+// OBTENER POST RELACIONADOS
 export const getRelated = (sPost:IPostItem | undefined, posts:IPostItem[], uid:string) => {
 	// OBTENER TAGS
 	const tags: string[] | undefined  = sPost?.tags

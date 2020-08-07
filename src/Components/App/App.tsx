@@ -1,12 +1,14 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState, lazy, Suspense } from 'react'
 
-import Index from 'Pages/Index/Index'
-import Post from 'Pages/Post/Post'
 import MainContext from 'Context/MainContext'
 import Navbar from 'Components/Navbar/Navbar'
 import Posts from 'Data/Posts.json'
 import Strings from 'Lang/Strings.json'
+
+// PAGINAS
+const Index = lazy(() => import('Pages/Index/Index'))
+const Post = lazy(() => import('Pages/Post/Post'))
 
 // ESTADO
 interface AppState {
@@ -59,10 +61,12 @@ const App: React.FC = () => {
 	return (
 		<MainContext.Provider value={{ ...appState, posts: Posts.postCollection.items }}>
 			<BrowserRouter>
-				<Switch>
-					<Route exact path='/' component={Index} />
-					<Route exact path='/posts/:uid' component={Post} />
-				</Switch>
+				<Suspense fallback={<></>}>
+					<Switch>
+						<Route exact path='/' component={Index} />
+						<Route exact path='/posts/:uid' component={Post} />
+					</Switch>
+				</Suspense>
 				<Navbar changeDarkMode={changeDarkMode} />
 			</BrowserRouter>
 		</MainContext.Provider>
