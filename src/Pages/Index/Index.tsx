@@ -13,7 +13,7 @@ import React, {
 import { ChevronDown } from 'react-feather'
 
 import Styles from './Index.module.scss'
-import useMetas from 'Components/Meta/Meta'
+import Meta from 'Components/Meta/Meta'
 
 // ESTADO
 interface IndexState {
@@ -72,19 +72,15 @@ const Index: React.FC = () => {
 		setPosts((prevState: IndexState) => ({ ...prevState, notSort: index === 0 }))
 	}
 
-	useMetas({
-		title: lang.general.title,
-		desc:
-			'Creamos experiencias digitales e integramos tecnología escalable de alto rendimiento con el objetivo de acelerar el crecimiento de negocios, empresas y startups al rededor del mundo.',
-		banner: '',
-		url: '',
-		keys: 'Diseño web, E-commerce, Apps móviles, Inteligencia Artificial, Consultoría IT, Software, Estudio de Desarrollo'.split(
-			', '
-		),
-	})
-
 	return (
 		<section className={`${Styles.page} home`}>
+			<Meta
+				title={lang.general.title}
+				desc='Blog de tecnología escrito en TypeScript con NextJS, Firebase y continuos deploying con Vercel, el proyecto es OpenSource bajo una licencia GNU, contiene Linters y Prettier para el formato estándar.'
+				banner=''
+				url=''
+				keys={['LUA', 'blog']}
+			/>
 			{postsState.posts && (
 				<div className={Styles.homeContainer}>
 					<div className={Styles.selectPost}>

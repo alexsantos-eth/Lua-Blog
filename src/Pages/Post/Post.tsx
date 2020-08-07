@@ -15,7 +15,7 @@ import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
 import SearchCard from 'Components/SearchCard/SearchCard'
 import { ChevronLeft, Twitter, Linkedin, Facebook, Link as LinkIcon, Star } from 'react-feather'
 import Styles from './Post.module.scss'
-import useMetas from 'Components/Meta/Meta'
+import Meta from 'Components/Meta/Meta'
 
 const Post: React.FC = () => {
 	// CONTEXTO
@@ -50,17 +50,16 @@ const Post: React.FC = () => {
 		? sPost.description
 		: 'Lo sentimos no hemos podido encontrar el post, intenta verificar la dirección o intenta nuevamente.'
 
-	useMetas({
-		title,
-		desc,
-		banner: sPost ? sPost.banner.url : '',
-		url: `posts/${sPost ? sPost.url : ''}`,
-		keys: ['LUA', 'blog'].concat(sPost ? sPost.tags : ['']),
-	})
-
 	// COMPONENT
 	return (
 		<section>
+			<Meta
+				title={title}
+				desc={desc}
+				banner={sPost ? sPost.banner.url : ''}
+				url={`posts/${sPost ? sPost.url : ''}`}
+				keys={['LUA', 'blog'].concat(sPost ? sPost.tags : [''])}
+			/>
 			<ScrollObserver />
 			{sPost && (
 				<div>
