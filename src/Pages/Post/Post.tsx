@@ -1,5 +1,5 @@
 // REACT
-import React, { useContext, MouseEvent } from 'react'
+import React, { useContext, MouseEvent, lazy, Suspense } from 'react'
 
 // NEXT
 import { Link, useLocation } from 'react-router-dom'
@@ -14,10 +14,11 @@ import MainContext from 'Context/MainContext'
 import ScrollObserver from 'Components/ScrollObserver/ScrollObserver'
 import Serializer, { GetTitles } from 'Components/Serializer/Serializer'
 import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
-import SearchCard from 'Components/SearchCard/SearchCard'
 import { ChevronLeft, Twitter, Linkedin, Facebook, Link as LinkIcon, Star } from 'react-feather'
 import Styles from './Post.module.scss'
 import Meta from 'Components/Meta/Meta'
+
+const SearchCard = lazy(() => import('Components/SearchCard/SearchCard'))
 
 const Post: React.FC = () => {
 	// CONTEXTO
@@ -173,7 +174,9 @@ const Post: React.FC = () => {
 										<div className={Styles.related}>
 											<h2>{lang.postPage.related}</h2>
 											{relatedPosts.map((relatedPost: IPostItem, key: number) => (
-												<SearchCard key={key} post={relatedPost} />
+												<Suspense key={key} fallback={<ClipSkeleton/>}>
+													<SearchCard post={relatedPost} />
+												</Suspense>
 											))}
 										</div>
 									)

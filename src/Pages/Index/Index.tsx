@@ -1,7 +1,5 @@
 import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
 import MainContext from 'Context/MainContext'
-import PostCard from 'Components/PostCard/PostCard'
-import SearchCard from 'Components/SearchCard/SearchCard'
 import React, {
 	ChangeEvent,
 	Dispatch,
@@ -9,11 +7,16 @@ import React, {
 	useContext,
 	useState,
 	useEffect,
+	lazy,
+	Suspense,
 } from 'react'
 import { ChevronDown } from 'react-feather'
 
 import Styles from './Index.module.scss'
 import Meta from 'Components/Meta/Meta'
+
+const SearchCard = lazy(() => import('Components/SearchCard/SearchCard'))
+const PostCard = lazy(() => import('Components/PostCard/PostCard'))
 
 // ESTADO
 interface IndexState {
@@ -115,7 +118,11 @@ const Index: React.FC = () => {
 								(postsState.notSort
 									? postsState.posts
 									: postsState.popular || postsState.posts
-								).map((post: IPostItem, key: number) => <PostCard key={key} post={post} />)}
+								).map((post: IPostItem, key: number) => (
+									<Suspense key={key} fallback={<ClipSkeleton />}>
+										<PostCard post={post} />
+									</Suspense>
+								))}
 						</div>
 					)}
 
@@ -123,7 +130,12 @@ const Index: React.FC = () => {
 						<div className={`${Styles.postClip} ${Styles.postRecent}`}>
 							<h2>{lang.index.postTitle}</h2>
 							{postsState.posts.map((post: IPostItem, key: number) => {
-								if (key < 3) return <SearchCard key={key} post={post} />
+								if (key < 3)
+									return (
+										<Suspense key={`${key}_rec`} fallback={<ChevronDown />}>
+											<SearchCard post={post} />
+										</Suspense>
+									)
 								else return null
 							})}
 						</div>
@@ -133,7 +145,12 @@ const Index: React.FC = () => {
 								<div className={`${Styles.postClip} ${Styles.bestPosts}`}>
 									<h2>{lang.index.postTitle_2}</h2>
 									{postsState.popular.map((post: IPostItem, key: number) => {
-										if (key < 3) return <SearchCard key={key} post={post} />
+										if (key < 3)
+											return (
+												<Suspense key={`${key}_pop`} fallback={<ChevronDown />}>
+													<SearchCard post={post} />
+												</Suspense>
+											)
 										else return null
 									})}
 								</div>
