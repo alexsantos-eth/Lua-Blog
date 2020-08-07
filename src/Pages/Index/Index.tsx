@@ -76,10 +76,12 @@ const Index: React.FC = () => {
 		<section className={`${Styles.page} home`}>
 			<Meta
 				title={lang.general.title}
-				desc='Blog de tecnología escrito en TypeScript con NextJS, Firebase y continuos deploying con Vercel, el proyecto es OpenSource bajo una licencia GNU, contiene Linters y Prettier para el formato estándar.'
-				banner=''
+				desc='Creamos experiencias digitales e integramos tecnología escalable de alto rendimiento con el objetivo de acelerar el crecimiento de negocios, empresas y startups al rededor del mundo.'
+				banner='https://blog.wearelua.com/images/banner.jpg'
 				url=''
-				keys={['LUA', 'blog']}
+				keys={'Diseño web, E-commerce, Apps móviles, Inteligencia Artificial, Consultoría IT, Software, Estudio de Desarrollo'.split(
+					', '
+				)}
 			/>
 			{postsState.posts && (
 				<div className={Styles.homeContainer}>
