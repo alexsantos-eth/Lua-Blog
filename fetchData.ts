@@ -46,3 +46,5 @@ const start = async () => {
 }
 
 start()
+
+export {}
