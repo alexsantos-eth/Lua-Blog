@@ -1,6 +1,6 @@
 // REACT
 import React from 'react'
-import { render } from 'react-dom'
+import { render, hydrate } from 'react-dom'
 
 // ESTILOS
 import './index.scss'
@@ -16,7 +16,8 @@ const root: HTMLDivElement | null = document.getElementById('root') as HTMLDivEl
 const app: JSX.Element = <App />
 
 // RECARGAR
-render(app, root)
+if (root.hasChildNodes()) hydrate(app, root)
+else render(app, root)
 
 // REGISTRAR
 sw.register()
