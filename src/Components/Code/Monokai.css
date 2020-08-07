@@ -1,14 +1,14 @@
 code[class*='language-'],
 pre[class*='language-'] {
-	color: #f8f8f2;
-	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
-	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	color: var(--primary);
+	font-family: 'Futura';
 	direction: ltr;
 	text-align: left;
 	white-space: pre;
 	word-spacing: normal;
 	word-break: normal;
 	word-wrap: normal;
+	font-weight: bold;
 	line-height: 1.5;
 
 	-moz-tab-size: 4;
@@ -21,21 +21,31 @@ pre[class*='language-'] {
 	hyphens: none;
 }
 
-pre[class*='language-'] {
-	padding: 1em;
-	margin: 0.5em 0;
-	overflow: auto;
-	border-radius: 0.3em;
+code[class*='language-'] *,
+pre[class*='language-'] * {
+	font-weight: 400;
 }
 
 :not(pre) > code[class*='language-'],
 pre[class*='language-'] {
-	background: #272822;
+	background: var(--whiteDeepCode);
 }
 
 :not(pre) > code[class*='language-'] {
 	padding: 0.1em;
 	border-radius: 0.3em;
+}
+
+.code-title {
+	background: var(--blackDark);
+	color: var(--white);
+	width: 100%;
+	display: block;
+	margin-bottom: 10px;
+	position: absolute;
+	left: 0%;
+	top: 0;
+	padding: 10px 25px;
 }
 
 .token.comment,
@@ -46,7 +56,7 @@ pre[class*='language-'] {
 }
 
 .token.punctuation {
-	color: #f8f8f2;
+	color: var(--codePunctuationBone);
 }
 
 .namespace {
@@ -58,7 +68,7 @@ pre[class*='language-'] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-	color: #f92672;
+	color: var(--codeTagLightCodeTag);
 }
 
 .token.boolean,
@@ -72,7 +82,7 @@ pre[class*='language-'] {
 .token.char,
 .token.builtin,
 .token.inserted {
-	color: #a6e22e;
+	color: var(--codeCharLightCodeChar);
 }
 
 .token.operator,
@@ -81,17 +91,18 @@ pre[class*='language-'] {
 .language-css .token.string,
 .style .token.string,
 .token.variable {
-	color: #f8f8f2;
+	color: var(--codeURLLightCodeURL);
 }
 
 .token.atrule,
 .token.attr-value,
+.token.class-name,
 .token.function {
-	color: #e6db74;
+	color: var(--codeFunctionLightCodeFunction);
 }
 
 .token.keyword {
-	color: #f92672;
+	color: var(--codeKeywordLightCodeKeyword);
 }
 
 .token.regex,

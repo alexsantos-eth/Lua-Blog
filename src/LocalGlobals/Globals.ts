@@ -9,12 +9,25 @@ interface IPColor {
 // COLORES PRIMARIOS
 const primaryColors: IPColor[] = [
 	{ name: '--orange', value: '#f07816' },
+	{ name: '--deepOrange', value: '#ff5722' },
 	{ name: '--pink', value: '#e60f71' },
 	{ name: '--black', value: '#160f30' },
+	{ name: '--dark', value: '#0d091d' },
+	{ name: '--deepCode', value: 'hsl(252, 53%, 10%)' },
 	{ name: '--white', value: '#fff' },
 	{ name: '--bone', value: '#f5f5f5' },
 	{ name: '--purple', value: '#481380' },
-	{ name: '--deepOrange', value: '#ff5722' },
+	{ name: '--codePunctuation', value: '#999' },
+	{ name: '--codeTag', value: '#f92672' },
+	{ name: '--codeTagLight', value: '#905' },
+	{ name: '--codeChar', value: '#a6e22e' },
+	{ name: '--codeCharLight', value: '#690' },
+	{ name: '--codeURL', value: '#f8f8f2' },
+	{ name: '--codeURLLight', value: '#9a6e3a' },
+	{ name: '--codeFunction', value: '#e6db74' },
+	{ name: '--codeFunctionLight', value: '#DD4A68' },
+	{ name: '--codeKeyword', value: '#f92672' },
+	{ name: '--codeKeywordLight', value: '#07a' },
 ]
 
 // COLORES INMUTABLES

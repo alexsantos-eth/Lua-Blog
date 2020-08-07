@@ -13,7 +13,7 @@ export const GetTitles = (md?: string, sub?: boolean) => {
 }
 
 // SERIALIZAR MARKDOWN
-const Serializer = (md: string) => {
+const Serializer = (md: string, darkMode?:boolean) => {
 	const lines: string[] = md.split('\n')
 
 	let codeTagToggle: boolean = false
@@ -43,7 +43,7 @@ const Serializer = (md: string) => {
 			// RETORNAR ELEMENTO
 			return (
 				<Suspense key={`Post_${key}_pre`} fallback={<ClipSkeleton/>}>
-					<Code codeStr={codeCopy} type={codeLang}/>
+					<Code darkMode={darkMode || false} codeStr={codeCopy} type={codeLang}/>
 				</Suspense>
 			)
 		}
@@ -61,6 +61,8 @@ const Serializer = (md: string) => {
 			return (
 				<strong key={`Post_${key}_strong`}>{line.substr(2, line.lastIndexOf('__') - 2)}</strong>
 			)
+
+		else if(typeof parseInt(line.charAt(0), 10) === 'number' && line.indexOf('. ') === 1) return <li key={`Post_${key}_li`}>{line.substr(3)}</li>
 
 		// DEVOLVER UN P PARA CUALQUIER ELEMENTO NO RECONOCIDO
 		else return <p key={`Post_${key}_p`}>{line}</p>

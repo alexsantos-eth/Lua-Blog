@@ -51,12 +51,12 @@
 			align-items: flex-end;
 
 			.related {
-				padding: 10px 30px;
+				padding: 10px 30px 0px 30px;
 
 				a {
 					width: 100%;
 					box-shadow: none;
-					margin-bottom: 20px;
+					margin-bottom: 10px;
 				}
 			}
 
@@ -69,29 +69,7 @@
 				box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
 				margin-bottom: 30px;
 				overflow: hidden;
-
-				&::before {
-					content: '';
-					width: 100%;
-					height: 100%;
-					position: absolute;
-					top: 0;
-					left: 0;
-					background: var(--navbarBackground);
-					z-index: -2;
-					transition: background 0.3s ease-in-out;
-				}
-
-				&::after {
-					content: '';
-					width: 100%;
-					height: 100%;
-					position: absolute;
-					top: 0;
-					left: 0;
-					background: var(--shadow);
-					z-index: -1;
-				}
+				background: var(--whiteDark);
 
 				h2 {
 					text-align: center;
@@ -229,23 +207,28 @@
 	font-family: 'OpenSans';
 	color: var(--primary);
 	font-size: 1.1em;
-	opacity: 0.7;
 	line-height: 1.2;
+
+	p {
+		opacity: 0.7;
+	}
 
 	h2 {
 		margin: 20px 0;
 		font-size: 1.7em;
 		opacity: 1;
 		font-weight: 400;
+		opacity: 0.7;
 	}
 
 	pre {
-		margin: 40px 0 !important;
+		user-select: initial;
+		margin: 40px 0;
 		border-radius: 10px;
 		width: 100%;
 		height: auto;
-		overflow: scroll;
-		padding: 30px !important;
+		overflow: auto;
+		padding: 55px 30px 10px 30px;
 	}
 
 	pre + h2 {
@@ -258,12 +241,13 @@
 
 	strong {
 		font-weight: bold;
+		opacity: 0.6;
 	}
 
 	h3 {
 		margin: 15px 0;
 		font-size: 1.4em;
-		opacity: 0.9;
+		opacity: 0.6;
 		font-weight: 400;
 	}
 
@@ -282,11 +266,22 @@
 	}
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1300px) {
 	.content {
 		.container {
 			.index {
-				margin-left: 30px;
+				margin-left: 20px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.content {
+		width: calc(100% - 100px);
+		.container {
+			.index {
+				display: none;
 			}
 		}
 	}
@@ -295,17 +290,6 @@
 @media screen and (max-width: 965px) {
 	.content {
 		margin-top: 15px;
-	}
-}
-
-@media screen and (max-width: 950px) {
-	.content {
-		width: calc(100% - 100px);
-		.container {
-			.index {
-				display: none;
-			}
-		}
 	}
 }
 
