@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"express": "^4.17.1",
 		"firebase": "^7.17.1",
 		"prismjs": "^1.21.0",
 		"react": "^16.13.1",
@@ -20,9 +21,10 @@
 		"@types/react-dom": "^16.9.0",
 		"@types/react-helmet": "^6.1.0",
 		"@types/react-router-dom": "^5.1.5",
-		"@arcadian-digital/react-snap": "^1.23.2",
 		"axios": "^0.19.2",
+		"cors": "^2.8.5",
 		"node-sass": "^4.14.1",
+		"prerender-node": "^3.2.5",
 		"prettier": "1.18.1",
 		"source-map-explorer": "2.0.1",
 		"ts-node": "^8.10.2",
@@ -35,7 +37,7 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"analyze": "source-map-explorer 'build/static/js/*.js'",
-		"build": "npm run fetch && react-scripts build && react-snap",
+		"build": "npm run fetch && react-scripts build",
 		"build:analyze": "react-scripts build && npm run analyze",
 		"test": "react-scripts test",
 		"fetch": "ts-node fetchData.ts",

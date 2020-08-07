@@ -4,7 +4,7 @@ import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton';
 // BLOQUES
 const Code = React.lazy(() => import('Components/Code/Code'));
 
-// TITULOS Y SUBTITULOS
+// TÍTULOS Y SUBTÍTULOS
 export const GetTitles = (md?: string, sub?: boolean) => {
 	if(md){
 	const lines: string[] = md?.split('\n')

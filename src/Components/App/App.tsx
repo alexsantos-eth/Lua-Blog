@@ -61,7 +61,7 @@ const App: React.FC = () => {
 	return (
 		<MainContext.Provider value={{ ...appState, posts: Posts.postCollection.items }}>
 			<BrowserRouter>
-				<Suspense fallback={<></>}>
+				<Suspense fallback={<span>Cargando ...</span>}>
 					<Switch>
 						<Route exact path='/' component={Index} />
 						<Route exact path='/posts/:uid' component={Post} />
