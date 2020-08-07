@@ -30,7 +30,7 @@ const DefState: IndexState = {
 }
 
 // CARGA INICIAL
-let firstLoad: number = 1
+let localPopular: IPostItem[] | null = null
 
 const Index: React.FC = () => {
 	// CONTEXTO
@@ -38,7 +38,7 @@ const Index: React.FC = () => {
 
 	// ESTADO
 	DefState.posts = posts
-	DefState.popular = window.innerWidth <= 600 ? posts : null
+	DefState.popular = window.innerWidth <= 600 ? localPopular || posts : localPopular
 	const [postsState, setPosts]: [IndexState, Dispatch<SetStateAction<IndexState>>] = useState(
 		DefState
 	)
@@ -46,18 +46,18 @@ const Index: React.FC = () => {
 	// FIRESTORE
 	useEffect(() => {
 		// TIEMPO EN MOVIL
-		const eta: number = window.innerWidth <= 600 ? 5000 : 1000
+		const eta: number = window.innerWidth <= 600 ? 7000 : 1000
 
 		window.onload = () => {
 			setTimeout(
 				() =>
 					import('Utils/Firestore').then(({ getSortPopular }) => {
 						getSortPopular(posts).then(popular => {
-							firstLoad = 0
+							localPopular = popular
 							setPosts((prevState: IndexState) => ({ ...prevState, popular }))
 						})
 					}),
-				firstLoad * eta
+				localPopular === null ? eta : 0
 			)
 		}
 	}, [posts])
@@ -122,7 +122,7 @@ const Index: React.FC = () => {
 
 						<div className={Styles.loadContainer}>
 							{postsState.popular ? (
-								<div className={`${Styles.bestPosts} ${Styles.postClip}`}>
+								<div className={`${Styles.postClip} ${Styles.bestPosts}`}>
 									<h2>{lang.index.postTitle_2}</h2>
 									{postsState.popular.map((post: IPostItem, key: number) => {
 										if (key < 3) return <SearchCard key={key} post={post} />

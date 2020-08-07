@@ -215,25 +215,21 @@
 	}
 }
 
-.post-page-desc {
-	& > * {
-		font-family: 'OpenSans';
-		color: var(--primary);
-		font-weight: 400;
-		font-size: 1.2em;
-		line-height: 20px;
-		opacity: 0.7;
-	}
+.desc {
+	font-family: 'OpenSans';
+	color: var(--primary);
+	font-weight: 400;
+	font-size: 1.2em;
+	line-height: 20px;
+	opacity: 0.7;
 }
 
-.post-page-main {
-	& > * {
-		font-family: 'OpenSans';
-		color: var(--primary);
-		font-size: 1.1em;
-		opacity: 0.7;
-		line-height: 20px;
-	}
+.main {
+	font-family: 'OpenSans';
+	color: var(--primary);
+	font-size: 1.1em;
+	opacity: 0.7;
+	line-height: 20px;
 
 	h2 {
 		margin: 15px 0;

@@ -22,14 +22,6 @@
 	margin-bottom: 30px;
 	overflow: hidden;
 
-	&:last-child {
-		padding: 10px 60px;
-
-		ul > li {
-			margin-bottom: 10px;
-		}
-	}
-
 	&::before {
 		content: '';
 		width: 100%;
