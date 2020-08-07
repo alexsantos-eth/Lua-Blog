@@ -11,7 +11,6 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 interface CodeProps {
 	codeStr: string
 	type: string
-	darkMode: boolean
 }
 
 const Code: React.FC<CodeProps> = (props: CodeProps) => {
@@ -36,11 +35,11 @@ const Code: React.FC<CodeProps> = (props: CodeProps) => {
 			} else require(`prismjs/components/prism-${props.type}`)
 
 			// HIGHLIGHT
-			if (codeRef.current) Prism.highlightElement(codeRef.current, true)
+			if (codeRef.current) Prism.highlightElement(codeRef.current, false)
 		}
 
 		highlight()
-	}, [props.type, props.darkMode])
+	}, [props.type])
 
 	return (
 		<pre className='line-numbers'>

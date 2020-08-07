@@ -27,7 +27,7 @@ const SearchCard = lazy(() => import('Components/SearchCard/SearchCard'))
 
 const Post: React.FC = () => {
 	// CONTEXTO
-	const { posts, lang, darkMode } = useContext(MainContext)
+	const { posts, lang } = useContext(MainContext)
 
 	// POST ACTUAL
 	const uid: string = useLocation().pathname.substr(7)
@@ -92,7 +92,7 @@ const Post: React.FC = () => {
 								</div>
 
 								<div className={Styles.desc}>{sPost.description}</div>
-								<div className={Styles.main}>{Serializer(sPost.contentMd, darkMode)}</div>
+								<div className={Styles.main}>{Serializer(sPost.contentMd)}</div>
 
 								<h2 className={Styles.likesTitle}>
 									{lang.postPage.likes}
