@@ -35,7 +35,7 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"analyze": "source-map-explorer 'build/static/js/*.js'",
-		"build": "npm run fetch && react-scripts build && react-snapshot",
+		"build": "npm run fetch && react-scripts build && react-snap",
 		"build:analyze": "react-scripts build && npm run analyze",
 		"test": "react-scripts test",
 		"fetch": "ts-node fetchData.ts",
@@ -44,9 +44,6 @@
 	},
 	"eslintConfig": {
 		"extends": "react-app"
-	},
-	"reactSnapshot": {
-		"snapShotDelay": "3000"
 	},
 	"browserslist": {
 		"production": [
