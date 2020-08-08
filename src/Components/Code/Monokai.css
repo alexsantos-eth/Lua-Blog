@@ -29,6 +29,11 @@ pre[class*='language-'] * {
 :not(pre) > code[class*='language-'],
 pre[class*='language-'] {
 	background: var(--whiteDeepCode);
+	user-select: initial;
+	width: 100%;
+	height: auto;
+	overflow: auto;
+	padding: 47px 30px 10px 30px;
 }
 
 :not(pre) > code[class*='language-'] {
@@ -37,10 +42,25 @@ pre[class*='language-'] {
 }
 
 .codeBlock {
+	margin: 40px 0;
 	position: relative;
 }
 
-.code-title {
+.codeIcon {
+	position: absolute;
+	bottom: 30px;
+	right: 0;
+	margin: 20px;
+	cursor: pointer;
+	transition: transform 0.3s ease-in-out;
+}
+
+.codeIcon:hover {
+	transform: scale(1.2) rotateZ(5deg);
+}
+
+.code-title,
+.codeFooter {
 	font-family: 'Manrope';
 	background: var(--blackDark);
 	color: var(--white);
@@ -54,6 +74,13 @@ pre[class*='language-'] {
 	font-weight: bold !important;
 	border-radius: 10px 10px 0 0;
 	z-index: 2;
+}
+
+.codeFooter {
+	position: relative;
+	border-radius: 0 0 10px 10px;
+	font-size: 0.8em;
+	opacity: 0.7;
 }
 
 .token.comment,

@@ -149,6 +149,16 @@
 	button {
 		color: var(--primary);
 		cursor: pointer;
+
+		svg {
+			fill: transparent;
+			transition: fill 0.3s ease-in-out, transform 0.3s ease-in-out;
+		}
+
+		svg:hover {
+			transform: rotate(30deg);
+			fill: var(--primary);
+		}
 	}
 
 	label {

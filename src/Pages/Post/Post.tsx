@@ -1,5 +1,5 @@
 // REACT
-import React, { useContext, MouseEvent, lazy, Suspense } from 'react'
+import React, { useContext, MouseEvent, Dispatch, SetStateAction, useState, useCallback } from 'react'
 
 // NEXT
 import { Link, useLocation } from 'react-router-dom'
@@ -12,8 +12,6 @@ import MainContext from 'Context/MainContext'
 
 // COMPONENTES
 import Meta from 'Components/Meta/Meta'
-import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
-import ScrollObserver from 'Components/ScrollObserver/ScrollObserver'
 import Serializer, { GetTitles } from 'Components/Serializer/Serializer'
 
 // ICONOS
@@ -21,13 +19,26 @@ import { ChevronLeft, Twitter, Linkedin, Facebook, Link as LinkIcon, Star } from
 
 // ESTILOS
 import Styles from './Post.module.scss'
+import PostClip from 'Components/PostClip/PostClip'
 
-// LAZY COMPONENTS
-const SearchCard = lazy(() => import('Components/SearchCard/SearchCard'))
+// HOOKS
+import { useLikes, useLikesAverage } from 'Utils/LikesHook'
+
+// ESTADOS
+interface PostState{
+	likesAverage: string
+}
+
+const DefState:PostState = {
+	likesAverage: '0'
+}
 
 const Post: React.FC = () => {
 	// CONTEXTO
 	const { posts, lang } = useContext(MainContext)
+
+	// ESTADO
+	const [postState, setState]:[PostState, Dispatch<SetStateAction<PostState>>] = useState(DefState)
 
 	// POST ACTUAL
 	const uid: string = useLocation().pathname.substr(7)
@@ -40,19 +51,25 @@ const Post: React.FC = () => {
 
 	// COMPARTIR
 	const shareEvent = (ev: MouseEvent<HTMLAnchorElement>) => {
-		ev.preventDefault()
-		import('Utils/Tools').then(({ shareLink }) =>
-			shareLink(
-				ev,
-				sPost ? sPost.title : '',
-				`Mira este artículo sobre ${sPost ? sPost.tags.join(', ') : ['']}`
+		if(navigator && navigator.share){
+			ev.preventDefault()
+			import('Utils/Tools').then(({ shareLink }) =>
+				shareLink(
+					ev,
+					sPost ? sPost.title : '',
+					`Mira este artículo sobre ${sPost ? sPost.tags.join(', ') : ['']}`
+				)
 			)
-		)
+		}
 	}
+
+	// HOOKS DE LIKES
+	useLikes(uid, `.${Styles.content} .${Styles.container} .${Styles.contentText} .${Styles.likes} ul:first-child li`, Styles.starFilled)
+	useLikesAverage(uid, useCallback((likesAverage:string) => setState({likesAverage}), []))
 
 	// COPIAR URL
 	const copyPaths = (e: any) =>
-		import('Utils/Tools').then(({ copyPath }) => copyPath(e, lang.postPage.toast))
+		import('Utils/Tools').then(({ copyToClipboard }) => copyToClipboard(e, lang.postPage.toast))
 
 	// META TAGS
 	const title: string = sPost ? sPost.title : 'Error al cargar el artículo (404)'
@@ -70,7 +87,6 @@ const Post: React.FC = () => {
 				url={`posts/${sPost ? sPost.url : ''}`}
 				keys={['LUA', 'blog'].concat(sPost ? sPost.tags : [''])}
 			/>
-			<ScrollObserver />
 			{sPost && (
 				<div>
 					<div className={Styles.content}>
@@ -96,7 +112,7 @@ const Post: React.FC = () => {
 
 								<h2 className={Styles.likesTitle}>
 									{lang.postPage.likes}
-									<span>{0}</span> <Star />
+									<span>{postState.likesAverage}</span> <Star />
 								</h2>
 								<div className={Styles.likes}>
 									<ul>
@@ -174,20 +190,7 @@ const Post: React.FC = () => {
 											))}
 									</ul>
 								</div>
-								{relatedPosts ? (
-									relatedPosts.length > 0 && (
-										<div className={Styles.related}>
-											<h2>{lang.postPage.related}</h2>
-											{relatedPosts.map((relatedPost: IPostItem, key: number) => (
-												<Suspense key={key} fallback={<ClipSkeleton/>}>
-													<SearchCard post={relatedPost} />
-												</Suspense>
-											))}
-										</div>
-									)
-								) : (
-									<ClipSkeleton />
-								)}
+							<PostClip title={lang.postPage.related} posts={relatedPosts}/>
 							</div>
 						</div>
 					</div>

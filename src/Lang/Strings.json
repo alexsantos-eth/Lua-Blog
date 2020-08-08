@@ -22,7 +22,9 @@
 			"related": "Post relacionados",
 			"subtitle": "Contenido",
 			"likes": "Calificación",
-			"toast": "URL copiada correctamente"
+			"toast": "URL copiada correctamente",
+			"codeToast": "Código copiado correctamente",
+			"codeFooter": "Código gracias a LUACode®"
 		},
 		"navbar": {
 			"searchPlaceholder": "Buscar artículos",

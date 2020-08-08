@@ -21,28 +21,7 @@
 	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
 	margin-bottom: 30px;
 	overflow: hidden;
-
-	&::before {
-		content: '';
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		background: var(--invertedPrimary);
-		z-index: -2;
-	}
-
-	&::after {
-		content: '';
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		background: var(--shadow);
-		z-index: -1;
-	}
+	background: var(--whiteDark);
 
 	h2 {
 		text-align: center;
@@ -105,27 +84,6 @@
 	}
 }
 
-@media screen and (max-width: 1000px) {
-	.loadContainer,
-	.postClip {
-		display: none;
-	}
-
-	.page {
-		padding: 0 50px;
-	}
-
-	.selectPost {
-		display: flex;
-	}
-}
-
-@media screen and (max-width: 460px) {
-	.page {
-		padding: 0 30px;
-	}
-}
-
 @media screen and (max-width: 1200px) {
 	.homeContainer {
 		width: 1030px;
@@ -139,6 +97,18 @@
 }
 
 @media screen and (max-width: 1000px) {
+	.loadContainer {
+		display: none;
+	}
+
+	.page {
+		padding: 0 var(--margins);
+	}
+
+	.selectPost {
+		display: flex;
+	}
+
 	.homeContainer {
 		width: 100%;
 		margin-top: 0;

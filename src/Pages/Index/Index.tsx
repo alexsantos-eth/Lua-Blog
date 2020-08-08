@@ -22,9 +22,9 @@ import MainContext from 'Context/MainContext'
 // COMPONENTES
 import Meta from 'Components/Meta/Meta'
 import ClipSkeleton from 'Components/ClipSkeleton/ClipSkeleton'
+import PostClip from 'Components/PostClip/PostClip'
 
 // LAZY COMPONENTS
-const SearchCard = lazy(() => import('Components/SearchCard/SearchCard'))
 const PostCard = lazy(() => import('Components/PostCard/PostCard'))
 
 // ESTADO
@@ -62,6 +62,7 @@ const Index: React.FC = () => {
 
 		// ONLOAD
 		const onload = () => {
+			// DIFERIR CARGA DE FIRESTORE
 			setTimeout(
 				() =>
 					import('Utils/Firestore').then(({ getSortPopular }) => {
@@ -70,10 +71,13 @@ const Index: React.FC = () => {
 							setPosts((prevState: IndexState) => ({ ...prevState, popular }))
 						})
 					}),
+
+				// TIEMPO APROXIMADO DE CARGA
 				localPopular === null ? eta : 0
 			)
 		}
 
+		// CARGAR FIRESTORE DESPUES DEL PRIMER RENDEREIZADO
 		if (window.localStorage.getItem('waitFirestore') === '1') onload()
 
 		// AGREGAR EVENTO
@@ -121,7 +125,7 @@ const Index: React.FC = () => {
 					</div>
 
 					{postsState.posts && (
-						<div className={Styles.postsList}>
+						<div>
 							{postsState.posts &&
 								(postsState.notSort
 									? postsState.posts
@@ -134,38 +138,9 @@ const Index: React.FC = () => {
 						</div>
 					)}
 
-					<div>
-						<div className={`${Styles.postClip} ${Styles.postRecent}`}>
-							<h2>{lang.index.postTitle}</h2>
-							{postsState.posts.map((post: IPostItem, key: number) => {
-								if (key < 3)
-									return (
-										<Suspense key={`${key}_rec`} fallback={<ClipSkeleton />}>
-											<SearchCard post={post} />
-										</Suspense>
-									)
-								else return null
-							})}
-						</div>
-
-						<div className={Styles.loadContainer}>
-							{postsState.popular ? (
-								<div className={`${Styles.postClip} ${Styles.bestPosts}`}>
-									<h2>{lang.index.postTitle_2}</h2>
-									{postsState.popular.map((post: IPostItem, key: number) => {
-										if (key < 3)
-											return (
-												<Suspense key={`${key}_pop`} fallback={<ClipSkeleton />}>
-													<SearchCard post={post} />
-												</Suspense>
-											)
-										else return null
-									})}
-								</div>
-							) : (
-								<ClipSkeleton />
-							)}
-						</div>
+					<div className={Styles.loadContainer}>
+						<PostClip title={lang.index.postTitle} posts={posts} />
+						<PostClip title={lang.index.postTitle_2} posts={postsState.popular} />
 					</div>
 				</div>
 			)}

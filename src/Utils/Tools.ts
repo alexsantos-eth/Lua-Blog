@@ -100,12 +100,13 @@ export const shareLink = (ev: any, title: string, text: string) => {
 }
 
 // COPIAR AL PORTAPAPELES
-export const copyPath = (e: any, text: string) => {
+export const copyToClipboard = (e: any, text: string, str?: string) => {
 	// EVITAR LINK
-	e.preventDefault()
+	if (e.preventDefault) e.preventDefault()
 
 	// COPIAR
-	import('Utils/Fx').then(({ showToast }) =>
-		navigator.clipboard.writeText(window.location.href).then(() => showToast({ text }))
-	)
+	import('Utils/Fx').then(({ showToast }) => {
+		if (navigator.clipboard && navigator.clipboard.writeText)
+			navigator.clipboard.writeText(str || window.location.href).then(() => showToast({ text }))
+	})
 }

@@ -40,12 +40,13 @@
 	}
 
 	.container {
-		display: flex;
+		display: grid;
+		grid-template-columns: 1fr 300px;
+		column-gap: 80px;
 		justify-content: space-between;
 
 		.index {
 			height: 100%;
-			margin-left: 80px;
 			display: flex;
 			flex-direction: column;
 			align-items: flex-end;
@@ -60,7 +61,7 @@
 				}
 			}
 
-			div {
+			.indexList {
 				position: relative;
 				color: var(--primary);
 				width: 300px;
@@ -111,6 +112,7 @@
 
 		.contentText {
 			width: 100%;
+			overflow: hidden;
 			margin-bottom: 30px;
 
 			.likes {
@@ -124,10 +126,21 @@
 
 				ul:first-child {
 					display: flex;
-					margin-left: -5px;
 
 					li {
 						width: 30px;
+						cursor: pointer;
+
+						svg {
+							fill: transparent;
+							transition: fill 0.3s ease-in-out;
+						}
+					}
+
+					.starFilled {
+						svg {
+							fill: var(--primary);
+						}
 					}
 				}
 
@@ -139,9 +152,12 @@
 
 						a {
 							color: var(--primary);
-
-							i {
-								font-size: 1.8em;
+							svg {
+								fill: transparent;
+								transition: fill 0.3s ease-in-out;
+							}
+							svg:hover {
+								fill: var(--primary);
 							}
 						}
 					}
@@ -213,6 +229,10 @@
 		opacity: 0.7;
 	}
 
+	li {
+		opacity: 0.7;
+	}
+
 	h2 {
 		margin: 20px 0;
 		font-size: 1.7em;
@@ -222,14 +242,9 @@
 		scroll-margin-top: calc(var(--navHeight) + 10px);
 	}
 
-	pre {
-		user-select: initial;
-		margin: 40px 0;
-		border-radius: 10px;
-		width: 100%;
-		height: auto;
-		overflow: auto;
-		padding: 55px 30px 10px 30px;
+	a {
+		color: var(--deepOrange);
+		font-weight: bold;
 	}
 
 	pre + h2 {
@@ -268,20 +283,29 @@
 	}
 }
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1200px) {
 	.content {
+		width: 1030px;
 		.container {
-			.index {
-				margin-left: 20px;
-			}
+			column-gap: var(--margins);
 		}
 	}
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1100px) {
 	.content {
-		width: calc(100% - 100px);
+		width: 930px;
+	}
+}
+
+@media screen and (max-width: 1000px) {
+	.content {
+		width: 100%;
+		padding: 0 var(--margins);
+
 		.container {
+			grid-template-columns: 100%;
+			column-gap: 0;
 			.index {
 				display: none;
 			}
@@ -340,12 +364,6 @@
 				}
 			}
 		}
-	}
-}
-
-@media screen and (max-width: 460px) {
-	.content {
-		width: calc(100% - 60px);
 	}
 }
 

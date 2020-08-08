@@ -92,7 +92,7 @@ body {
 	--invertedPrimary: #fff;
 	--navHeight: 90px;
 	--scrollHeight: 56px;
-	--margins: 30px;
+	--margins: 50px;
 	--maxWidth: 1000px;
 	--maxHeight: calc(100vh - var(--navHeight));
 	background: var(--boneBlack);
@@ -314,6 +314,12 @@ p {
 	body {
 		font-size: 14px;
 		--navHeight: 80px;
+	}
+}
+
+@media screen and (max-width: 460px) {
+	body {
+		--margins: 30px;
 	}
 }
 

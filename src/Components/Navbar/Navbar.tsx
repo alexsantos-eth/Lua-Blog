@@ -61,7 +61,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 
 	return (
 		<nav className={Styles.nav} ref={navRef}>
-			<ScrollObserver />
+			<ScrollObserver uid={props.location.pathname} />
 			<div className={Styles.navContent}>
 				<input type='checkbox' className={Styles.showMenu} ref={drawerInp} id='showMenu' />
 				<div className={Styles.logo}>

@@ -1,12 +1,13 @@
 // REACT
-import React, { RefObject, useRef, useEffect } from 'react'
-
-// TEMA
-import './Monokai.css'
+import React, { RefObject, useRef, useEffect, useContext, MouseEvent } from 'react'
 
 // PLUGINS
 import 'prismjs/plugins/match-braces/prism-match-braces.css'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
+
+// ICONOS
+import { Copy } from 'react-feather'
+import MainContext from 'Context/MainContext'
 
 interface CodeProps {
 	codeStr: string
@@ -14,8 +15,18 @@ interface CodeProps {
 }
 
 const Code: React.FC<CodeProps> = (props: CodeProps) => {
+	// CONTEXTO
+	const { lang } = useContext(MainContext)
+
 	// REFERENCIAS
 	const codeRef: RefObject<HTMLElement> = useRef(null)
+
+	// COPIAR CÓDIGO
+	const copyCode = (e: MouseEvent<HTMLOrSVGElement>) => {
+		import('Utils/Tools').then(({ copyToClipboard }) =>
+			copyToClipboard(e, lang.postPage.codeToast, codeRef.current?.textContent || '')
+		)
+	}
 
 	// HIGHLIGHT
 	useEffect(() => {
@@ -49,6 +60,8 @@ const Code: React.FC<CodeProps> = (props: CodeProps) => {
 					{props.codeStr.trim()}
 				</code>
 			</pre>
+			<Copy className='codeIcon' onClick={copyCode} />
+			<span className='codeFooter'>{lang.postPage.codeFooter}</span>
 		</div>
 	)
 }

@@ -23,6 +23,8 @@ interface ILangPackage {
 		related: string
 		likes: string
 		toast: string
+		codeToast: string
+		codeFooter: string
 	}
 	dictionaryPage: {
 		title: string

@@ -1,8 +1,13 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState, CSSProperties } from 'react'
 
 import Styles from './ClipSkeleton.module.scss'
 
-const ClipSkeleton: React.FC = () => {
+interface Props {
+	className?: string
+	style?: CSSProperties
+}
+
+const ClipSkeleton: React.FC<Props> = (props: Props) => {
 	// ESTADO
 	const [state, setRandom]: [number[], Dispatch<SetStateAction<number[]>>] = useState([0])
 
@@ -24,7 +29,7 @@ const ClipSkeleton: React.FC = () => {
 	}, [])
 
 	return (
-		<div className={Styles.container}>
+		<div className={`${Styles.container} ${props.className}`} style={props.style}>
 			<span
 				className={Styles.skeleton}
 				style={{ width: `${Math.min(state[0] * 100 + 40, 100)}%` }}
