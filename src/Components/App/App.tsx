@@ -72,7 +72,9 @@ const App: React.FC = () => {
 				<BrowserRouter>
 					<Switch>
 						<Route exact path='/' component={Index} />
-						<Route exact path='/posts/:uid' component={Post} />
+						<Route exact path='/posts/:uid'>
+							<Post />
+						</Route>
 						<Route component={NotFound} />
 					</Switch>
 
