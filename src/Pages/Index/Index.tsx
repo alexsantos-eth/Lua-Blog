@@ -140,7 +140,7 @@ const Index: React.FC = () => {
 							{postsState.posts.map((post: IPostItem, key: number) => {
 								if (key < 3)
 									return (
-										<Suspense key={`${key}_rec`} fallback={<ChevronDown />}>
+										<Suspense key={`${key}_rec`} fallback={<ClipSkeleton />}>
 											<SearchCard post={post} />
 										</Suspense>
 									)
@@ -155,7 +155,7 @@ const Index: React.FC = () => {
 									{postsState.popular.map((post: IPostItem, key: number) => {
 										if (key < 3)
 											return (
-												<Suspense key={`${key}_pop`} fallback={<ChevronDown />}>
+												<Suspense key={`${key}_pop`} fallback={<ClipSkeleton />}>
 													<SearchCard post={post} />
 												</Suspense>
 											)

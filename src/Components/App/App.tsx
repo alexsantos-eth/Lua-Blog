@@ -51,9 +51,9 @@ const App: React.FC = () => {
 		const currentDark: boolean = window.localStorage.getItem('darkmode') === '1'
 
 		// DETECTAR TEMA DE OS
-		import('LocalGlobals/Globals').then(({ isDark }) =>
-			isDark ? window.localStorage.setItem('darkmode', '1') : null
-		)
+		const isDark: boolean =
+			window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+		if (isDark) window.localStorage.setItem('darkmode', '1')
 
 		// CAMBIAR CSS
 		import('Utils/Tools').then(({ toggleDarkMode }) => toggleDarkMode())
