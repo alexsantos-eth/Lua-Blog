@@ -64,20 +64,19 @@ const App: React.FC = () => {
 
 	return (
 		<MainContext.Provider value={{ ...appState, posts: Posts.postCollection.items }}>
-			<BrowserRouter>
-				<Suspense
-					fallback={
-						<h1 style={{ textAlign: 'center', marginTop: '-30px' }}>Espera un momento ...</h1>
-					}>
+			<Suspense
+				fallback={
+					<h1 style={{ textAlign: 'center', marginTop: '-30px' }}>Espera un momento ...</h1>
+				}>
+				<BrowserRouter>
 					<Switch>
 						<Route exact path='/' component={Index} />
-						<Route path='/posts/:uid' component={Post} />
+						<Route exact path='/posts/:uid' component={Post} />
 					</Switch>
-				</Suspense>
-				<Suspense fallback={<></>}>
+
 					<Navbar changeDarkMode={changeDarkMode} />
-				</Suspense>
-			</BrowserRouter>
+				</BrowserRouter>
+			</Suspense>
 		</MainContext.Provider>
 	)
 }
