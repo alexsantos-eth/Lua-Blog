@@ -12,6 +12,7 @@ import Strings from 'Lang/Strings.json'
 // PAGINAS Y LAZY
 const Post = lazy(() => import('Pages/Post/Post'))
 const Index = lazy(() => import('Pages/Index/Index'))
+const NotFound = lazy(() => import('Pages/Error/NotFound'))
 const Navbar = lazy(() => import('Components/Navbar/Navbar'))
 
 // ESTADO
@@ -72,6 +73,7 @@ const App: React.FC = () => {
 					<Switch>
 						<Route exact path='/' component={Index} />
 						<Route exact path='/posts/:uid' component={Post} />
+						<Route component={NotFound} />
 					</Switch>
 
 					<Navbar changeDarkMode={changeDarkMode} />
