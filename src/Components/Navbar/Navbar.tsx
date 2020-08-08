@@ -1,6 +1,6 @@
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { Moon, Sun } from 'react-feather'
-import React, { RefObject, useContext, useEffect, useRef } from 'react'
+import React, { RefObject, useContext, useEffect, useRef, memo } from 'react'
 
 import Logo from 'Assets/General/logo.png'
 import MainContext from 'Context/MainContext'
@@ -24,6 +24,10 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 	useEffect(() => {
 		// OCULTAR DRAWER EN CAMBIO DE RUTA
 		if (drawerInp.current) drawerInp.current.checked = false
+
+		// CAMBIAR RENDER
+		if (props.location.pathname !== '/' && !window.localStorage.getItem('waitFirestore'))
+			window.localStorage.setItem('waitFirestore', '1')
 	}, [props.location.pathname])
 
 	// SCROLL
@@ -57,7 +61,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 
 	return (
 		<nav className={Styles.nav} ref={navRef}>
-			<ScrollObserver />
+			<ScrollObserver uid={props.location.pathname} />
 			<div className={Styles.navContent}>
 				<input type='checkbox' className={Styles.showMenu} ref={drawerInp} id='showMenu' />
 				<div className={Styles.logo}>
@@ -122,4 +126,4 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 	)
 }
 
-export default withRouter(Navbar)
+export default withRouter(memo(Navbar))

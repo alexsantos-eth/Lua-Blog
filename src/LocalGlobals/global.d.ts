@@ -5,6 +5,8 @@ interface Lang {
 interface ILangPackage {
 	general: {
 		title: string
+		days: string[]
+		months: string[]
 	}
 	navbar: {
 		title: string
@@ -21,6 +23,8 @@ interface ILangPackage {
 		related: string
 		likes: string
 		toast: string
+		codeToast: string
+		codeFooter: string
 	}
 	dictionaryPage: {
 		title: string
@@ -55,4 +59,42 @@ interface ISlice {
 // INTERFAZ DE DOCUMENTOS DE FIRESTORE
 interface LikeDoc {
 	count: number[]
+}
+
+interface IPostItem {
+	sys: {
+		publishedAt: string
+	}
+	title: string
+	tags: string[]
+	url: string
+	description: string
+	author: string
+	contentMd: string
+	banner: {
+		url: string
+		title: string
+	}
+}
+
+interface IPostsDB {
+	post: IPostItem
+	uid: string
+}
+
+// DB DE USUARIOS
+interface IDictionaryDB {
+	dict: any
+	id: number
+}
+
+// DB DE COMENTARIOS
+interface ICommentsDB {
+	comments: any
+	id: number
+}
+
+interface IUsersDB {
+	user: any
+	id: number
 }

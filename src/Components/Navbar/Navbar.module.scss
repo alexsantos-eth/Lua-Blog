@@ -12,34 +12,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	--displayBackground: 0;
-	box-shadow: 0px 5px 5px rgba(0, 0, 0, calc(var(--displayBackground) - 0.9));
-}
-
-nav::before {
-	content: '';
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: -2;
-	background: var(--invertedPrimary);
-	opacity: var(--displayBackground);
-	transition: opacity 0.3s ease-in-out;
-}
-
-nav::after {
-	content: '';
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	background: var(--shadow);
-	z-index: -1;
-	opacity: var(--displayBackground);
-	transition: opacity 0.3s ease-in-out;
+	box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+	background: var(--whiteDark);
 }
 
 .navContent {
@@ -175,6 +149,16 @@ nav::after {
 	button {
 		color: var(--primary);
 		cursor: pointer;
+
+		svg {
+			fill: transparent;
+			transition: fill 0.3s ease-in-out, transform 0.3s ease-in-out;
+		}
+
+		svg:hover {
+			transform: rotate(30deg);
+			fill: var(--primary);
+		}
 	}
 
 	label {

@@ -92,9 +92,10 @@ body {
 	--invertedPrimary: #fff;
 	--navHeight: 90px;
 	--scrollHeight: 56px;
-	--margins: 30px;
+	--margins: 50px;
 	--maxWidth: 1000px;
 	--maxHeight: calc(100vh - var(--navHeight));
+	background: var(--boneBlack);
 	margin: 0;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
 		'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -119,6 +120,7 @@ body > #root {
 	position: relative;
 	width: 100%;
 	overflow: hidden;
+	top: var(--navHeight);
 }
 
 body section:not(:first-child) {
@@ -183,13 +185,13 @@ p {
 	background: #333;
 	padding: 20px;
 	z-index: 99;
-}
 
-.toast > span {
-	font-size: 1em;
-	color: var(--primary);
-	font-weight: 500;
-	font-family: 'OpenSans';
+	span {
+		font-size: 1em;
+		color: var(--white);
+		font-weight: 500;
+		font-family: 'OpenSans';
+	}
 }
 
 @keyframes show {
@@ -212,70 +214,71 @@ p {
 	animation: show 0.4s ease-in-out 1;
 	transition: opacity 0.4s ease-in-out;
 	font-size: 14px;
-}
 
-.alertContainer > .alertShadow {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	background: rgba(0, 0, 0, 0.5);
-	z-index: 1;
-}
+	.alertShadow {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: rgba(0, 0, 0, 0.5);
+		z-index: 1;
+	}
 
-.alertContainer .alertContent {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	padding: 30px;
-	width: calc(100% - 40px);
-	max-width: 450px;
-	transform: translate(-50%, -50%);
-	background: var(--invertedPrimary);
-	z-index: 2;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-	border-radius: 10px;
-	font-family: 'OpenSans';
-}
+	.alertContent {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		padding: 30px;
+		width: calc(100% - 40px);
+		max-width: 450px;
+		transform: translate(-50%, -50%);
+		background: var(--invertedPrimary);
+		z-index: 2;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		border-radius: 10px;
+		font-family: 'OpenSans';
 
-.alertContainer .alertActions {
-	display: flex;
-	justify-content: flex-end;
-	position: relative;
-	z-index: 3;
-}
+		h1 {
+			color: var(--primary);
+			font-size: 2em;
+			margin-bottom: 10px;
+			font-weight: 600;
+			font-family: 'OpenSans';
+		}
 
-.alertContainer .alertActions li .cancelBtn {
-	color: var(--primary);
-	background: transparent;
-	box-shadow: none;
-	display: none;
-}
+		p {
+			color: var(--primary);
+			margin-bottom: 20px;
+			font-size: 1em;
+			line-height: 20px;
+			font-family: 'OpenSans';
+		}
+	}
 
-.alertContainer .alertActions li button {
-	color: var(--white);
-	width: 100px;
-	background: hsl(14, 100%, 40%);
-	box-shadow: none;
-	overflow: hidden;
-	font-family: 'OpenSans';
-}
+	.alertActions {
+		display: flex;
+		justify-content: flex-end;
+		position: relative;
+		z-index: 3;
+		li {
+			button {
+				color: var(--white);
+				width: 100px;
+				background: hsl(14, 100%, 40%);
+				box-shadow: none;
+				overflow: hidden;
+				font-family: 'OpenSans';
+			}
 
-.alertContainer .alertContent h1 {
-	color: var(--primary);
-	font-size: 2em;
-	margin-bottom: 10px;
-	font-weight: 600;
-	font-family: 'OpenSans';
-}
-
-.alertContainer .alertContent p {
-	color: var(--primary);
-	margin-bottom: 20px;
-	font-size: 1em;
-	line-height: 20px;
-	font-family: 'OpenSans';
+			.cancelBtn {
+				color: var(--primary);
+				background: transparent;
+				box-shadow: none;
+				display: none;
+			}
+		}
+	}
 }
 
 /* NAVBAR */
@@ -307,26 +310,6 @@ p {
 	transform-origin: bottom right;
 }
 
-// FOOTER
-footer {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 50px;
-	background: var(--invertedPrimary);
-
-	span {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		color: var(--primary);
-		font-size: 1em;
-		font-family: 'Manrope';
-		height: 55px;
-	}
-}
-
 @media screen and (max-width: 965px) {
 	body {
 		font-size: 14px;
@@ -334,25 +317,15 @@ footer {
 	}
 }
 
-@media screen and (max-width: 760px) {
-	body {
-		font-size: 13px;
-	}
-}
-
 @media screen and (max-width: 460px) {
 	body {
-		font-size: 12px;
+		--margins: 30px;
 	}
 }
 
 @media screen and (max-width: 360px) {
 	body {
-		font-size: 11px;
-	}
-
-	footer span {
-		width: 200px;
+		font-size: 13px;
 	}
 }
 

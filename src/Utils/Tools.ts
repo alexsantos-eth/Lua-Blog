@@ -1,6 +1,3 @@
-// GLOBALES
-import { colors } from 'LocalGlobals/Globals'
-
 // CAMBIAR UN COLOR
 const changeColor = (selectedColor: IColor, dark: boolean) => {
 	// SELECCIONAR BODY
@@ -16,7 +13,9 @@ export const toggleDarkMode = () => {
 	const darkValue: boolean = window.localStorage.getItem('darkmode') === '1'
 
 	// RECORRER CAMBIOS
-	colors.forEach((color: IColor) => changeColor(color, darkValue))
+	import('LocalGlobals/Globals').then(({ colors }) =>
+		colors.forEach((color: IColor) => changeColor(color, darkValue))
+	)
 }
 
 // CALCULAR PIXELS
@@ -79,4 +78,35 @@ export const scrollRAF = (cb: (scrollY: number) => any) => {
 
 	// AGREGAR EVENTO
 	window.addEventListener('scroll', onScroll, false)
+}
+
+// COMPARTIR EN FACEBOOK
+export const shareLink = (ev: any, title: string, text: string) => {
+	// VERIFICAR SI ESTA DISPONIBLE LA API
+	if (navigator.share) {
+		// EVITAR LINK
+		ev.preventDefault()
+
+		// COMPARTIR
+		navigator
+			.share({
+				title,
+				text,
+				url: window.location.href,
+			})
+			.then(() => console.log('Successfully share'))
+			.catch((error: Error) => console.log('Error sharing', error))
+	}
+}
+
+// COPIAR AL PORTAPAPELES
+export const copyToClipboard = (e: any, text: string, str?: string) => {
+	// EVITAR LINK
+	if (e.preventDefault) e.preventDefault()
+
+	// COPIAR
+	import('Utils/Fx').then(({ showToast }) => {
+		if (navigator.clipboard && navigator.clipboard.writeText)
+			navigator.clipboard.writeText(str || window.location.href).then(() => showToast({ text }))
+	})
 }

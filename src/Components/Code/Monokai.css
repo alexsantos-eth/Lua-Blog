@@ -1,0 +1,158 @@
+code[class*='language-'],
+pre[class*='language-'] {
+	color: var(--primary);
+	font-family: 'Futura';
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	font-weight: bold;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+code[class*='language-'] *,
+pre[class*='language-'] * {
+	font-weight: 400;
+}
+
+:not(pre) > code[class*='language-'],
+pre[class*='language-'] {
+	background: var(--whiteDeepCode);
+	user-select: initial;
+	width: 100%;
+	height: auto;
+	overflow: auto;
+	padding: 47px 30px 10px 30px;
+}
+
+:not(pre) > code[class*='language-'] {
+	padding: 0.1em;
+	border-radius: 0.3em;
+}
+
+.codeBlock {
+	margin: 40px 0;
+	position: relative;
+}
+
+.codeIcon {
+	position: absolute;
+	bottom: 30px;
+	right: 0;
+	margin: 20px;
+	cursor: pointer;
+	transition: transform 0.3s ease-in-out;
+}
+
+.codeIcon:hover {
+	transform: scale(1.2) rotateZ(5deg);
+}
+
+.code-title,
+.codeFooter {
+	font-family: 'Manrope';
+	background: var(--blackDark);
+	color: var(--white);
+	width: 100%;
+	display: block;
+	margin-bottom: 10px;
+	position: absolute;
+	left: 0%;
+	top: 0;
+	padding: 10px 25px;
+	font-weight: bold !important;
+	border-radius: 10px 10px 0 0;
+	z-index: 2;
+}
+
+.codeFooter {
+	position: relative;
+	border-radius: 0 0 10px 10px;
+	font-size: 0.8em;
+	opacity: 0.7;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #778090;
+}
+
+.token.punctuation {
+	color: var(--codePunctuationBone);
+}
+
+.namespace {
+	opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: var(--codeTagLightCodeTag);
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: var(--codeCharLightCodeChar);
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: var(--codeURLLightCodeURL);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.class-name,
+.token.function {
+	color: var(--codeFunctionLightCodeFunction);
+}
+
+.token.keyword {
+	color: var(--codeKeywordLightCodeKeyword);
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}

@@ -1,12 +1,18 @@
+// REACT Y ROUTER
+import React, { Dispatch, SetStateAction, useEffect, useState, lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-// REACT
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-import Index from 'Pages/Index/Index'
+// CONTEXTO
 import MainContext from 'Context/MainContext'
-import Navbar from 'Components/Navbar/Navbar'
+
+// DATA
+import Posts from 'Data/Posts.json'
 import Strings from 'Lang/Strings.json'
-import { isDark } from 'LocalGlobals/Globals'
+
+// PAGINAS Y LAZY
+const Post = lazy(() => import('Pages/Post/Post'))
+const Index = lazy(() => import('Pages/Index/Index'))
+const Navbar = lazy(() => import('Components/Navbar/Navbar'))
 
 // ESTADO
 interface AppState {
@@ -45,6 +51,8 @@ const App: React.FC = () => {
 		const currentDark: boolean = window.localStorage.getItem('darkmode') === '1'
 
 		// DETECTAR TEMA DE OS
+		const isDark: boolean =
+			window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
 		if (isDark) window.localStorage.setItem('darkmode', '1')
 
 		// CAMBIAR CSS
@@ -55,13 +63,20 @@ const App: React.FC = () => {
 	}, [])
 
 	return (
-		<MainContext.Provider value={{ ...appState }}>
-			<BrowserRouter>
-				<Switch>
-					<Route exact path='/' component={Index} />
-				</Switch>
-				<Navbar changeDarkMode={changeDarkMode} />
-			</BrowserRouter>
+		<MainContext.Provider value={{ ...appState, posts: Posts.postCollection.items }}>
+			<Suspense
+				fallback={
+					<h1 style={{ textAlign: 'center', marginTop: '-30px' }}>Espera un momento ...</h1>
+				}>
+				<BrowserRouter>
+					<Switch>
+						<Route exact path='/' component={Index} />
+						<Route exact path='/posts/:uid' component={Post} />
+					</Switch>
+
+					<Navbar changeDarkMode={changeDarkMode} />
+				</BrowserRouter>
+			</Suspense>
 		</MainContext.Provider>
 	)
 }

@@ -1,3 +1,7 @@
+// REACT
+import React from 'react'
+import { render, hydrate } from 'react-dom'
+
 // ESTILOS
 import './index.scss'
 
@@ -6,20 +10,14 @@ import * as sw from './serviceWorker'
 
 // COMPONENTES
 import App from 'Components/App/App'
-import React from 'react'
-// @ts-ignore
-import { render } from 'react-snapshot'
 
 // RENDER
 const root: HTMLDivElement | null = document.getElementById('root') as HTMLDivElement
-const app: JSX.Element = (
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>
-)
+const app: JSX.Element = <App />
 
 // RECARGAR
-render(app, root)
+if (root.hasChildNodes()) hydrate(app, root)
+else render(app, root)
 
 // REGISTRAR
 sw.register()

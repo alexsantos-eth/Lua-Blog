@@ -1,13 +1,30 @@
 {
 	"es": {
 		"general": {
-			"title": "LUA Development Studio - Blog"
+			"title": "LUA Development Studio - Blog",
+			"days": ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+			"months": [
+				"Enero",
+				"Febrero",
+				"Marzo",
+				"Abril",
+				"Mayo",
+				"Junio",
+				"Julio",
+				"Agosto",
+				"Septiembre",
+				"Octubre",
+				"Noviembre",
+				"Diciembre"
+			]
 		},
 		"postPage": {
 			"related": "Post relacionados",
 			"subtitle": "Contenido",
 			"likes": "Calificación",
-			"toast": "URL copiada correctamente"
+			"toast": "URL copiada correctamente",
+			"codeToast": "Código copiado correctamente",
+			"codeFooter": "Código gracias a LUACode®"
 		},
 		"navbar": {
 			"searchPlaceholder": "Buscar artículos",
