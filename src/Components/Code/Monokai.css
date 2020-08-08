@@ -36,6 +36,10 @@ pre[class*='language-'] {
 	border-radius: 0.3em;
 }
 
+.codeBlock {
+	position: relative;
+}
+
 .code-title {
 	font-family: 'Manrope';
 	background: var(--blackDark);
@@ -48,6 +52,8 @@ pre[class*='language-'] {
 	top: 0;
 	padding: 10px 25px;
 	font-weight: bold !important;
+	border-radius: 10px 10px 0 0;
+	z-index: 2;
 }
 
 .token.comment,

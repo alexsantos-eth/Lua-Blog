@@ -42,12 +42,14 @@ const Code: React.FC<CodeProps> = (props: CodeProps) => {
 	}, [props.type])
 
 	return (
-		<pre className='line-numbers'>
+		<div className='codeBlock'>
 			<span className='code-title'>{props.type.toUpperCase()}</span>
-			<code ref={codeRef} className={`match-braces rainbow-braces language-${props.type}`}>
-				{props.codeStr.trim()}
-			</code>
-		</pre>
+			<pre className='line-numbers'>
+				<code ref={codeRef} className={`match-braces rainbow-braces language-${props.type}`}>
+					{props.codeStr.trim()}
+				</code>
+			</pre>
+		</div>
 	)
 }
 
