@@ -100,8 +100,8 @@ export const showAlert = (props: AlertProps) => {
 	alertContent.classList.add('alertContent')
 	alertBody.classList.add('alertBody')
 	actions.classList.add('alertActions')
-	cancelBtn.classList.add('cancelBtn', 'waves', 'waves-dark')
-	confirmBtn.classList.add('primary', 'waves')
+	cancelBtn.classList.add('cancelBtn')
+	confirmBtn.classList.add('primary')
 
 	// ASIGNAR TEXTOS
 	h1.textContent = props.title

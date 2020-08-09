@@ -79,7 +79,7 @@
 		}
 
 		p {
-			font-weight: 200;
+			font-weight: 300;
 		}
 	}
 }
@@ -102,12 +102,18 @@
 				display: none;
 			}
 
+			&:nth-child(5) {
+				a::before {
+					transform: translateY(-50%) scaleX(1);
+				}
+			}
+
 			a {
 				color: var(--primary);
 				font-family: 'Futura';
 				font-size: 1.05em;
 				text-decoration: none;
-				font-weight: 200;
+				font-weight: 400;
 				position: relative;
 
 				&::before {
@@ -193,6 +199,7 @@
 .talkBtn {
 	font-size: 0.8em;
 	font-family: 'Futura';
+	font-weight: 500;
 	width: 130px;
 	box-shadow: none;
 	border-radius: 8px;

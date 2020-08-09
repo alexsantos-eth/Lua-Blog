@@ -57,7 +57,10 @@ const App: React.FC = () => {
 		if (isDark) window.localStorage.setItem('darkmode', '1')
 
 		// CAMBIAR CSS
-		import('Utils/Tools').then(({ toggleDarkMode }) => toggleDarkMode())
+		import('Utils/Tools').then(({ toggleDarkMode, updateApp }) => {
+			toggleDarkMode()
+			updateApp()
+		})
 
 		// ACTUALIZAR APP
 		setAppState({ lang: Strings.es, darkMode: currentDark })
