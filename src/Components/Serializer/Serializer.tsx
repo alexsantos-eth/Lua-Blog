@@ -41,6 +41,7 @@ const Serializer = (md: string) => {
 		"<code lang='$2'><!-- $3 --></code>"
 	)
 
+	// PARSE
 	const jsxArry: JSX.Element | JSX.Element[] = parse(codeBlock, {
 		replace: domNode => {
 			if (domNode.name === 'code') {

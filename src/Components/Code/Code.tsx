@@ -60,7 +60,7 @@ const Code: React.FC<CodeProps> = (props: CodeProps) => {
 					{props.codeStr.trim()}
 				</code>
 			</pre>
-			<Copy style={{marginBottom:props.codeStr.split('\n').length === 2?'15px':'22px'}} className='codeIcon' onClick={copyCode} />
+			<Copy style={{marginBottom:props.codeStr.split('\n').length === 3?'15px':'22px'}} className='codeIcon' onClick={copyCode} />
 			<span className='codeFooter'>{lang.postPage.codeFooter}</span>
 		</div>
 	)
