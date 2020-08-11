@@ -6,32 +6,10 @@
 	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
 	margin-bottom: 30px;
 	overflow: hidden;
+	background: var(--whiteDark);
 
 	span {
 		left: -5px;
-	}
-
-	&::before {
-		content: '';
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		background: var(--navbarBackground);
-		z-index: -2;
-		transition: background 0.3s ease-in-out;
-	}
-
-	&::after {
-		content: '';
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		background: var(--shadow);
-		z-index: -1;
 	}
 
 	ul {

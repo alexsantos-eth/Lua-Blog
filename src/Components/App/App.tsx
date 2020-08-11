@@ -12,6 +12,7 @@ import Strings from 'Lang/Strings.json'
 // PAGINAS Y LAZY
 const Post = lazy(() => import('Pages/Post/Post'))
 const Index = lazy(() => import('Pages/Index/Index'))
+const NotFound = lazy(() => import('Pages/Error/NotFound'))
 const Navbar = lazy(() => import('Components/Navbar/Navbar'))
 
 // ESTADO
@@ -56,7 +57,10 @@ const App: React.FC = () => {
 		if (isDark) window.localStorage.setItem('darkmode', '1')
 
 		// CAMBIAR CSS
-		import('Utils/Tools').then(({ toggleDarkMode }) => toggleDarkMode())
+		import('Utils/Tools').then(({ toggleDarkMode, updateApp }) => {
+			toggleDarkMode()
+			updateApp()
+		})
 
 		// ACTUALIZAR APP
 		setAppState({ lang: Strings.es, darkMode: currentDark })
@@ -71,7 +75,10 @@ const App: React.FC = () => {
 				<BrowserRouter>
 					<Switch>
 						<Route exact path='/' component={Index} />
-						<Route exact path='/posts/:uid' component={Post} />
+						<Route exact path='/posts/:uid'>
+							<Post />
+						</Route>
+						<Route component={NotFound} />
 					</Switch>
 
 					<Navbar changeDarkMode={changeDarkMode} />

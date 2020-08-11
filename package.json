@@ -4,6 +4,7 @@
 	"private": true,
 	"dependencies": {
 		"firebase": "^7.17.1",
+		"html-react-parser": "^0.13.0",
 		"prismjs": "^1.21.0",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
@@ -13,16 +14,16 @@
 		"react-scripts": "3.4.1"
 	},
 	"devDependencies": {
-		"@arcadian-digital/react-snap": "^1.23.2",
 		"@types/node": "^12.0.0",
 		"@types/prismjs": "^1.16.1",
 		"@types/react": "^16.9.0",
 		"@types/react-dom": "^16.9.0",
 		"@types/react-helmet": "^6.1.0",
 		"@types/react-router-dom": "^5.1.5",
+		"@arcadian-digital/react-snap": "^1.23.2",
 		"axios": "^0.19.2",
 		"node-sass": "^4.14.1",
-		"prettier": "2.0.5",
+		"prettier": "1.18.1",
 		"source-map-explorer": "2.0.1",
 		"ts-node": "^8.10.2",
 		"tslint": "^6.1.3",

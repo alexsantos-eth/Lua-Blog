@@ -110,3 +110,33 @@ export const copyToClipboard = (e: any, text: string, str?: string) => {
 			navigator.clipboard.writeText(str || window.location.href).then(() => showToast({ text }))
 	})
 }
+
+// ALERTA DE ACTUALIZACIONES
+export const updateApp = () => {
+	import('Utils/Fx').then(({showAlert}) => {
+		// ACTUALIZAR APP
+		try {
+			window.navigator.serviceWorker
+				.getRegistration()
+				.then((reg: ServiceWorkerRegistration | undefined) => {
+					reg?.addEventListener('updatefound', () => {
+						const worker = reg.installing
+						worker?.addEventListener('statechange', () => {
+							if (worker.state === 'installed') {
+								showAlert({
+									type: 'confirm',
+									body: 'Hay una nueva actualización disponible, ¿deseas actualizar?',
+									title: 'Nueva actualización',
+									confirmBtn: 'Recargar',
+									onConfirm: () => window.location.reload(),
+								})
+								worker.postMessage({ type: 'SKIP_WAITING' })
+							}
+						})
+					})
+				})
+		} catch (error) {
+			console.log(error)
+		}
+	})
+}

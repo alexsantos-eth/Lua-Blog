@@ -19,6 +19,7 @@ pre[class*='language-'] {
 	-moz-hyphens: none;
 	-ms-hyphens: none;
 	hyphens: none;
+	display: block;
 }
 
 code[class*='language-'] *,

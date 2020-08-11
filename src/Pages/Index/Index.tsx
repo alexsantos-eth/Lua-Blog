@@ -97,6 +97,9 @@ const Index: React.FC = () => {
 		setPosts((prevState: IndexState) => ({ ...prevState, notSort: index === 0 }))
 	}
 
+	// ESTA DISPONIBLE LOS POPULARES
+	const enablePopulars: boolean = postsState.popular === null || postsState.popular.length > 0
+
 	return (
 		<section className={`${Styles.page} home`}>
 			<Meta
@@ -140,7 +143,9 @@ const Index: React.FC = () => {
 
 					<div className={Styles.loadContainer}>
 						<PostClip title={lang.index.postTitle} posts={posts} />
-						<PostClip title={lang.index.postTitle_2} posts={postsState.popular} />
+						{enablePopulars && (
+							<PostClip title={lang.index.postTitle_2} posts={postsState.popular} />
+						)}
 					</div>
 				</div>
 			)}
