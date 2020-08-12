@@ -41,7 +41,8 @@ const Serializer = (md: string) => {
 		joinRegexp(/\[(.*?)\]\((.*?)\)\((.*?)\)/),
 		'<a href="$2" title="$3">$1</a>'
 	)
-	const br = anchor.replace(joinRegexp(/\n\n/), '\n<br></br>\n')
+	const images = anchor.replace(joinRegexp(/^!\[(.*?)\]\((.*?)\)/), '<img src="$2" alt="$1"/>')
+	const br = images.replace(joinRegexp(/\n\n/), '\n<br></br>\n')
 	const ul = br.replace(joinRegexp(/((\n?<li>.+<\/li>(\n?))+)/), '\n<ul>$1</ul>\n')
 	const codeBlock = ul.replace(
 		joinRegexp(/(```([a-z]*)(\n[\s\S]*?\n)```+)/),
