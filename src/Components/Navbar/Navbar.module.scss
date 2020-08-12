@@ -198,18 +198,36 @@
 }
 
 .talkBtn {
+	$border: 3px;
 	font-size: 0.8em;
 	font-family: 'Futura';
 	font-weight: 500;
 	width: 130px;
 	box-shadow: none;
 	border-radius: 8px;
-	color: var(--white) !important;
+	color: var(--primary);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 45px;
+	background-clip: padding-box;
+
 	background: linear-gradient(140deg, rgba(240, 120, 22, 1) 0%, rgba(230, 15, 113, 1) 100%);
+	border: solid $border transparent;
+	position: relative;
+	z-index: 2;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+		z-index: -2;
+		background: var(--whiteDark);
+	}
 }
 
 .activeLangBtn {
@@ -364,10 +382,11 @@
 	.sections > ul > li > .talkBtn {
 		display: inline-flex;
 		width: 140px;
-		border-color: var(--blackPink);
+		border: none !important;
 
 		&::before {
 			background: transparent;
+			display: none;
 		}
 	}
 }
@@ -382,7 +401,7 @@
 	}
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 415px) {
 	.logo > img {
 		width: 50px;
 	}

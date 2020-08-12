@@ -1,5 +1,12 @@
 // REACT
-import React, { useContext, MouseEvent, Dispatch, SetStateAction, useState, useCallback } from 'react'
+import React, {
+	useContext,
+	MouseEvent,
+	Dispatch,
+	SetStateAction,
+	useState,
+	useCallback,
+} from 'react'
 
 // NEXT
 import { Link, useLocation } from 'react-router-dom'
@@ -25,12 +32,12 @@ import PostClip from 'Components/PostClip/PostClip'
 import { useLikes, useLikesAverage } from 'Utils/LikesHook'
 
 // ESTADOS
-interface PostState{
+interface PostState {
 	likesAverage: string
 }
 
-const DefState:PostState = {
-	likesAverage: '0'
+const DefState: PostState = {
+	likesAverage: '0',
 }
 
 const Post: React.FC = () => {
@@ -38,7 +45,7 @@ const Post: React.FC = () => {
 	const { posts, lang } = useContext(MainContext)
 
 	// ESTADO
-	const [postState, setState]:[PostState, Dispatch<SetStateAction<PostState>>] = useState(DefState)
+	const [postState, setState]: [PostState, Dispatch<SetStateAction<PostState>>] = useState(DefState)
 
 	// POST ACTUAL
 	const uid: string = useLocation().pathname.substr(7)
@@ -46,12 +53,12 @@ const Post: React.FC = () => {
 
 	// ESTADO DEL POST
 	const relatedPosts: IPostItem[] = getRelated(sPost, posts, uid)
-	const subtitles:string[] = GetTitles(sPost?.contentMd, false)
-	const subsubtitles:string[] = GetTitles(sPost?.contentMd, true)
+	const subtitles: string[] = GetTitles(sPost?.contentMd, false)
+	const subsubtitles: string[] = GetTitles(sPost?.contentMd, true)
 
 	// COMPARTIR
 	const shareEvent = (ev: MouseEvent<HTMLAnchorElement>) => {
-		if(navigator && navigator.share){
+		if (navigator && navigator.share) {
 			ev.preventDefault()
 			import('Utils/Tools').then(({ shareLink }) =>
 				shareLink(
@@ -64,8 +71,15 @@ const Post: React.FC = () => {
 	}
 
 	// HOOKS DE LIKES
-	useLikes(uid, `.${Styles.content} .${Styles.container} .${Styles.contentText} .${Styles.likes} ul:first-child li`, Styles.starFilled)
-	useLikesAverage(uid, useCallback((likesAverage:string) => setState({likesAverage}), []))
+	useLikes(
+		uid,
+		`.${Styles.content} .${Styles.container} .${Styles.contentText} .${Styles.likes} ul:first-child li`,
+		Styles.starFilled
+	)
+	useLikesAverage(
+		uid,
+		useCallback((likesAverage: string) => setState({ likesAverage }), [])
+	)
 
 	// COPIAR URL
 	const copyPaths = (e: any) =>
@@ -166,9 +180,7 @@ const Post: React.FC = () => {
 										{subtitles &&
 											Array.from(subtitles).map((subtitle: string, i: number) => (
 												<li key={`sub-${i}`}>
-													<a
-														href={`#${subtitle.replace(/ /g, '-').substr(4)}`}
-														title={subtitle}>
+													<a href={`#${subtitle.replace(/ /g, '-').substr(1)}`} title={subtitle}>
 														{subtitle}
 													</a>
 													<ul>
@@ -178,7 +190,7 @@ const Post: React.FC = () => {
 																	subSubtitle?.startsWith(` ${(i + 1).toString()}.`) && (
 																		<li key={`subSub-${ind}`}>
 																			<a
-																				href={`#${subSubtitle.replace(/ /g, '-').substr(5)}`}
+																				href={`#${subSubtitle.replace(/ /g, '-').substr(1)}`}
 																				title={subSubtitle}>
 																				{subSubtitle}
 																			</a>
@@ -190,7 +202,7 @@ const Post: React.FC = () => {
 											))}
 									</ul>
 								</div>
-							<PostClip title={lang.postPage.related} posts={relatedPosts}/>
+								<PostClip title={lang.postPage.related} posts={relatedPosts} />
 							</div>
 						</div>
 					</div>

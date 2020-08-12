@@ -44,7 +44,6 @@ interface NavbarState {
 	filterPosts: IPostItem[] | null
 }
 
-
 const defState: NavbarState = {
 	filterPosts: null,
 }
