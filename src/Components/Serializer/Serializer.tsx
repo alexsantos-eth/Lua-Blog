@@ -1,6 +1,9 @@
 // REACT
 import React, { Suspense } from 'react'
 
+// ROUTER
+import { Link } from 'react-router-dom'
+
 // PARSE HTML
 import parse from 'html-react-parser'
 
@@ -27,15 +30,20 @@ const Serializer = (md: string) => {
 		new RegExp(new RegExp(exp).source + isolate.source, 'g')
 
 	// EXPRESIONES REGULARES
-	const italic = md.replace(joinRegexp(/\*(.+)\*/), '<em>$1</em>')
-	const bold = italic.replace(joinRegexp(/__(.+)__/), '<strong>$1</strong>')
+	const italic = md.replace(joinRegexp(/\*(.*?)\*/), '<em>$1</em>')
+	const bold = italic.replace(joinRegexp(/__(.*?)__/), '<strong>$1</strong>')
 	const quote = bold.replace(joinRegexp(/(^> |\n> )(.+)/), '\n<blockquote>$1</blockquote>')
 	const list = quote.replace(joinRegexp(/(^\* |\n\* )(.+)/), '\n<li>$2</li>')
-	const h1 = list.replace(joinRegexp(/(^# |\n# )(.+)/), '\n<h1>$2</h1>')
-	const h2 = h1.replace(joinRegexp(/(^## |\n## )(.+)/), '\n<h2>$2</h2>')
-	const h3 = h2.replace(joinRegexp(/(^### |\n### )(.+)/), '\n<h3>$2</h3>')
-	const br = h3.replace(joinRegexp(/\n\n/), '\n<br></br>\n')
-	const ul = br.replace(joinRegexp(/((\n?<li>.+<\/li>(\n?))+)/), '\n<ul>$1</ul>\n')
+	const h1 = list.replace(joinRegexp(/(^# |\n# )(.+)/), '\n<h1 id="$2">$2</h1>')
+	const h2 = h1.replace(joinRegexp(/(^## |\n## )(.+)/), '\n<h2 id="$2">$2</h2>')
+	const h3 = h2.replace(joinRegexp(/(^### |\n### )(.+)/), '\n<h3 id="$2">$2</h3>')
+	const anchor = h3.replace(
+		joinRegexp(/\[(.*?)\]\((.*?)\)\((.*?)\)/),
+		'<a href="$2" title="$3">$1</a>'
+	)
+	const images = anchor.replace(joinRegexp(/^!\[(.*?)\]\((.*?)\)/), '<img src="$2" alt="$1"/>')
+	const br = images.replace(joinRegexp(/\n\n/), '\n<br></br>\n')
+	const ul = br.replace(joinRegexp(/((\n?<li>.*?<\/li>(\n?))+)/), '\n<ul>$1</ul>\n')
 	const codeBlock = ul.replace(
 		joinRegexp(/(```([a-z]*)(\n[\s\S]*?\n)```+)/),
 		"<code lang='$2'><!-- $3 --></code>"
@@ -60,7 +68,30 @@ const Serializer = (md: string) => {
 						/>
 					</Suspense>
 				)
-			}
+			} else if (domNode.name === 'a' && !domNode.attribs?.href.includes('http'))
+				return (
+					<Link to={domNode.attribs?.href || '/'} title={domNode.attribs?.title || ''}>
+						{domNode.children ? domNode.children[0].data : ''}
+					</Link>
+				)
+			else if (domNode.name === 'h1')
+				return (
+					<h1 id={domNode.attribs?.id.replace(/ /g, '-')}>
+						{domNode.children && domNode.children[0].data}
+					</h1>
+				)
+			else if (domNode.name === 'h2')
+				return (
+					<h2 id={domNode.attribs?.id.replace(/ /g, '-')}>
+						{domNode.children && domNode.children[0].data}
+					</h2>
+				)
+			else if (domNode.name === 'h3')
+				return (
+					<h3 id={domNode.attribs?.id.replace(/ /g, '-')}>
+						{domNode.children && domNode.children[0].data}
+					</h3>
+				)
 		},
 	})
 
