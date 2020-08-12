@@ -1,6 +1,9 @@
 // REACT
 import React, { Suspense } from 'react'
 
+// ROUTER
+import { Link } from 'react-router-dom'
+
 // PARSE HTML
 import parse from 'html-react-parser'
 
@@ -34,7 +37,11 @@ const Serializer = (md: string) => {
 	const h1 = list.replace(joinRegexp(/(^# |\n# )(.+)/), '\n<h1>$2</h1>')
 	const h2 = h1.replace(joinRegexp(/(^## |\n## )(.+)/), '\n<h2>$2</h2>')
 	const h3 = h2.replace(joinRegexp(/(^### |\n### )(.+)/), '\n<h3>$2</h3>')
-	const br = h3.replace(joinRegexp(/\n\n/), '\n<br></br>\n')
+	const anchor = h3.replace(
+		joinRegexp(/\[(.*?)\]\((.*?)\)\((.*?)\)/),
+		'<a href="$2" title="$3">$1</a>'
+	)
+	const br = anchor.replace(joinRegexp(/\n\n/), '\n<br></br>\n')
 	const ul = br.replace(joinRegexp(/((\n?<li>.+<\/li>(\n?))+)/), '\n<ul>$1</ul>\n')
 	const codeBlock = ul.replace(
 		joinRegexp(/(```([a-z]*)(\n[\s\S]*?\n)```+)/),
@@ -60,7 +67,12 @@ const Serializer = (md: string) => {
 						/>
 					</Suspense>
 				)
-			}
+			} else if (domNode.name === 'a' && !domNode.attribs?.href.includes('http'))
+				return (
+					<Link to={domNode.attribs?.href || '/'} title={domNode.attribs?.title || ''}>
+						{domNode.children ? domNode.children[0].data : ''}
+					</Link>
+				)
 		},
 	})
 
