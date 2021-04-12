@@ -14,7 +14,7 @@ import React, {
 } from 'react'
 
 // ROUTER
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import {  RouteComponentProps, withRouter } from 'react-router-dom'
 
 // ESTILOS
 import Styles from './Navbar.module.scss'
