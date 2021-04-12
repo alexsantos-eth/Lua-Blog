@@ -183,7 +183,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 											href={
 												key === 4
 													? 'https://blog.wearelua.com'
-													: `https://wearelua.com/${route.toLowerCase()}`
+													: `https://wearelua.com/#!${route.toLowerCase()}`
 											}
 											title={route}>
 											{route}
@@ -201,7 +201,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					<button aria-label='Darkmode Icon' onClick={changeDarkMode}>
 						{darkMode ? <Sun /> : <Moon />}
 					</button>
-					<a href='https://wearelua.com' className={Styles.talkBtn}>
+					<a href='https://wearelua.com/#!hablemos' className={Styles.talkBtn}>
 						{lang.navbar.routes[5]}
 					</a>
 					<ul>
