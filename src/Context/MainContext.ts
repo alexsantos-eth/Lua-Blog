@@ -13,7 +13,7 @@ interface ContextProps {
 // VALOR POR DEFECTO
 const DefContext: ContextProps = {
 	lang: Strings.es,
-	darkMode: false,
+	darkMode: true,
 	posts: Posts.postCollection.items,
 }
 

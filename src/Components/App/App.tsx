@@ -24,7 +24,7 @@ interface AppState {
 // ESTADO POR DEFECTO
 const DefState: AppState = {
 	lang: Strings.es,
-	darkMode: false,
+	darkMode: true,
 }
 
 const App: React.FC = () => {
@@ -34,7 +34,7 @@ const App: React.FC = () => {
 	// CAMBIAR DARKMODE
 	const changeDarkMode = () => {
 		// DARKMODE ACTUAL
-		const currentDarkMode: boolean = window.localStorage.getItem('darkmode') === '1' || false
+		const currentDarkMode: boolean = (window.localStorage.getItem('darkmode') || '1') === '1'
 
 		// CAMBIAR EN LOCAL
 		window.localStorage.setItem('darkmode', currentDarkMode ? '0' : '1')
@@ -49,12 +49,13 @@ const App: React.FC = () => {
 	// CAMBIAR DARKMODE DE INICIO
 	useEffect(() => {
 		// OBTENER VALOR ACTUAL
-		const currentDark: boolean = window.localStorage.getItem('darkmode') === '1'
+		const currentDark: boolean = (window.localStorage.getItem('darkmode') || '1') === '1'
 
 		// DETECTAR TEMA DE OS
 		const isDark: boolean =
 			window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-		if (isDark) window.localStorage.setItem('darkmode', '1')
+		if (isDark || window.localStorage.getItem('darkmode') === null)
+			window.localStorage.setItem('darkmode', '1')
 
 		// CAMBIAR CSS
 		import('Utils/Tools').then(({ toggleDarkMode, updateApp }) => {

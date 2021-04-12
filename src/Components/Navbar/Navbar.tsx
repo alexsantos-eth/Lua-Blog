@@ -124,12 +124,6 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 	// CAMBIAR DARKMODE
 	const changeDarkMode = () => props.changeDarkMode && props.changeDarkMode()
 
-	// HACER SCROLL HACIA ARRIBA
-	const scrollToTop = () => {
-		if (drawerInp.current) drawerInp.current.checked = false
-		window.scrollTo({ top: 0, behavior: 'smooth' })
-	}
-
 	// CERRAR DRAWER
 	const linkActions = lang.navbar.routes.map((_route: string) => () =>
 		drawerInp.current ? (drawerInp.current.checked = false) : null
@@ -180,25 +174,21 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 						{lang.navbar.routes.map((route: string, key: number) =>
 							key < 6 ? (
 								<li key={key}>
-									{key === 0 ? (
-										<Link to='/#!' title={route} onClick={scrollToTop}>
-											{route}
-										</Link>
-									) : (
+									{
 										<a
 											className={key === 5 ? Styles.talkBtn : undefined}
 											onClick={linkActions[key]}
-											rel={key === 4 ? 'noopener noreferrer' : undefined}
-											target={key === 4 ? '_blank' : undefined}
+											rel='noopener noreferrer'
+											target='_blank'
 											href={
 												key === 4
 													? 'https://blog.wearelua.com'
-													: `${key === 0 ? '#!' : '#!' + route.toLowerCase()}`
+													: `https://wearelua.com/${route.toLowerCase()}`
 											}
 											title={route}>
 											{route}
 										</a>
-									)}
+									}
 								</li>
 							) : null
 						)}
@@ -211,7 +201,7 @@ const Navbar: React.FC<NavProps> = (props: NavProps) => {
 					<button aria-label='Darkmode Icon' onClick={changeDarkMode}>
 						{darkMode ? <Sun /> : <Moon />}
 					</button>
-					<a href={`#!${lang.navbar.routes[5].toLowerCase()}`} className={Styles.talkBtn}>
+					<a href='https://wearelua.com' className={Styles.talkBtn}>
 						{lang.navbar.routes[5]}
 					</a>
 					<ul>
