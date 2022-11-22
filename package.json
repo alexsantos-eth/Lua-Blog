@@ -12,7 +12,7 @@
 		"react-feather": "2.0.8",
 		"react-helmet": "^6.1.0",
 		"react-router-dom": "^5.2.0",
-		"react-scripts": "3.4.1"
+		"react-scripts": "5.0.1"
 	},
 	"devDependencies": {
 		"@arcadian-digital/react-snap": "^1.23.2",
